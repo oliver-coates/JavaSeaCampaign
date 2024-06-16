@@ -23,7 +23,7 @@ public class GameMaster : MonoBehaviour
     }
 
     [SerializeField] private bool _turnUnderway;
-    public bool turnUnderway
+    public static bool turnUnderway
     {
         get
         {
