@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b064f2cc5f1d55d4e80c59dabb4e1757, type: 3}
+  m_Name: (2) F Class
+  m_EditorClassIdentifier: 
+  className: F
+  shipType: {fileID: 11400000, guid: 1724e2be3bf510b48a1af5d0a9fcabd3, type: 2}
+  extra_manuverability: 0
+  extra_armour: 0
+  extra_repairs: 0
+  extra_maxCondition: 0
+  extra_cargo: 0
