@@ -23,6 +23,8 @@ public class ShipInstance : MonoBehaviour
 
     [Header("Components:")]
     [SerializeField] private EngineScript _engine;
+    [SerializeField] private LineRenderer _lineRenderer;
+
 
     private void Awake()
     {
@@ -33,19 +35,40 @@ public class ShipInstance : MonoBehaviour
     {
         if (GameMaster.turnUnderway)
         {
-            _engine.TurnUpdate(rudder, targetSpeed, Time.deltaTime);
+            _engine.TurnUpdate(Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
+        {
+            OnShipStatChanged();
         }
     }
 
     private void OnShipStatChanged()
     {
         // Should be called whenever the target speed, rudder etc is changed.
-        // SimulateTrajectory();
+        RedrawTrajectory();
     }
 
     private void OnTurnEnded()
     {
-        // SimulateTrajectory();
+        RedrawTrajectory();
+    }
+
+    private void RedrawTrajectory()
+    {
+        _lineRenderer.positionCount = 100;
+        _lineRenderer.SetPositions(_engine.SimulateMovement());
+
+        float baseWidth = 0.05f;
+        float steerLerp = Mathf.Abs(rudder);
+
+        _lineRenderer.startWidth = baseWidth;
+        _lineRenderer.endWidth = Mathf.Lerp(baseWidth, 6f, steerLerp);
+
+        Color endColor = Color.Lerp(Color.black, Color.clear, steerLerp);
+
+        _lineRenderer.endColor = endColor;
     }
 
 }
