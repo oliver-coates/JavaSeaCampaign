@@ -74,7 +74,7 @@ public class GameMaster : MonoBehaviour
 
     private void CheckForDebugCommand()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             StartTurn();            
         }
