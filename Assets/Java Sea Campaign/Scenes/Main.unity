@@ -3505,12 +3505,12 @@ MonoBehaviour:
   target: {fileID: 186830587}
   _turnSpeed: 50
   _rotationBlockers:
-  - from: 330
-    to: 30
-    type: 0
+  - from: 320
+    to: 40
+    type: 1
   - from: 160
     to: 200
-    type: 1
+    type: 0
   _gizmoRotationRadius: 3.5
 --- !u!1 &2146864501
 GameObject:

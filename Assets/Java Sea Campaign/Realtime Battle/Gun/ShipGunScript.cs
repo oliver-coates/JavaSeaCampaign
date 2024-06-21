@@ -65,9 +65,9 @@ public class ShipGunScript : MonoBehaviour
         float targetDegrees = ShearRotationByBlockers(desiredDegrees);
 
         // Determine which direction it is acceptable to turn
-        RotationDirection direction = FindAllowedRotationDirection(targetDegrees, currentDegrees);
+        RotationDirection direction = FindAllowedRotationDirection(currentDegrees, targetDegrees);
         
-        // Find and apply the rotation
+        // Apply the rotation
         float turnAmountThisFrame = Time.deltaTime * _turnSpeed;
         
         if (direction == RotationDirection.Left)
@@ -136,7 +136,7 @@ public class ShipGunScript : MonoBehaviour
     private RotationDirection FindAllowedRotationDirection(float currentDegrees, float targetDegrees)
     {
         // Check that we are not pointing at the target
-        float distanceBetweenDegrees = Mathf.Abs(targetDegrees - currentDegrees);
+        float distanceBetweenDegrees = Mathf.Abs(currentDegrees - targetDegrees);
         if (distanceBetweenDegrees < 1f)
         {
             // If less than 1 degree, we are pointing at the target
@@ -144,9 +144,9 @@ public class ShipGunScript : MonoBehaviour
         }
 
         // Find the distances from the current rotation to the target rotation
-        float distanceNormal = Mathf.Abs(targetDegrees - currentDegrees);
-        float distanceAdjustedLeft = Mathf.Abs( (targetDegrees + 360) - currentDegrees);
-        float distanceAdjustedRight = Mathf.Abs( (targetDegrees - 360) - currentDegrees);
+        float distanceNormal = Mathf.Abs(currentDegrees - targetDegrees);
+        float distanceAdjustedLeft = Mathf.Abs( (currentDegrees + 360) - targetDegrees);
+        float distanceAdjustedRight = Mathf.Abs( (currentDegrees - 360) - targetDegrees);
 
         RotationDirection shortestDirection;
 
@@ -154,7 +154,7 @@ public class ShipGunScript : MonoBehaviour
         if (distanceNormal < distanceAdjustedLeft && distanceNormal < distanceAdjustedRight)
         {
             // Do normal calculation:
-            if (currentDegrees > targetDegrees)
+            if (targetDegrees > currentDegrees)
             {
                 // The target is to the left
                 shortestDirection = RotationDirection.Right;
@@ -180,6 +180,38 @@ public class ShipGunScript : MonoBehaviour
         // Check if the shortest direction is going to put us inside a no-rotate zone
         RotationDirection allowedDirection = shortestDirection;
 
+        // Find the 'rotation amount' between the current degrees and target degrees        
+        float rotationDistance = 0f;
+        if (shortestDirection == RotationDirection.Right)
+        {
+            if (currentDegrees < targetDegrees)
+            {
+                rotationDistance = targetDegrees - currentDegrees;
+            }
+            else
+            {
+                rotationDistance = (360f - currentDegrees) + targetDegrees;
+            }
+        }
+        else if (shortestDirection == RotationDirection.Left)
+        {
+            if (currentDegrees > targetDegrees)
+            {
+                rotationDistance = currentDegrees - targetDegrees;
+            }
+            else
+            {
+                rotationDistance = (360f - targetDegrees) + currentDegrees;
+            }
+        }
+
+        // Now that the rotation distance has been found, we can find the increment that each of our probes
+        // are going to advance by
+        int probeCount = 6;
+        float probeIncrement = rotationDistance / (float) probeCount;
+        bool foundBlock = false;
+
+        // Debug.Log($"Conducting {probeCount} probes with an increment of {probeIncrement}");
         foreach (GunRotationBlocker blocker in _rotationBlockers)
         {
             // Ignore no shoot zones
@@ -187,12 +219,55 @@ public class ShipGunScript : MonoBehaviour
             {
                 continue;
             }
-        
+
+            // For each rotation blocker, check if any of our probes fall within it:
+            for (int i = 0; i < probeCount; i++)
+            {
+                float increment;
+                if (allowedDirection == RotationDirection.Left)
+                {
+                    increment = -i * probeIncrement;
+                }
+                else
+                {
+                    increment = i * probeIncrement;
+                }
+
+                float probeDegrees = currentDegrees + increment;
+                if (probeDegrees >= 360f)
+                {
+                    probeDegrees -= 360f;
+                    // Keep witin 360 degree bounds
+                }
+
+                if (blocker.IsWithin(probeDegrees))
+                {
+                    Debug.Log($"Probe Hit at {probeDegrees}");
+                    // Flip direction
+                    foundBlock = true;
+                    if (allowedDirection == RotationDirection.Left)
+                    {
+                        allowedDirection = RotationDirection.Right;
+                    }
+                    else
+                    {
+                        allowedDirection = RotationDirection.Left;
+                    }
+
+                    break;
+                }
+            }  
+
+            // If we have found a block, break
+            if (foundBlock)
+            {
+                break;
+            }
             
         }
 
         
-
+        // Debug.Log($"Rotation Distance: current: {currentDegrees}, to: {targetDegrees}, distance: {rotationDistance}");
         return allowedDirection;        
     }
 
