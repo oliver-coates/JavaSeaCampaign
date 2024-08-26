@@ -1436,8 +1436,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc0a2027842b6ce4e8366b0c67c782da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weight: 2500
   _rudder: 0
-  _targetSpeed: 0.582
+  _targetSpeed: 1
   _engine: {fileID: 471897047}
 --- !u!114 &471897047
 MonoBehaviour:
@@ -1451,12 +1452,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2c434d20dc3b7145ada2da17417eb18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _velocity: 16.5
-  _engineSpeed: 0.5
-  _maxVelocity: 36.5
-  _engineAccelerationTime: 60
-  _engineForce: 10
-  _turnSpeed: 10
+  _velocity: 0
+  _engineSpeed: 0
+  _engines:
+  - {fileID: 11400000, guid: 461aa4652e0511a48b8e87d6abe487f3, type: 2}
+  - {fileID: 11400000, guid: 461aa4652e0511a48b8e87d6abe487f3, type: 2}
+  _strength: 0
+  _agility: 0
+  _horsepowerToWeightRatio: 0
+  _maxVelocity: 0
+  _engineAccelerationTime: 0
+  _engineForce: 0
+  _turnSpeed: 0
   _dragCurve:
     serializedVersion: 2
     m_Curve:

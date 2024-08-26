@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ShipInstance : BoardPiece
 {
-    
+    [Header("Stats:")]
+    public int weight = 0;
 
     [Header("Input:")]
     // The current state that this ships rudder is set to,
@@ -44,9 +45,10 @@ public class ShipInstance : BoardPiece
     }
 
 
-    [Header("Components:")]
+    [Header("Sub-Systems:")]
     [SerializeField] private EngineScript _engine;
-    // [SerializeField] private LineRenderer _lineRenderer;
+
+
 
     protected override void Initialise()
     {
