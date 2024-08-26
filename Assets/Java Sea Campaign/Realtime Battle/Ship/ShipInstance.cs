@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipInstance : MonoBehaviour
+public class ShipInstance : BoardPiece
 {
-
+    
 
     [Header("Input:")]
     // The current state that this ships rudder is set to,
@@ -20,7 +20,6 @@ public class ShipInstance : MonoBehaviour
         set
         {
             _rudder = value;
-            OnShipStatChanged();
         }
     }
 
@@ -41,54 +40,28 @@ public class ShipInstance : MonoBehaviour
         set
         {
             _targetSpeed = value;
-            OnShipStatChanged();
         }
     }
 
 
     [Header("Components:")]
     [SerializeField] private EngineScript _engine;
-    [SerializeField] private LineRenderer _lineRenderer;
+    // [SerializeField] private LineRenderer _lineRenderer;
 
-
-    private void Awake()
+    protected override void Initialise()
     {
-        GameMaster.onTurnEnd += OnTurnEnded;
     }
 
-    private void Update()
+
+    protected override void GameTick()
     {
-        if (GameMaster.turnUnderway)
-        {
-            _engine.TurnUpdate(Time.deltaTime);
-        }
+
     }
 
-    private void OnShipStatChanged()
+
+    protected override void UpdateTick()
     {
-        // Should be called whenever the target speed, rudder etc is changed.
-        RedrawTrajectory();
     }
 
-    private void OnTurnEnded()
-    {
-        RedrawTrajectory();
-    }
-
-    private void RedrawTrajectory()
-    {
-        _lineRenderer.positionCount = 100;
-        _lineRenderer.SetPositions(_engine.SimulateMovement());
-
-        float baseWidth = 0.05f;
-        float steerLerp = Mathf.Abs(rudder);
-
-        _lineRenderer.startWidth = baseWidth;
-        _lineRenderer.endWidth = Mathf.Lerp(baseWidth, 6f, steerLerp);
-
-        Color endColor = Color.Lerp(Color.black, Color.clear, steerLerp);
-
-        _lineRenderer.endColor = endColor;
-    }
-
+    
 }

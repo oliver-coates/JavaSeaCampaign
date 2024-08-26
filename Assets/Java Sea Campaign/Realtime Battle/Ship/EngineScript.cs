@@ -3,59 +3,101 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EngineScript : MonoBehaviour
+public class EngineScript : BoardPiece
 {
 
-    public ShipInstance ship;
+    private ShipInstance _ship;
 
-    [Header("Engine:")]
-    [SerializeField] private Engine _engine;
-    [HideInInspector] private Engine _simulatorEngine;
+    [Header("State:")]
+    // The velocity, in knots, of the ship
+    [SerializeField] private float _velocity;
+
+    // The speed that the engine is currently going.
+    [Range(0,1)] [SerializeField] private float _engineSpeed;
     
 
-    [Header("References:")]
-    private Transform _simulatorTransform;
-
-
-    private void Awake()
+    [Header("Settings:")]
+    [SerializeField] private float _maxVelocity;
+    [SerializeField] private float _engineAccelerationTime;
+    private float _engineAcceleration
     {
-        _simulatorTransform = new GameObject("Engine Simulator").transform;
-        _simulatorTransform.SetParent(transform);
-    
-        // _engine states should be set in inspector for now (rework this to use ship sheet later)
-        _engine.Setup(transform, this);
-        _simulatorEngine = new Engine(_engine, _simulatorTransform);
-    }
-
-    public void TurnUpdate(float timeStep)
-    {
-        _engine.ApplyForce(timeStep);
-    }
-
-    public Vector3[] SimulateMovement()
-    {
-        int steps = 100;
-        float timeStep = 5f/steps;
-
-        Vector3[] postionData = new Vector3[100];
-
-        // Ensure we are starting at the ships position and rotation
-        _simulatorTransform.position = transform.position;
-        _simulatorTransform.rotation = transform.rotation;
-
-        // Ensure that the simulator engines stats match the real engines stats:
-        _simulatorEngine.Sync(_engine);
-
-        for (int i = 0; i < steps; i++)
+        get
         {
-            // Record where we are
-            postionData[i] = _simulatorTransform.position;
-            postionData[i].y = 0.1f;
-        
-            // Call a turn update to move us forward
-            _simulatorEngine.ApplyForce(timeStep);
+            return 1f/_engineAccelerationTime;
         }
-    
-        return postionData;
     }
+    [SerializeField] private float _engineForce;
+    [SerializeField] private float _turnSpeed;
+
+    [SerializeField] private AnimationCurve _dragCurve;
+
+    protected override void Initialise()
+    {
+        _ship = GetComponent<ShipInstance>();
+        if (!_ship)
+        {
+            Debug.LogError($"No ship instance on ship engine");
+        }
+    }
+
+
+    protected override void GameTick()
+    {
+        ApplyForce();
+    }
+
+    
+    protected override void UpdateTick()
+    {
+        
+    }
+
+
+    private void ApplyForce()
+    {
+        float targetSpeed = _ship.targetSpeed;
+        float rudder = _ship.rudder;
+
+        // Accelerate the engine by engine acceleration amount:
+        float accelerationTuner = 1f;
+        if (_engineSpeed > targetSpeed)
+        {
+            // If we are decellerating, increase the speed at which this happens
+            accelerationTuner = 2.5f;
+        }
+        _engineSpeed = Mathf.MoveTowards(_engineSpeed, targetSpeed, Time.deltaTime * _engineAcceleration * accelerationTuner);
+
+        // Find how much velocity is to be gained this frame
+        float velocityGain = _engineSpeed * _engineForce * (1f - _dragCurve.Evaluate(_velocity / _maxVelocity));
+
+        // Add the engine speed onto veloicty
+        _velocity += velocityGain * Time.deltaTime;
+
+        // Move the ship forward by velocity
+        // Note 1 knot is 0.5144 m/s
+        transform.position += transform.forward * _velocity * 0.5144f * Time.deltaTime;
+
+        // When the target speed is low, apply up to a 15% per frame velocity loss
+        float decelerateFactor = (1 - _engineSpeed);
+        _velocity -= _velocity * 0.15f * Time.deltaTime * decelerateFactor;
+
+        // Rotate the ship by turn speed
+        float turnAmount = GetTurnAmount(rudder);
+        transform.Rotate(0, turnAmount * Time.deltaTime, 0);
+    }
+
+    private float GetTurnAmount(float rudder)
+    {
+        // How much the boat is turning at full speed
+        float turnBase = rudder * _turnSpeed; 
+
+        // Reduce the turn speed by the speed of the ship (0-1 range)
+        float speedAmount = (_velocity / _maxVelocity);
+
+        turnBase = turnBase * speedAmount;
+
+        return turnBase;
+    }
+
+
 }

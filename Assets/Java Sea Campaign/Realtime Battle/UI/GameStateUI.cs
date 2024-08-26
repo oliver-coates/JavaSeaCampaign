@@ -5,35 +5,33 @@ using UnityEngine.UI;
 
 public class GameStateUI : MonoBehaviour
 {
+    private const float VIGNETTE_FADE_TIME = 0.5f; 
+
+
+    [Header("UI Refererences:")]
     [SerializeField] private Image _vignette;
-    [SerializeField] private Image _turnTimeIndicator;
 
 
     private void Awake()
     {
         _vignette.CrossFadeAlpha(0, 0.01f, true);        
     
-        GameMaster.onTurnStart += TurnStart;
-        GameMaster.onTurnEnd += TurnEnd;
-    }
-
-    private void Update()
-    {
-        float lerp = GameMaster.turnTimer / GameMaster.TURN_TIME;
-        lerp = Mathf.Clamp(lerp, 0, 1);
-
-        _turnTimeIndicator.fillAmount = 1 - lerp;
+        GameMaster.OnTimePause += GamePause;
+        GameMaster.OnTimePlay += GamePlay;
+    
+        // The game starts paused
+        GamePause();
     }
 
 
-    private void TurnStart()
+
+    private void GamePlay()
     {
-        _vignette.CrossFadeAlpha(1, 0.5f, true);
+        _vignette.CrossFadeAlpha(0, VIGNETTE_FADE_TIME, true);
     }
 
-    private void TurnEnd()
+    private void GamePause()
     {
-        _vignette.CrossFadeAlpha(0, 0.5f, true);
-        _turnTimeIndicator.fillAmount = 0f;
+        _vignette.CrossFadeAlpha(1, VIGNETTE_FADE_TIME, true);
     }
 }

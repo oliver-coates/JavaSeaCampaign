@@ -5,62 +5,55 @@ using UnityEngine;
 
 public class GameMaster : MonoBehaviour
 {
-    public static event Action onTurnStart;
-    public static event Action onTurnEnd;
+    #region Game Event Callbacks
+    public static event Action OnBattleStart;
+    public static event Action OnBattleEnd;
+    public static event Action OnTimePause;
+    public static event Action OnTimePlay;
+    #endregion
 
-    private static GameMaster _instance;
-
-
-    public const float TURN_TIME = 5f;
-
-    [SerializeField] private float _turnTimer;
-    public static float turnTimer
+    [Header("Game State:")]
+    [SerializeField] private bool _gameUnderway;
+    public bool gameUnderway
     {
         get
         {
-            return _instance._turnTimer;
+            return _gameUnderway;
         }	
     }
 
-    [SerializeField] private bool _turnUnderway;
-    public static bool turnUnderway
-    {
-        get
-        {
-            return _instance._turnUnderway;
-        }	
-    }
+    [SerializeField] private List<BoardPiece> _boardPieces;
 
 
     private void Awake()
     {
-        _instance = this;
+        _boardPieces = new List<BoardPiece>();
+        BoardPiece.OnBoardPieceInitialised += InitialiseBoardPiece;
+    }
+
+    private void InitialiseBoardPiece(BoardPiece piece)
+    {
+        Debug.Log($"Recieved a: " + piece.GetType());
+        _boardPieces.Add(piece);
     }
 
     private void Update()
     {
         UpdateDebug();
-
-        _turnTimer -= Time.deltaTime;
-        _turnTimer = Mathf.Clamp(_turnTimer, 0, TURN_TIME);
-        if (_turnUnderway && _turnTimer == 0)
-        {
-            EndTurn();
-        }
     }
 
-    private void StartTurn()
+    private void PlayGame()
     {
-        _turnUnderway = true;
-        _turnTimer = TURN_TIME;
+        _gameUnderway = true;
 
-        onTurnStart?.Invoke();
+        OnTimePlay.Invoke();
     }
 
-    private void EndTurn()
+    private void PauseGame()
     {
-        _turnUnderway = false;
-        onTurnEnd?.Invoke();
+        _gameUnderway = false;
+
+        OnTimePause.Invoke();
     }
 
     #region Debug
@@ -76,7 +69,14 @@ public class GameMaster : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartTurn();            
+            if (_gameUnderway)
+            {
+                PauseGame();
+            }     
+            else
+            {
+                PlayGame();
+            }
         }
     }
     #endregion
