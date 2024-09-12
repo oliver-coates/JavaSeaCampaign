@@ -184,7 +184,7 @@ public static class SaveLoad
     /// </summary>
     /// <typeparam name="T"> Type of object to create.</typeparam>
     /// <returns> The created object</returns>
-    public static T InstantiateSerializedObject<T>() where T : SerializedObject
+    public static T InstantiateSerializedObject<T>(string name) where T : SerializedObject
     {
         if (_SerializedObjects == null)
         {
@@ -192,7 +192,8 @@ public static class SaveLoad
         }
 
         T NewObj = (T) ScriptableObject.CreateInstance(typeof(T));
-        
+        NewObj.name = name;
+
         NewObj.SetPersistentID(GetPersistentUID());
         NewObj.OnCreate();
 

@@ -73,7 +73,7 @@ public class SaveLoadDebugger : MonoBehaviour
         if (_debugCreateTestObject)
         {
             _debugCreateTestObject = false;
-            ExampleSerializedObject test = SaveLoad.InstantiateSerializedObject<ExampleSerializedObject>();
+            ExampleSerializedObject test = SaveLoad.InstantiateSerializedObject<ExampleSerializedObject>("Debug Object");
         }
 
         if (_debugForceLoad)
