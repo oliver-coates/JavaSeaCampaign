@@ -33,7 +33,7 @@ public class PlayerCharacterUIManager : MonoBehaviour
         SessionMaster.OnLoaded -= RefreshUI;
         OnPlayerCharactersUpdated -= RefreshUI;
     }
-
+    
     public void CreateNewPlayerCharacter()
     {
         PlayerCharacter newPlayerCharacter = SaveLoad.InstantiateSerializedObject<PlayerCharacter>("Player Character");
@@ -52,9 +52,6 @@ public class PlayerCharacterUIManager : MonoBehaviour
         foreach (PlayerCharacter character in SessionMaster.playerCharacters)
         {
             PlayerCharacterUI createdUI = Instantiate(_playerCharacterUIPrefab, _contentZone.transform).GetComponent<PlayerCharacterUI>();
-
-            // createdUI.transform.localScale = Vector3.one;
-            // createdUI.transform.SetParent(transform);
 
             createdUI.AssignToPlayerCharacter(character); 
             _playerCharacterUIs.Add(createdUI);

@@ -17,11 +17,11 @@ public static class ContentDistributor
     {
         int numberOfContent = contents.Count;
 
-        float totalSpace = 0f;
 
         float yHeight = within.rect.max.y - within.rect.min.y;
         float xWidth = within.rect.max.x - within.rect.min.x;
 
+        float totalSpace = 0f;
         if (direction == Direction.TopToBottom)
         {
             totalSpace = yHeight;
@@ -31,26 +31,39 @@ public static class ContentDistributor
             totalSpace = xWidth;
         }
 
-        float spaceBetweenContent = totalSpace / (numberOfContent - 1.0f);
 
-        for (int i = 0; i < numberOfContent; i++)
+        #region Only one content
+        if (numberOfContent == 1)
         {
-            RectTransform content = contents[i];
-
-            float xPos = 0f;
-            float yPos = 0f;
-
-            if (direction == Direction.TopToBottom)
-            {
-                yPos = - (i * spaceBetweenContent);
-            }
-            else if (direction == Direction.LeftToRight)
-            {
-                xPos = - (i * spaceBetweenContent);
-            }
-
-            content.anchoredPosition = new Vector2(xPos, yPos);
+            RectTransform content = contents[0];
+            content.anchoredPosition = new Vector2(0, 0);
         }
+        #endregion
+        #region Multiple Contents
+        else
+        {
+            float spaceBetweenContent = totalSpace / (numberOfContent - 1.0f);
+            for (int i = 0; i < numberOfContent; i++)
+            {
+                RectTransform content = contents[i];
+
+                float xPos = 0f;
+                float yPos = 0f;
+
+                if (direction == Direction.TopToBottom)
+                {
+                    yPos = (-yHeight/2f) + (i * spaceBetweenContent);
+                }
+                else if (direction == Direction.LeftToRight)
+                {
+                    xPos = (-xWidth/2f) + (i * spaceBetweenContent);
+                }
+
+                content.anchoredPosition = new Vector2(xPos, yPos);
+            }
+            
+        }
+        #endregion
 
     }
 
