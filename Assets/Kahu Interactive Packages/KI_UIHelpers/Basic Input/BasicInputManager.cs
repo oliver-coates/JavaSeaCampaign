@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 namespace KahuInteractive.UIHelpers
@@ -30,10 +31,14 @@ public class BasicInputManager : MonoBehaviour
     private void Show()
     {
         _inputField.text = "";
-
+       
         _canvasGroup.alpha = 1f;
         _canvasGroup.blocksRaycasts = true;
         _canvasGroup.interactable = true;
+
+        // Force selection of this input field:
+        EventSystem.current.SetSelectedGameObject(_inputField.gameObject, null);
+        _inputField.OnPointerClick(new PointerEventData(EventSystem.current));
     }
 
     private void Hide()
