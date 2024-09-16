@@ -15,7 +15,7 @@ public class PlayerCharacter : SerializedObject
     [SerializeField] public string imagePath = "";
     public Sprite image = null; // Not serialized
     
-    [SerializeField] public bool isUnconcious = false;
+    [SerializeField] public bool isDisabled = false;
 
     [Header("Task:")]
     [SerializeField] public string currentTask = "No Task";

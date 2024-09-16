@@ -22,7 +22,7 @@ public class PlayerCharacterUIManager : MonoBehaviour
 
     private void Awake()
     {
-        SessionMaster.OnLoaded += RefreshUI;
+        SessionMaster.OnPlayerCharactersChanged += RefreshUI;
         OnPlayerCharactersUpdated += RefreshUI;
 
         _playerCharacterUIs = new List<PlayerCharacterUI>();
@@ -30,7 +30,7 @@ public class PlayerCharacterUIManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        SessionMaster.OnLoaded -= RefreshUI;
+        SessionMaster.OnPlayerCharactersChanged -= RefreshUI;
         OnPlayerCharactersUpdated -= RefreshUI;
     }
     

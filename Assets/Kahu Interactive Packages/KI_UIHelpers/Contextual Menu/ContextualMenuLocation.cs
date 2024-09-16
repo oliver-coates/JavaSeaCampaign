@@ -12,15 +12,9 @@ public class ContextualMenuLocation : MonoBehaviour, IPointerClickHandler
 {
     public static event Action<ContextualMenu.Option[]> onMenuOpened;
 
-    private bool _initialised;
+    private bool _initialised = false;
     private ContextualMenu.Option[] _options;
 
-
-
-    private void Awake()
-    {
-        _initialised = false;
-    }
 
     public void Initialise(ContextualMenu.Option[] options)
     {

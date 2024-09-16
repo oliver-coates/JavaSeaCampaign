@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using KahuInteractive.HassleFreeSaveLoad;
 using KahuInteractive.UIHelpers;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class PlayerCharacterUI : MonoBehaviour
     [SerializeField] private ContextualMenuLocation _contextualMenu;
 
 
+    [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private TextMeshProUGUI _taskText;
     [SerializeField] private Image _portraitImage;
@@ -20,15 +22,64 @@ public class PlayerCharacterUI : MonoBehaviour
     private PlayerCharacter _playerCharacter;
 
 
+    #region Unity Methods
+    private void Start()
+    {
+        SetupContextualMenu();
+    }
+
+    private void Update()
+    {
+        if (_playerCharacter == null)
+        {
+            return;
+        }
+
+        UpdateCompletionBar();
+    }
+    #endregion
+
     public void AssignToPlayerCharacter(PlayerCharacter playerCharacter)
     {
         _playerCharacter = playerCharacter;
 
-        _nameText.text = playerCharacter.name;
-        // _portraitImage.sprite = playerCharacter.image;
-
+        RefreshUI();
         UpdateCompletionBar();
+    }
 
+    #region Button callbacks:
+    private void Rename()
+    {
+        Debug.Log($"Rename");
+    }
+
+    private void Remove()
+    {
+        SessionMaster.RemovePlayerCharacter(_playerCharacter);
+    }
+
+    private void SetDisabled()
+    {
+        _playerCharacter.isDisabled = !_playerCharacter.isDisabled;        
+
+        RefreshUI();
+    }
+
+    private void SetTask()
+    {
+        Debug.Log($"Task");
+    }
+
+    private void SetIdle()
+    {
+        Debug.Log($"Idle");
+    }
+    #endregion
+
+    #region UI
+
+    private void SetupContextualMenu()
+    {
         // Set up the contextual menu:
         ContextualMenu.Option[] options = new ContextualMenu.Option[5];
 
@@ -42,16 +93,23 @@ public class PlayerCharacterUI : MonoBehaviour
         _contextualMenu.Initialise(options);
     }
 
-    private void Update()
+    private void RefreshUI()
     {
-        if (_playerCharacter == null)
+        _nameText.text = _playerCharacter.characterName;
+        // _portraitImage.sprite = _playerCharacter.image;
+
+        if (_playerCharacter.isDisabled)
         {
-            return;
+            _canvasGroup.alpha = 0.25f;
+            _taskText.text = "";
         }
-
-        UpdateCompletionBar();
+        else
+        {
+            _canvasGroup.alpha = 1f;
+            _taskText.text = "Idle";
+        }
     }
-
+    
     private void UpdateCompletionBar()
     {
         // Set fill amount - preventing divide by 0
@@ -65,28 +123,7 @@ public class PlayerCharacterUI : MonoBehaviour
         }
     }
 
-    private void Rename()
-    {
-        Debug.Log($"Rename");
-    }
 
-    private void Remove()
-    {
-        Debug.Log($"Remove");
-    }
-
-    private void SetDisabled()
-    {
-        Debug.Log($"Unconcious");
-    }
-
-    private void SetTask()
-    {
-        Debug.Log($"Task");
-    }
-
-    private void SetIdle()
-    {
-        Debug.Log($"Idle");
-    }
+    #endregion
 }
+

@@ -7,6 +7,7 @@ using UnityEngine;
 public static class SessionMaster
 {
     public static event Action OnLoaded;
+    public static event Action OnPlayerCharactersChanged;
 
     public static List<PlayerCharacter> playerCharacters;
 
@@ -28,7 +29,16 @@ public static class SessionMaster
             if (loadedObject is PlayerCharacter)
             {
                 playerCharacters.Add((PlayerCharacter) loadedObject);
+                OnPlayerCharactersChanged?.Invoke();
             }
         } 
+    }
+
+    public static void RemovePlayerCharacter(PlayerCharacter playerCharacter)
+    {
+        playerCharacters.Remove(playerCharacter);
+        SaveLoad.UntrackSerializedObject(playerCharacter);
+
+        OnPlayerCharactersChanged?.Invoke();
     }
 }
