@@ -25,6 +25,8 @@ public class ContextualMenu : MonoBehaviour
     private void Awake()
     {
         ContextualMenuLocation.onMenuOpened += OpenMenu;
+        ContextualMenuButton.onClicked += CloseMenu;
+
         _buttonObjects = new GameObject[0];
         CloseMenu();
     }
@@ -32,6 +34,7 @@ public class ContextualMenu : MonoBehaviour
     private void OnDestroy()
     {
         ContextualMenuLocation.onMenuOpened -= OpenMenu;
+        ContextualMenuButton.onClicked -= CloseMenu;
     }
 
     public void OpenMenu(Option[] options)

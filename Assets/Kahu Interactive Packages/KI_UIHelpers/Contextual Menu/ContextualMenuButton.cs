@@ -10,6 +10,8 @@ namespace KahuInteractive.UIHelpers
 
 public class ContextualMenuButton : MonoBehaviour
 {
+    public static event Action onClicked;
+
     [SerializeField] private RectTransform _rectTransform;
     [SerializeField] private TextMeshProUGUI _text;
 
@@ -26,6 +28,8 @@ public class ContextualMenuButton : MonoBehaviour
     public void Clicked()
     {
         _option.OnClick();
+
+        onClicked?.Invoke();
     }
 
 }

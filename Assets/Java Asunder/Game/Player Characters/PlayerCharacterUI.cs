@@ -10,6 +10,8 @@ using UnityEngine.UI;
 public class PlayerCharacterUI : MonoBehaviour
 {
 
+    private static event Action onPlayerCharacterChanged;
+
     [SerializeField] private ContextualMenuLocation _contextualMenu;
 
 
@@ -26,6 +28,12 @@ public class PlayerCharacterUI : MonoBehaviour
     private void Start()
     {
         SetupContextualMenu();
+        onPlayerCharacterChanged += RefreshUI;
+    }
+
+    private void OnDestroy()
+    {
+        onPlayerCharacterChanged -= RefreshUI;
     }
 
     private void Update()
@@ -50,7 +58,14 @@ public class PlayerCharacterUI : MonoBehaviour
     #region Button callbacks:
     private void Rename()
     {
-        Debug.Log($"Rename");
+        BasicInputManager.RequestInput(new BasicInputManager.InputRequest("Rename Character", Rename));
+    }
+
+    private void Rename(string newName)
+    {
+        _playerCharacter.characterName = newName;
+
+        onPlayerCharacterChanged?.Invoke();
     }
 
     private void Remove()
@@ -62,7 +77,7 @@ public class PlayerCharacterUI : MonoBehaviour
     {
         _playerCharacter.isDisabled = !_playerCharacter.isDisabled;        
 
-        RefreshUI();
+        onPlayerCharacterChanged?.Invoke();
     }
 
     private void SetTask()
