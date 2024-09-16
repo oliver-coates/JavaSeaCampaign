@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 5339118278422258557}
   - component: {fileID: 7782814959853079863}
   - component: {fileID: 5380492171593445755}
+  - component: {fileID: 1474218190118403227}
   m_Layer: 5
   m_Name: Player Character UI
   m_TagString: Untagged
@@ -242,10 +243,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 234bf726fa6ed7448baf663a69c76337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _contextualMenu: {fileID: 1474218190118403227}
   _nameText: {fileID: 4565625533898304486}
   _taskText: {fileID: 4975918517946691247}
   _portraitImage: {fileID: 4700385706059191786}
   _completionBarImage: {fileID: 7927486417918603569}
+--- !u!114 &1474218190118403227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4227116148008811372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c19bbda76aeaa4e8547a8c45f304c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4583035353096184772
 GameObject:
   m_ObjectHideFlags: 0
