@@ -8,7 +8,7 @@ namespace Ships
 
 
 
-public class Component : ScriptableObject
+public class ShipComponent : ScriptableObject
 {
     public Nation sourceNation;
 

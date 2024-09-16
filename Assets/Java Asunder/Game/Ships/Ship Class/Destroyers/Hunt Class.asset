@@ -10,13 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b064f2cc5f1d55d4e80c59dabb4e1757, type: 3}
-  m_Name: (1) Qi Lao
+  m_Name: Hunt Class
   m_EditorClassIdentifier: 
-  className: Qi Lao
-  shipType: {fileID: 11400000, guid: 83a0b04aadbdffd4ebddd64c65da8482, type: 2}
-  nation: {fileID: 11400000, guid: f0585e80012e79849bba53f73d9fd4fb, type: 2}
-  baseAgility: 0
-  baseArmour: 0
-  baseCargo: 0
+  className: Hunt
+  shipType: {fileID: 11400000, guid: 49ebc7c39ef313840ac873ba26badd47, type: 2}
+  manufacturerNation: {fileID: 11400000, guid: e4e4966f2da0af447862c514c81b92a5, type: 2}
+  displacement: 1550
+  value: 15000
+  baseAgility: 5
+  baseArmour: 1
+  baseCargo: 10
   sections:
-  - sectionName: Unnamed section
+  - sectionName: Fore
+  - sectionName: Aft

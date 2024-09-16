@@ -6,7 +6,7 @@ namespace Ships
 {
 
 
-[CreateAssetMenu(fileName = "UnnamedShip", menuName = "Ships/Ship", order = 1)]
+[CreateAssetMenu(fileName = "New Ship", menuName = "Java Asunder/Ships/Ship", order = 1)]
 
 public class Ship : ScriptableObject
 {
@@ -15,8 +15,7 @@ public class Ship : ScriptableObject
 
     [Header("Decorative:")]
     public string shipName;
-    public float displacement;
-    public float value;
+    
 
     public string GetFullName()
     {
