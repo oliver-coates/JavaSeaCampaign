@@ -5,10 +5,11 @@ using UnityEngine;
 namespace Ships
 {
 
-[System.Serializable]
-public class ShipSection
+public class ShipSection : MonoBehaviour
 {
     public string sectionName = "Unnamed section";
+
+
 }
 
 }

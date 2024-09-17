@@ -33,7 +33,6 @@ public class GameMaster : MonoBehaviour
 
     private void InitialiseBoardPiece(BoardPiece piece)
     {
-        Debug.Log($"Recieved a: " + piece.GetType());
         _boardPieces.Add(piece);
     }
 

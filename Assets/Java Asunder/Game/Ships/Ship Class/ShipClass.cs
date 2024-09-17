@@ -6,9 +6,7 @@ using UnityEditor;
 namespace Ships
 {
 
-
-[CreateAssetMenu(fileName = "Unnamed Class", menuName = "Java Asunder/Ships/Ship Class", order = 1)]
-public class ShipClass : ScriptableObject
+public class ShipClass : MonoBehaviour
 {
     public string className;
     public ShipType shipType;
@@ -23,6 +21,7 @@ public class ShipClass : ScriptableObject
     public int baseCargo;
 
     [Header("Section:")]
+    public ComponentSlot armourSlot;
     public ShipSection[] sections;
 
 }

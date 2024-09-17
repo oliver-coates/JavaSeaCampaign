@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 7195041851315061154}
   - component: {fileID: 7382370654369917384}
   m_Layer: 0
-  m_Name: US 5' 38_ Dual Purpose
+  m_Name: Ship Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
