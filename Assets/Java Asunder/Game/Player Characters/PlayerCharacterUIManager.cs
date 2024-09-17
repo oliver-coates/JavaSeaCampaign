@@ -7,7 +7,6 @@ using System;
 
 public class PlayerCharacterUIManager : MonoBehaviour
 {
-    private static event Action OnPlayerCharactersUpdated;
 
 
     [Header("Settings:")]
@@ -23,7 +22,6 @@ public class PlayerCharacterUIManager : MonoBehaviour
     private void Awake()
     {
         SessionMaster.OnPlayerCharactersChanged += RefreshUI;
-        OnPlayerCharactersUpdated += RefreshUI;
 
         _playerCharacterUIs = new List<PlayerCharacterUI>();
     }
@@ -31,16 +29,12 @@ public class PlayerCharacterUIManager : MonoBehaviour
     private void OnDestroy()
     {
         SessionMaster.OnPlayerCharactersChanged -= RefreshUI;
-        OnPlayerCharactersUpdated -= RefreshUI;
     }
     
     public void CreateNewPlayerCharacter()
     {
         PlayerCharacter newPlayerCharacter = SaveLoad.InstantiateSerializedObject<PlayerCharacter>("Player Character");
-
-        SessionMaster.playerCharacters.Add(newPlayerCharacter);
-
-        OnPlayerCharactersUpdated?.Invoke();
+        SessionMaster.AddPlayerCharacter(newPlayerCharacter);
     }
 
     private void RefreshUI()

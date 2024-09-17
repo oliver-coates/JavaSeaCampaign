@@ -2,19 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using KahuInteractive.HassleFreeSaveLoad;
+using Ships;
 using UnityEngine;
 
 public static class SessionMaster
 {
     public static event Action OnLoaded;
     public static event Action OnPlayerCharactersChanged;
+    public static event Action OnShipsChanged;
 
     public static List<PlayerCharacter> playerCharacters;
+    public static List<Ship> ships;
+
 
     public static void Initialise()
     {
         playerCharacters = new List<PlayerCharacter>();
     
+        ObjectRequestHandler.Initialise();
         LoadDataFromSaveFile();
     
         OnLoaded?.Invoke();
@@ -28,10 +33,21 @@ public static class SessionMaster
         {
             if (loadedObject is PlayerCharacter)
             {
-                playerCharacters.Add((PlayerCharacter) loadedObject);
-                OnPlayerCharactersChanged?.Invoke();
+                AddPlayerCharacter((PlayerCharacter) loadedObject);
+            }
+            else if (loadedObject is Ship)
+            {
+                AddShip((Ship) loadedObject);
             }
         } 
+    }
+
+    #region Player Characters
+    public static void AddPlayerCharacter(PlayerCharacter playerCharacter)
+    {
+        playerCharacters.Add(playerCharacter);
+
+        OnPlayerCharactersChanged?.Invoke();
     }
 
     public static void RemovePlayerCharacter(PlayerCharacter playerCharacter)
@@ -41,4 +57,26 @@ public static class SessionMaster
 
         OnPlayerCharactersChanged?.Invoke();
     }
+    #endregion
+
+    #region Ships
+
+    public static void AddShip(Ship toAdd)
+    {
+        ships.Add(toAdd);
+
+        OnShipsChanged?.Invoke();
+    }
+
+    public static void RemoveShip(Ship toRemove)
+    {
+        ships.Remove(toRemove);
+        SaveLoad.UntrackSerializedObject(toRemove);
+
+        OnShipsChanged?.Invoke();
+    }
+
+    #endregion
+
+
 }
