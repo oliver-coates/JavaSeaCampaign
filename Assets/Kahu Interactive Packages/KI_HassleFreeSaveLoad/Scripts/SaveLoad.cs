@@ -9,6 +9,8 @@ namespace KahuInteractive.HassleFreeSaveLoad
 
 public static class SaveLoad
 {
+    private const int MAXIMUM_IDS = 250000;
+
     public static event Action<string> OnSaveFinished;
     public static event Action<string> OnLoadFinished;
     public static event Action OnScriptableObjectListChanged;
@@ -226,20 +228,31 @@ public static class SaveLoad
 
     private static int GetPersistentUID()
     {
-        int i;
-        for (i = 0; i < _PersistentIDDictionary.Count; i++)
+        int possibleID = 0;
+
+        while (possibleID < MAXIMUM_IDS)
         {
-            // Check if a number is not in use
-            if (_PersistentIDDictionary[i] == false)
+            if (_PersistentIDDictionary.ContainsKey(possibleID))
             {
-                _PersistentIDDictionary[i] = true;
-                return i;
+                // If an ID is already in the dictionary, check if it is in use
+                if (_PersistentIDDictionary[possibleID] == false)
+                {
+                    _PersistentIDDictionary[possibleID] = true;
+                    return possibleID;
+                }
             }
+            else
+            {
+                // If no unused ID could be found, add a new one
+                _PersistentIDDictionary.Add(possibleID, true);
+                return possibleID;
+            }
+
+            possibleID ++;
         }
 
-        // If no unused ID could be found, add a new one
-        _PersistentIDDictionary.Add(i, true);
-        return i;
+        Debug.LogError($"Ran out of Persistent IDs!");
+        return -1;
     }
 
     #endregion

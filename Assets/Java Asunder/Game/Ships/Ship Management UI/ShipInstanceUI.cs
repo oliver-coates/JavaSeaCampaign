@@ -26,7 +26,8 @@ public class ShipInstanceUI : MonoBehaviour
     {
         _nameText.text = _ship.GetFullName();
 
-        _descriptionText.text = $"{_ship.nation.nationNameDesc} {_ship.shipClass.shipType.typeName}";
+        _descriptionText.text = $"NATION TYPE";
+        // _descriptionText.text = $"{_ship.nation.nationNameDesc} {_ship.shipClass.shipType.typeName}";
     }
 
 

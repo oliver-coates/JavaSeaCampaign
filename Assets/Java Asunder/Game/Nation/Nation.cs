@@ -5,6 +5,7 @@ using UnityEngine;
 namespace Ships
 {
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "New Nation", menuName = "Java Asunder/Nations/New Nation", order = 1)]
 public class Nation : ScriptableObject
 {

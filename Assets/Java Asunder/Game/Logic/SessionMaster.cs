@@ -18,6 +18,7 @@ public static class SessionMaster
     public static void Initialise()
     {
         playerCharacters = new List<PlayerCharacter>();
+        ships = new List<Ship>();
     
         ObjectRequestHandler.Initialise();
         LoadDataFromSaveFile();
