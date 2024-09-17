@@ -10,18 +10,29 @@ namespace KahuInteractive.UIHelpers
 {
 
 
-public class BasicSelectionManager : MonoBehaviour
+public class BasicSelection : MonoBehaviour
 {
 
-    private static BasicSelectionManager _Instance;
+    private static BasicSelection _Instance;
+
+    [SerializeField] private GameObject _categoryUI;
+    private List<SelectionCategoryUI> _selectionCategories;
 
     [Header("UI References:")]
     [SerializeField] private CanvasGroup _canvasGroup;
 
     private void Awake()
     {
+        SelectionOptionUI.onClickedAny += Hide;
+
+        _selectionCategories = new List<SelectionCategoryUI>();
         _Instance = this;
         Hide();
+    }
+
+    private void OnDestroy()
+    {
+        SelectionOptionUI.onClickedAny -= Hide;
     }
 
     private void Show()
@@ -37,11 +48,18 @@ public class BasicSelectionManager : MonoBehaviour
         _canvasGroup.alpha = 0f;
         _canvasGroup.blocksRaycasts = false;
         _canvasGroup.interactable = false;
+
+        foreach (SelectionCategoryUI categoryUI in _selectionCategories)
+        {
+            Destroy(categoryUI.gameObject);
+        }
+        _selectionCategories = new List<SelectionCategoryUI>();
     }
 
-    public static void RequestSelection<T>(SelectionCategory<T>[] categories, Action<T> onFulfilled)
+    public static void RequestSelection<T>(Category<T>[] categories, Action<T> onChosen)
     {    
-        foreach (SelectionCategory<T> category in categories)
+        int categoryIndex = 0;
+        foreach (Category<T> category in categories)
         {
             if (category.options.Length == 0)
             {
@@ -49,39 +67,52 @@ public class BasicSelectionManager : MonoBehaviour
             }
 
             // Create Category divider
+            SelectionCategoryUI categoryUI = Instantiate(_Instance._categoryUI, _Instance.transform).GetComponent<SelectionCategoryUI>();
+            _Instance._selectionCategories.Add(categoryUI);
 
-            foreach (SelectionOption<T> option in category.options)
-            {
-                // Create option button
-                Debug.Log($"Creating option {option.displayText} under category {category.categoryName}");
-            }
+            // Position it
+            Vector2 pos = new Vector2(100 + (350 * categoryIndex), 0);
+            categoryUI.rectTransform.anchoredPosition = pos;
+
+            // Draw the category options
+            categoryUI.RepresentCategory(category, onChosen);
+
+            categoryIndex++;
         }
 
         _Instance.Show();
     }
 
 
-    public struct SelectionCategory<T>
+    public struct Category<T>
     {
         public string categoryName;
-        public SelectionOption<T>[] options;
+        public Option<T>[] options;
 
-        public SelectionCategory(string name, SelectionOption<T>[] options)
+        public Category(string name, Option<T>[] options)
         {
             categoryName = name;
             this.options = options;
         }
     }
 
-    public struct SelectionOption<T>
+    public struct Option<T>
     {
         public T value;
         public string displayText;
 
-        public SelectionOption(string displayText, T value)
+        public Action<T> onChosen;
+
+        public Option(string displayText, T value)
         {
             this.displayText = displayText;
             this.value = value;
+            onChosen = null;
+        }
+
+        public void Chosen()
+        {
+            onChosen?.Invoke(value);
         }
     }
 

@@ -8,7 +8,7 @@ using KahuInteractive.UIHelpers;
 public static class ObjectRequestHandler
 {
     
-    private static BasicSelectionManager.SelectionCategory<ShipClassType>[] _shipTypeCategories;
+    private static BasicSelection.Category<ShipClassType>[] _shipTypeCategories;
 
     public static void Initialise()
     {
@@ -17,7 +17,7 @@ public static class ObjectRequestHandler
 
     private static void AssembleShipTypesIntoCategories()
     {
-        _shipTypeCategories = new BasicSelectionManager.SelectionCategory<ShipClassType>[2];
+        _shipTypeCategories = new BasicSelection.Category<ShipClassType>[2];
         
         int i = 0;
 
@@ -25,31 +25,31 @@ public static class ObjectRequestHandler
 
         #region Destroyers
         ShipClassType[] destroyerTypes = Resources.LoadAll<ShipClassType>("Ship Classes/Destroyers");
-        BasicSelectionManager.SelectionOption<ShipClassType>[] destroyerOptions = new BasicSelectionManager.SelectionOption<ShipClassType>[destroyerTypes.Length]; 
+        BasicSelection.Option<ShipClassType>[] destroyerOptions = new BasicSelection.Option<ShipClassType>[destroyerTypes.Length]; 
         i = 0;
         foreach (ShipClassType destroyerType in destroyerTypes)
         {
-            destroyerOptions[i] = new BasicSelectionManager.SelectionOption<ShipClassType>(destroyerType.name, destroyerType);
+            destroyerOptions[i] = new BasicSelection.Option<ShipClassType>(destroyerType.name, destroyerType);
             
             i++;
         }
 
-        BasicSelectionManager.SelectionCategory<ShipClassType> destroyerCategory = new BasicSelectionManager.SelectionCategory<ShipClassType>("Destroyers", destroyerOptions);
+        BasicSelection.Category<ShipClassType> destroyerCategory = new BasicSelection.Category<ShipClassType>("Destroyers", destroyerOptions);
         _shipTypeCategories[0] = destroyerCategory;
         #endregion
 
         #region Freighter
         ShipClassType[] freighterTypes = Resources.LoadAll<ShipClassType>("Ship Classes/Freighters");
-        BasicSelectionManager.SelectionOption<ShipClassType>[] freighterOptions = new BasicSelectionManager.SelectionOption<ShipClassType>[freighterTypes.Length]; 
+        BasicSelection.Option<ShipClassType>[] freighterOptions = new BasicSelection.Option<ShipClassType>[freighterTypes.Length]; 
         i = 0;
         foreach (ShipClassType freighterType in freighterTypes)
         {
-            freighterOptions[i] = new BasicSelectionManager.SelectionOption<ShipClassType>(freighterType.name, freighterType);
+            freighterOptions[i] = new BasicSelection.Option<ShipClassType>(freighterType.name, freighterType);
             
             i++;
         }
 
-        BasicSelectionManager.SelectionCategory<ShipClassType> freighterCategory = new BasicSelectionManager.SelectionCategory<ShipClassType>("Freighters", freighterOptions);
+        BasicSelection.Category<ShipClassType> freighterCategory = new BasicSelection.Category<ShipClassType>("Freighters", freighterOptions);
         _shipTypeCategories[1] = freighterCategory;
         #endregion
     }
@@ -57,6 +57,6 @@ public static class ObjectRequestHandler
 
     public static void RequestShipClass(Action<ShipClassType> onFulfilled)
     {
-        BasicSelectionManager.RequestSelection(_shipTypeCategories, onFulfilled);
+        BasicSelection.RequestSelection(_shipTypeCategories, onFulfilled);
     }
 }
