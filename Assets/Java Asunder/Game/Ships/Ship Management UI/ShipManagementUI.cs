@@ -11,6 +11,9 @@ public class ShipManagementUI : MonoBehaviour
 
     [SerializeField] private RectTransform _contentZoneRectTransform;
 
+    // Move this to some global settings file later:
+    [SerializeField] private Nation _defaultNation;
+
     private void Awake()
     {
         _shipUIs = new List<ShipInstanceUI>();
@@ -51,10 +54,13 @@ public class ShipManagementUI : MonoBehaviour
 
     public void CreateNewShip(ShipClassType newShipClass)
     {
-        Debug.Log($"Creating new ship of type: {newShipClass.name}");
+        // Debug.Log($"Creating new ship of type: {newShipClass.name}");
 
         // Create a new ship from provided type
         Ship newShip = SaveLoad.InstantiateSerializedObject<Ship>("Ship In Play");
+
+        newShip.Initialise(newShipClass, _defaultNation);
+
         SessionMaster.AddShip(newShip);
     }
 }
