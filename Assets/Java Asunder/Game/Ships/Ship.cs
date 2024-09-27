@@ -10,6 +10,10 @@ namespace Ships
 [Serializable]
 public class Ship : SerializedObject
 {
+    // Called when any value changes on this here ship:
+    public event Action OnChange;
+    public event Action OnDeath;
+
     private const string DEFAULT_NAME  = "Unnnamed Ship";
 
     [SerializeField] private ShipClassType _shipClass;
@@ -32,15 +36,29 @@ public class Ship : SerializedObject
 
 
     [Header("Decorative:")]
-    public string shipName;
+    [SerializeField] private string _shipName;
+    public string shipName
+    {
+        get
+        {
+            return _shipName;
+        }	
+    }
 
     public void Initialise(ShipClassType shipClass, Nation shipNation)
     {
         _shipClass = shipClass;
         _nation = shipNation;
 
-        shipName = DEFAULT_NAME;
+        _shipName = DEFAULT_NAME;
+
+        OnChange?.Invoke();
     }    
+
+    private void OnDestroy()
+    {
+        OnDeath?.Invoke();
+    }
 
     public string GetFullName()
     {
@@ -53,6 +71,16 @@ public class Ship : SerializedObject
             return shipName;
         }
     }
+
+    public void Rename(string newName)
+    {
+        _shipName = newName;
+
+        OnChange?.Invoke();
+    }
+
+
 }
+
 
 }

@@ -73,6 +73,8 @@ public static class SessionMaster
     {
         ships.Remove(toRemove);
         SaveLoad.UntrackSerializedObject(toRemove);
+        
+        GameObject.Destroy(toRemove);
 
         OnShipsChanged?.Invoke();
     }
