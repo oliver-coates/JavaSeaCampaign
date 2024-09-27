@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ships;
 using KahuInteractive.HassleFreeSaveLoad;
+using System;
 
 public class ShipManagementUI : MonoBehaviour
 {
     [SerializeField] private GameObject _UIPrefab;
-    private List<ShipInstanceUI> _shipUIs;
+    [SerializeField] private List<ShipInstanceUI> _shipUIs;
 
     [SerializeField] private RectTransform _contentZoneRectTransform;
 
@@ -17,33 +18,52 @@ public class ShipManagementUI : MonoBehaviour
     private void Awake()
     {
         _shipUIs = new List<ShipInstanceUI>();
-        SessionMaster.OnShipsChanged += DrawShipUI;
+        SessionMaster.OnShipCountChanged += DrawShipUI;
     }
 
     private void OnDestroy()
     {
-        SessionMaster.OnShipsChanged -= DrawShipUI;
+        SessionMaster.OnShipCountChanged -= DrawShipUI;
     } 
 
     private void DrawShipUI()
     {
-        foreach (ShipInstanceUI shipUI in _shipUIs)
-        {
-            Destroy(shipUI.gameObject);
-        }
-        _shipUIs = new List<ShipInstanceUI>();
-
         int shipUIIndex = 0;
         foreach (Ship ship in SessionMaster.ships)
         {
-            ShipInstanceUI shipUI = Instantiate(_UIPrefab, _contentZoneRectTransform.transform).GetComponent<ShipInstanceUI>();
-
+            ShipInstanceUI shipUI;
+            if (_shipUIs.Count > shipUIIndex)
+            {
+                // We already have a ship UI we can reuse:
+                shipUI = _shipUIs[shipUIIndex];
+            }
+            else
+            {
+                // Create a new one
+                shipUI = Instantiate(_UIPrefab, _contentZoneRectTransform.transform).GetComponent<ShipInstanceUI>();
+                _shipUIs.Add(shipUI);
+            }
+     
+            // Will ignore if already assigned
             shipUI.AssignToShip(ship);
 
-            Vector2 pos = new Vector2(0, -40 * (shipUIIndex * 70));
+            Vector2 pos = new Vector2(0, shipUIIndex * -70);
             shipUI.rectTransform.anchoredPosition = pos;
 
             shipUIIndex++;
+        }
+
+
+        // Cull any extra UI elements
+        int extraUIElements = _shipUIs.Count - SessionMaster.ships.Count;
+        extraUIElements = Math.Clamp(extraUIElements, 0, 100); 
+
+        for (int toDeleteIndex = 0; toDeleteIndex < extraUIElements; toDeleteIndex++)
+        {
+            ShipInstanceUI toDelete = _shipUIs[shipUIIndex];
+            _shipUIs.RemoveAt(shipUIIndex);
+
+            Destroy(toDelete.gameObject);
         }
     }
 

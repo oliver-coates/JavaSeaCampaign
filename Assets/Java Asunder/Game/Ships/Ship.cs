@@ -12,7 +12,6 @@ public class Ship : SerializedObject
 {
     // Called when any value changes on this here ship:
     public event Action OnChange;
-    public event Action OnDeath;
 
     private const string DEFAULT_NAME  = "Unnnamed Ship";
 
@@ -54,11 +53,6 @@ public class Ship : SerializedObject
 
         OnChange?.Invoke();
     }    
-
-    private void OnDestroy()
-    {
-        OnDeath?.Invoke();
-    }
 
     public string GetFullName()
     {

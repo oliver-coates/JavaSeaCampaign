@@ -17,20 +17,27 @@ public class ShipInstanceUI : MonoBehaviour
 
     public void AssignToShip(Ship ship)
     {
+        if (_ship == ship)
+        {
+            // We are already assigned, return
+            return;
+        }
+
+        // Unsubscribe from old ship events:
+        if (_ship != null)
+        {
+            _ship.OnChange -= RefreshUI;
+        }
+
+        // This is a new ship: Go Ahead with reassigning.
         _ship = ship;
 
-        _ship.OnDeath += DeleteMe;
         _ship.OnChange += RefreshUI;
 
         SetupContextualMenu();
         RefreshUI();
     }
 
-    private void DeleteMe()
-    {
-        _ship.OnDeath -= DeleteMe;
-        Destroy(gameObject);
-    }
 
     private void OnDestroy()
     {

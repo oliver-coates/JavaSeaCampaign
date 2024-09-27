@@ -21,14 +21,14 @@ public class PlayerCharacterUIManager : MonoBehaviour
 
     private void Awake()
     {
-        SessionMaster.OnPlayerCharactersChanged += RefreshUI;
+        SessionMaster.OnPlayerCountChanged += RefreshUI;
 
         _playerCharacterUIs = new List<PlayerCharacterUI>();
     }
 
     private void OnDestroy()
     {
-        SessionMaster.OnPlayerCharactersChanged -= RefreshUI;
+        SessionMaster.OnPlayerCountChanged -= RefreshUI;
     }
     
     public void CreateNewPlayerCharacter()

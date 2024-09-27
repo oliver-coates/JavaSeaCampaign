@@ -8,8 +8,8 @@ using UnityEngine;
 public static class SessionMaster
 {
     public static event Action OnLoaded;
-    public static event Action OnPlayerCharactersChanged;
-    public static event Action OnShipsChanged;
+    public static event Action OnPlayerCountChanged;
+    public static event Action OnShipCountChanged;
 
     public static List<PlayerCharacter> playerCharacters;
     public static List<Ship> ships;
@@ -48,7 +48,7 @@ public static class SessionMaster
     {
         playerCharacters.Add(playerCharacter);
 
-        OnPlayerCharactersChanged?.Invoke();
+        OnPlayerCountChanged?.Invoke();
     }
 
     public static void RemovePlayerCharacter(PlayerCharacter playerCharacter)
@@ -56,7 +56,7 @@ public static class SessionMaster
         playerCharacters.Remove(playerCharacter);
         SaveLoad.UntrackSerializedObject(playerCharacter);
 
-        OnPlayerCharactersChanged?.Invoke();
+        OnPlayerCountChanged?.Invoke();
     }
     #endregion
 
@@ -66,7 +66,7 @@ public static class SessionMaster
     {
         ships.Add(toAdd);
 
-        OnShipsChanged?.Invoke();
+        OnShipCountChanged?.Invoke();
     }
 
     public static void RemoveShip(Ship toRemove)
@@ -76,7 +76,7 @@ public static class SessionMaster
         
         GameObject.Destroy(toRemove);
 
-        OnShipsChanged?.Invoke();
+        OnShipCountChanged?.Invoke();
     }
 
     #endregion
