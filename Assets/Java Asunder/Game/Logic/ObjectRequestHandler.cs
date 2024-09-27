@@ -9,10 +9,12 @@ public static class ObjectRequestHandler
 {
     
     private static BasicSelection.Category<ShipClassType>[] _shipTypeCategories;
+    private static BasicSelection.Category<Nation> _nations;
 
     public static void Initialise()
     {
         AssembleShipTypesIntoCategories();
+        AssembleNations();
     }
 
     private static void AssembleShipTypesIntoCategories()
@@ -54,9 +56,28 @@ public static class ObjectRequestHandler
         #endregion
     }
     
+    private static void AssembleNations()
+    {
+        Nation[] nations = Resources.LoadAll<Nation>("Nations");
+
+        BasicSelection.Option<Nation>[] options = new BasicSelection.Option<Nation>[nations.Length];
+        int index = 0;
+        foreach (Nation nation in nations)
+        {   
+            options[index] = new BasicSelection.Option<Nation>(nation.nationName, nation);
+            index++;
+        }
+
+        _nations = new BasicSelection.Category<Nation>("Nations", options);
+    }
 
     public static void RequestShipClass(Action<ShipClassType> onFulfilled)
     {
         BasicSelection.RequestSelection(_shipTypeCategories, onFulfilled);
+    }
+
+    public static void RequestNationType(Action<Nation> onFulfilled)
+    {
+        BasicSelection.RequestSelection(_nations, onFulfilled);
     }
 }

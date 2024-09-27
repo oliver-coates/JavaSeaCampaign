@@ -38,7 +38,6 @@ public class ShipInstanceUI : MonoBehaviour
         RefreshUI();
     }
 
-
     private void OnDestroy()
     {
         _ship.OnChange -= RefreshUI;
@@ -48,7 +47,7 @@ public class ShipInstanceUI : MonoBehaviour
     {
         _nameText.text = _ship.GetFullName();
 
-        _descriptionText.text = $"{_ship.nation.nationNameDesc} {_ship.shipClass.name}";
+        _descriptionText.text = $"{_ship.nation.nationNameDesc} {_ship.shipClass.name} {_ship.shipClass.shipType.name}";
     }
 
     private void SetupContextualMenu()
@@ -69,7 +68,7 @@ public class ShipInstanceUI : MonoBehaviour
 
     private void StartChangeNation()
     {
-
+        ObjectRequestHandler.RequestNationType(_ship.ChangeNation);
     }
 
     private void StartRename()

@@ -73,7 +73,12 @@ public class Ship : SerializedObject
         OnChange?.Invoke();
     }
 
+    public void ChangeNation(Nation nation)
+    {
+        _nation = nation;
 
+        OnChange?.Invoke();
+    }
 }
 
 

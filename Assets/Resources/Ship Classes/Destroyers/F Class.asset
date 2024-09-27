@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: F Class
   m_EditorClassIdentifier: 
   prefab: {fileID: 3536027577139989715, guid: 913c1a146e9966c42aa41a4ddb7a966c, type: 3}
+  shipType: {fileID: 11400000, guid: 49ebc7c39ef313840ac873ba26badd47, type: 2}
+  hullDisplacement: 0
+  baseValue: 0

@@ -40,10 +40,16 @@ public class SelectionCategoryUI : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    public void Remove()
     {
-        
+        foreach (SelectionOptionUI selectionOption in _optionButtons)
+        {
+            Destroy(selectionOption.gameObject);
+        }
+
+        Destroy(gameObject);
     }
+
 }
 
 

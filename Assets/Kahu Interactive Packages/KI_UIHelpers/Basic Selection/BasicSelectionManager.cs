@@ -56,8 +56,21 @@ public class BasicSelection : MonoBehaviour
         _selectionCategories = new List<SelectionCategoryUI>();
     }
 
+    /// <summary>
+    /// Deletes all old UI elements from the screen
+    /// </summary>
+    private static void ClearElements()
+    {
+        foreach (SelectionCategoryUI categoryUI in _Instance._selectionCategories)
+        {
+            categoryUI.Remove();
+        }
+    }
+
     public static void RequestSelection<T>(Category<T>[] categories, Action<T> onChosen)
     {    
+        ClearElements();
+
         int categoryIndex = 0;
         foreach (Category<T> category in categories)
         {
@@ -65,36 +78,48 @@ public class BasicSelection : MonoBehaviour
             {
                 continue;
             }
-
-            // Create Category divider
-            SelectionCategoryUI categoryUI = Instantiate(_Instance._categoryUI, _Instance.transform).GetComponent<SelectionCategoryUI>();
-            _Instance._selectionCategories.Add(categoryUI);
-
-            // Position it
-            Vector2 pos = new Vector2(100 + (350 * categoryIndex), 0);
-            categoryUI.rectTransform.anchoredPosition = pos;
-
-            // Draw the category options
-            categoryUI.RepresentCategory(category, onChosen);
-
+            
+            DisplayCategory(category, onChosen, categoryIndex);
             categoryIndex++;
         }
 
         _Instance.Show();
     }
 
+    public static void RequestSelection<T>(Category<T> category, Action<T> onChosen)
+    {
+        ClearElements();
+        
+        DisplayCategory(category, onChosen, 0);
+
+        _Instance.Show();
+    }
+
+    private static void DisplayCategory<T>(Category<T> category, Action<T> onChosen, int categoryIndex)
+    {
+        // Create Category divider
+        SelectionCategoryUI categoryUI = Instantiate(_Instance._categoryUI, _Instance.transform).GetComponent<SelectionCategoryUI>();
+        _Instance._selectionCategories.Add(categoryUI);
+
+        // Position it
+        Vector2 pos = new Vector2(100 + (350 * categoryIndex), 0);
+        categoryUI.rectTransform.anchoredPosition = pos;
+
+        // Draw the category options
+        categoryUI.RepresentCategory(category, onChosen);
+    }
 
     public struct Category<T>
-    {
-        public string categoryName;
-        public Option<T>[] options;
+{
+    public string categoryName;
+    public Option<T>[] options;
 
-        public Category(string name, Option<T>[] options)
-        {
-            categoryName = name;
-            this.options = options;
-        }
+    public Category(string name, Option<T>[] options)
+    {
+        categoryName = name;
+        this.options = options;
     }
+}
 
     public struct Option<T>
     {
