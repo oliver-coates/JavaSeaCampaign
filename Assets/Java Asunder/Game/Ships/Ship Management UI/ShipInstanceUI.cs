@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 public class ShipInstanceUI : MonoBehaviour
 {
+    private readonly Color INACTIVE_COLOR = new Color(0.75f, 0.75f, 0.75f, 0.75f);
+    private readonly Color ACTIVE_COLOR = new Color(1f, 1f, 1f, 1f);
+
     private Ship _ship;
 
     [Header("UI References:")]
@@ -51,15 +54,29 @@ public class ShipInstanceUI : MonoBehaviour
         _flagImage.sprite = _ship.nation.flag;
 
         _descriptionText.text = $"{_ship.nation.nationNameDesc} {_ship.shipClass.name} {_ship.shipClass.shipType.name}";
+
+        if (_ship.isIncludedInBattle)
+        {
+            _flagImage.color = ACTIVE_COLOR;
+            _nameText.color = ACTIVE_COLOR;
+            _descriptionText.color = ACTIVE_COLOR;
+        }
+        else
+        {
+            _flagImage.color = INACTIVE_COLOR;
+            _nameText.color = INACTIVE_COLOR;
+            _descriptionText.color = INACTIVE_COLOR;
+        }
     }
 
     private void SetupContextualMenu()
     {
-        ContextualMenu.Option[] options = new ContextualMenu.Option[3];
+        ContextualMenu.Option[] options = new ContextualMenu.Option[4];
 
         options[0] = new ContextualMenu.Option("Remove", StartRemove);
         options[1] = new ContextualMenu.Option("Change Nation", StartChangeNation);
         options[2] = new ContextualMenu.Option("Rename", StartRename);
+        options[3] = new ContextualMenu.Option("Set Active/Inactive", StartAddToBattle);
 
         _contextualMenu.Initialise(options);
     }
@@ -77,5 +94,10 @@ public class ShipInstanceUI : MonoBehaviour
     private void StartRename()
     {
         BasicInputManager.RequestInput(new BasicInputManager.InputRequest($"Rename the {_ship.GetFullName()}", _ship.Rename));
+    }
+
+    private void StartAddToBattle()
+    {
+        _ship.SetIncludedInBattle(!_ship.isIncludedInBattle);
     }
 }

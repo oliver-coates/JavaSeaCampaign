@@ -34,6 +34,15 @@ public class Ship : SerializedObject
     }
 
 
+    [SerializeField] private bool _isIncludedInBattle;
+    public bool isIncludedInBattle
+    {
+        get
+        {
+            return _isIncludedInBattle;
+        }	
+    }
+
     [Header("Decorative:")]
     [SerializeField] private string _shipName;
     public string shipName
@@ -50,6 +59,7 @@ public class Ship : SerializedObject
         _nation = shipNation;
 
         _shipName = DEFAULT_NAME;
+        _isIncludedInBattle = false;
 
         OnChange?.Invoke();
     }    
@@ -77,6 +87,12 @@ public class Ship : SerializedObject
     {
         _nation = nation;
 
+        OnChange?.Invoke();
+    }
+
+    public void SetIncludedInBattle(bool isIncludedInBattle)
+    {
+        _isIncludedInBattle = isIncludedInBattle;
         OnChange?.Invoke();
     }
 }
