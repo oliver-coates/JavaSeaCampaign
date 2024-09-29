@@ -12,6 +12,7 @@ public class Nation : ScriptableObject
     public string nationName;
     public string nationNameDesc;
     public string shipPrefix;
+    public Sprite flag;
 }
 
 }

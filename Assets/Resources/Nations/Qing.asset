@@ -15,3 +15,4 @@ MonoBehaviour:
   nationName: China
   nationNameDesc: Chinese
   shipPrefix: ICN
+  flag: {fileID: 21300000, guid: 434b5a614aec8844d84b0559d2d05159, type: 3}

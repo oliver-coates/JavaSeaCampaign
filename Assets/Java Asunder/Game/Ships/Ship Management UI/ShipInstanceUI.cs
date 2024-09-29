@@ -4,6 +4,7 @@ using KahuInteractive.UIHelpers;
 using Ships;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShipInstanceUI : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class ShipInstanceUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private TextMeshProUGUI _descriptionText;
     [SerializeField] private ContextualMenuLocation _contextualMenu;
+    [SerializeField] private Image _flagImage;
 
     public void AssignToShip(Ship ship)
     {
@@ -46,6 +48,7 @@ public class ShipInstanceUI : MonoBehaviour
     private void RefreshUI()
     {
         _nameText.text = _ship.GetFullName();
+        _flagImage.sprite = _ship.nation.flag;
 
         _descriptionText.text = $"{_ship.nation.nationNameDesc} {_ship.shipClass.name} {_ship.shipClass.shipType.name}";
     }

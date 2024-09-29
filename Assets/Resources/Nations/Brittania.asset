@@ -15,3 +15,4 @@ MonoBehaviour:
   nationName: Brittania
   nationNameDesc: Brittanian
   shipPrefix: HMS
+  flag: {fileID: 21300000, guid: c43db65211d80df45b53a3dab854c2dd, type: 3}
