@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df4ea4e6fce3a04cbb3e4a9507bb30a, type: 3}
   m_Name: Brittanian Pub
   m_EditorClassIdentifier: 
-  loopSound: {fileID: 0}
-  hasRandomSounds: 0
-  randomSounds: []
-  randomSoundMinInterval: 1
-  randomSoundMaxInterval: 10
+  loopSound: {fileID: 8300000, guid: 5b08c21dfd4ced34db8c5e0b8d5eac9e, type: 3}
+  hasRandomSounds: 1
+  randomSounds:
+  - {fileID: 8300000, guid: 06dc33e6b3e5cf24e93241ca66a2344e, type: 3}
+  - {fileID: 8300000, guid: 8ddbb0c75f006ad49a12f78e8a25fe51, type: 3}
+  - {fileID: 8300000, guid: 295bba1f1f24f3a47ac7f98c3642d3b7, type: 3}
+  randomSoundMinInterval: 10
+  randomSoundMaxInterval: 30

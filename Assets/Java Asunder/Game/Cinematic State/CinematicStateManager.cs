@@ -13,7 +13,6 @@ public class CinematicStateManager : MonoBehaviour
     [SerializeField] private CinematicState[] _states;
     private CinematicState _currentState;
     private CinematicSoundscape _currentSoundscape;
-    private float _volume;
     [SerializeField] private float _randomSoundTimer;
     [SerializeField] private float _randomSoundInterval;
 
@@ -30,7 +29,8 @@ public class CinematicStateManager : MonoBehaviour
     private State _state;
 
     [Header("UI References:")]
-    [SerializeField] private TMP_Dropdown _dropdown;
+    [SerializeField] private TMP_Dropdown _stateDropdown;
+    [SerializeField] private TMP_Dropdown _soundDropdown;
 
     [SerializeField] private CanvasGroup _cinematicsCanvasGroup;
 
@@ -55,7 +55,9 @@ public class CinematicStateManager : MonoBehaviour
             optionDatas.Add(new TMP_Dropdown.OptionData(state.name));
         }
 
-        _dropdown.options = optionDatas;
+        _stateDropdown.options = optionDatas;
+
+        SetMasterVolume(0.5f);
 
         _state = State.BetweenCinematics;
         TransitionToState(1);
@@ -71,16 +73,35 @@ public class CinematicStateManager : MonoBehaviour
         {
             TransitionToState(_states[value-1]);
         }
+    
+        List<TMP_Dropdown.OptionData> soundscapeOptions = new List<TMP_Dropdown.OptionData>();
+        foreach (CinematicSoundscape soundscape in _currentState.soundscapes)
+        {
+            soundscapeOptions.Add(new TMP_Dropdown.OptionData(soundscape.name));
+        }
+        _soundDropdown.options = soundscapeOptions;
+
+        if (soundscapeOptions.Count > 0)
+        {
+            TransitionToSoundscape(0);
+        }
     }
 
     public void TransitionToSoundscape(int value)
     {
+        _currentSoundscape = _currentState.soundscapes[value];
 
+        _loopingAudioSource.Stop();
+        _loopingAudioSource.clip = _currentSoundscape.loopSound;
+        _loopingAudioSource.Play();
+
+        _randomSoundInterval = _currentSoundscape.GetRandomTimeInterval();
     }
 
     public void SetMasterVolume(float newAmount)
     {
-        _volume = newAmount;
+        _randomAudioSource.volume = newAmount;
+        _loopingAudioSource.volume = newAmount;
     }
 
     private void Update()
@@ -105,7 +126,8 @@ public class CinematicStateManager : MonoBehaviour
 
         _randomSoundInterval = toPlay.length + _currentSoundscape.GetRandomTimeInterval();
 
-        _randomAudioSource.PlayOneShot(toPlay, _volume);
+        _randomAudioSource.clip = toPlay;
+        _randomAudioSource.Play();
     }
 
 
