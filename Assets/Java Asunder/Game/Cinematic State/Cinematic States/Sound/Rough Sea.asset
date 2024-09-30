@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df4ea4e6fce3a04cbb3e4a9507bb30a, type: 3}
   m_Name: Rough Sea
   m_EditorClassIdentifier: 
-  loopSound: {fileID: 0}
+  loopSound: {fileID: 8300000, guid: 9cb948bcb155a69488371cb7ae9dc3d6, type: 3}
   hasRandomSounds: 0
   randomSounds: []
   randomSoundMinInterval: 1

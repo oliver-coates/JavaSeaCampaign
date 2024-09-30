@@ -60,6 +60,7 @@ public class CinematicStateManager : MonoBehaviour
         SetMasterVolume(0.5f);
 
         _state = State.BetweenCinematics;
+        _stateDropdown.SetValueWithoutNotify(1);
         TransitionToState(1);
     }
 
@@ -83,6 +84,7 @@ public class CinematicStateManager : MonoBehaviour
 
         if (soundscapeOptions.Count > 0)
         {
+            _soundDropdown.SetValueWithoutNotify(0);
             TransitionToSoundscape(0);
         }
     }
@@ -92,6 +94,8 @@ public class CinematicStateManager : MonoBehaviour
         _currentSoundscape = _currentState.soundscapes[value];
 
         _loopingAudioSource.Stop();
+        _randomAudioSource.Stop();
+        _randomAudioSource.clip = null;
         _loopingAudioSource.clip = _currentSoundscape.loopSound;
         _loopingAudioSource.Play();
 

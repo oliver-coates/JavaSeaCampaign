@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df4ea4e6fce3a04cbb3e4a9507bb30a, type: 3}
   m_Name: Jungle Day
   m_EditorClassIdentifier: 
-  loopSound: {fileID: 0}
+  loopSound: {fileID: 8300000, guid: 32d531b36dfdf584caba816c9e40f887, type: 3}
   hasRandomSounds: 0
   randomSounds: []
   randomSoundMinInterval: 1
