@@ -6,4 +6,9 @@ using UnityEngine;
 public class CinematicState : ScriptableObject
 {
     public Sprite[] displaySprites;
+
+    public Sprite GetRandomSprite()
+    {
+        return displaySprites[Random.Range(0, displaySprites.Length)];
+    }
 }
