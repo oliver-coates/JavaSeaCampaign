@@ -16,3 +16,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c7ddb5bdc6843094993a1abc7364c86d, type: 3}
   - {fileID: 21300000, guid: 0531e8dc0db29014da3217eca2d51480, type: 3}
   - {fileID: 21300000, guid: b73bc4a64b219b547a5dc69bb5b17d32, type: 3}
+  soundscapes:
+  - {fileID: 11400000, guid: f0dd36ca6ff821e4bab46ddbd2812a60, type: 2}
+  - {fileID: 11400000, guid: 161f43262fc335542855c61a9254b57e, type: 2}

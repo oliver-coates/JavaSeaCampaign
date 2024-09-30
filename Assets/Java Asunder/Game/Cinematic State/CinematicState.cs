@@ -7,6 +7,8 @@ public class CinematicState : ScriptableObject
 {
     public Sprite[] displaySprites;
 
+    public CinematicSoundscape[] soundscapes;
+
     public Sprite GetRandomSprite()
     {
         return displaySprites[Random.Range(0, displaySprites.Length)];

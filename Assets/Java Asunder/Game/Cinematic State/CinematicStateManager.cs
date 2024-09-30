@@ -12,6 +12,11 @@ public class CinematicStateManager : MonoBehaviour
 
     [SerializeField] private CinematicState[] _states;
     private CinematicState _currentState;
+    private CinematicSoundscape _currentSoundscape;
+    private float _volume;
+    [SerializeField] private float _randomSoundTimer;
+    [SerializeField] private float _randomSoundInterval;
+
 
     private float _transitionTimer;
     private bool _isTransitioning;
@@ -36,6 +41,10 @@ public class CinematicStateManager : MonoBehaviour
     [SerializeField] private CanvasGroup _canvasBackground;
 
     [SerializeField] private TextMeshProUGUI _locationText;
+
+    [Header("Sound references:")]
+    [SerializeField] private AudioSource _loopingAudioSource;
+    [SerializeField] private AudioSource _randomAudioSource;
 
     private void Awake()
     {
@@ -64,7 +73,44 @@ public class CinematicStateManager : MonoBehaviour
         }
     }
 
+    public void TransitionToSoundscape(int value)
+    {
+
+    }
+
+    public void SetMasterVolume(float newAmount)
+    {
+        _volume = newAmount;
+    }
+
     private void Update()
+    {
+        VisualTransitionUpdate();
+
+        if (_currentSoundscape.hasRandomSounds)
+        {
+            _randomSoundTimer += Time.deltaTime;
+
+            if (_randomSoundTimer > _randomSoundInterval)
+            {
+                _randomSoundTimer = 0f;
+                PlayRandomSound();
+            }
+        }
+    }
+
+    private void PlayRandomSound()
+    {
+        AudioClip toPlay = _currentSoundscape.GetRandomSound();
+
+        _randomSoundInterval = toPlay.length + _currentSoundscape.GetRandomTimeInterval();
+
+        _randomAudioSource.PlayOneShot(toPlay, _volume);
+    }
+
+
+    #region Visuals
+    private void VisualTransitionUpdate()
     {
         if (_isTransitioning)
         {
@@ -95,7 +141,6 @@ public class CinematicStateManager : MonoBehaviour
             }
         }
     }
-
     private void TransitionToBattle()
     {
         _isTransitioning = true;
@@ -134,4 +179,5 @@ public class CinematicStateManager : MonoBehaviour
 
      
     }
+    #endregion
 }
