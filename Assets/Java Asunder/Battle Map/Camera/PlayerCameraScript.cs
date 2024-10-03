@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraScript : MonoBehaviour
+public class PlayerCameraScript : MonoBehaviour
 {
 
     [SerializeField] private Camera _playerCamera;
@@ -11,10 +11,20 @@ public class CameraScript : MonoBehaviour
     private float _minSize;
     private float _maxSize;
 
-    private float _cameraSizeLerp;
+    private float _cameraSizeLerpAmount;
     private Vector3 _targetPosition;
 
     private float _movementTightness;
+
+    private void Awake()
+    {
+        GameMaster.OnBattleEnd += CenterCamera;
+    }
+
+    private void OnDestroy()
+    {
+        GameMaster.OnBattleEnd -= CenterCamera;
+    }
 
     public void SetupSizes(float min, float max, float tightness)
     {
@@ -23,13 +33,22 @@ public class CameraScript : MonoBehaviour
 
         _movementTightness = tightness;
 
+        CenterCamera();
     }
 
-    public void UpdateValues(float cameraSizeLerp, Vector3 targetPos)
+    public void SetTargetPositionAndSize(float cameraSizeAmount, Vector3 targetPos)
     {
         _targetPosition = targetPos;
-        _cameraSizeLerp = cameraSizeLerp;
+        _cameraSizeLerpAmount = cameraSizeAmount;
     }
+
+
+
+    public void CenterCamera()
+    {
+        SetTargetPositionAndSize(Mathf.Lerp(_minSize, _maxSize, 0.5f), Vector3.zero);
+    }
+
 
     private void Update()
     {
@@ -40,23 +59,14 @@ public class CameraScript : MonoBehaviour
 
     public void FOVUpdate()
     {
-        float camSizeTarget = Mathf.Lerp(_minSize, _maxSize, _cameraSizeLerp);
-
+        float camSizeTarget = Mathf.Lerp(_minSize, _maxSize, _cameraSizeLerpAmount);
         _camSize = Mathf.Lerp(_camSize, camSizeTarget, Time.deltaTime * 2f);
-
         _playerCamera.orthographicSize = _camSize;
 
     }
 
-
     private void MovementUpdate()
     {
-        float speedMultiplier = 1 + _cameraSizeLerp;
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            speedMultiplier *= 3f;
-        }
-
         transform.position = Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime * _movementTightness);
     }
 }

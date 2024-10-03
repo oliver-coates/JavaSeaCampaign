@@ -100,6 +100,11 @@ public class GameMaster : MonoBehaviour
         }
     }
 
+    private void SpawnShips()
+    {
+
+    }
+
     #endregion
 
     #region Battle time control

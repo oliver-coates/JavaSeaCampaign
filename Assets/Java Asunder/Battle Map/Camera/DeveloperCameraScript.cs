@@ -10,7 +10,7 @@ public class DeveloperCameraScript : MonoBehaviour
 
 
 
-    [SerializeField] private CameraScript _playerCamera;
+    [SerializeField] private PlayerCameraScript _playerCamera;
     [SerializeField] private Camera _devCamera;
 
     [Header("Field of View settings:")]
@@ -48,7 +48,7 @@ public class DeveloperCameraScript : MonoBehaviour
 
         if (_streamingCameraData)
         {
-            _playerCamera.UpdateValues(_cameraSizeLerp, _targetPosition);
+            _playerCamera.SetTargetPositionAndSize(_cameraSizeLerp, _targetPosition);
         }
     }
 
