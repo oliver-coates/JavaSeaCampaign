@@ -6,9 +6,12 @@ using UnityEngine;
 public abstract class BoardPiece : MonoBehaviour
 {
     public static event Action<BoardPiece> OnBoardPieceInitialised;
+    public static event Action<BoardPiece> OnBoardPieceDestroyed;
+
     protected bool _gameUnderway = false;
 
 
+    #region Initialisation & Destruction
     private void Start()
     {
         GameMaster.OnTimePlay += TimePlay;
@@ -18,7 +21,15 @@ public abstract class BoardPiece : MonoBehaviour
         Initialise();
     }
 
-    
+    private void OnDestroy()
+    {
+        GameMaster.OnTimePause -= TimePause;
+        GameMaster.OnTimePlay -= TimePlay;
+
+        OnBoardPieceDestroyed?.Invoke(this);
+    }
+    #endregion
+
     private void Update()
     {
         if (_gameUnderway)
@@ -38,6 +49,7 @@ public abstract class BoardPiece : MonoBehaviour
     {
         _gameUnderway = true;
     }
+
 
     /// <summary>
     /// Called when this board piece is created.

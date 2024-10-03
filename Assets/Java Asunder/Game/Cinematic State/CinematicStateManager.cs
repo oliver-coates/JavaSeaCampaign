@@ -45,9 +45,12 @@ public class CinematicStateManager : MonoBehaviour
     [Header("Sound references:")]
     [SerializeField] private AudioSource _loopingAudioSource;
     [SerializeField] private AudioSource _randomAudioSource;
+    [SerializeField] private CinematicSoundscape _battleSoundscape;
 
     private void Awake()
     {
+        GameMaster.OnBattleStart += SwitchToBattleState;
+        
         List<TMP_Dropdown.OptionData> optionDatas = new List<TMP_Dropdown.OptionData>();
         optionDatas.Add(new TMP_Dropdown.OptionData("Battle"));
         foreach (CinematicState state in _states)
@@ -62,6 +65,11 @@ public class CinematicStateManager : MonoBehaviour
         _state = State.BetweenCinematics;
         _stateDropdown.SetValueWithoutNotify(1);
         TransitionToState(1);
+    }
+
+    private void OnDestroy()
+    {
+        GameMaster.OnBattleStart -= SwitchToBattleState;
     }
 
     public void TransitionToState(int value)
@@ -91,7 +99,15 @@ public class CinematicStateManager : MonoBehaviour
 
     public void TransitionToSoundscape(int value)
     {
-        _currentSoundscape = _currentState.soundscapes[value];
+        if (value == -1)
+        {
+            _currentSoundscape =_battleSoundscape;
+        }
+        else
+        {
+            _soundDropdown.SetValueWithoutNotify(value);
+            _currentSoundscape = _currentState.soundscapes[value];
+        }
 
         _loopingAudioSource.Stop();
         _randomAudioSource.Stop();
@@ -132,6 +148,13 @@ public class CinematicStateManager : MonoBehaviour
 
         _randomAudioSource.clip = toPlay;
         _randomAudioSource.Play();
+    }
+
+    private void SwitchToBattleState()
+    {
+        _stateDropdown.SetValueWithoutNotify(0);
+        TransitionToState(0);
+        TransitionToSoundscape(-1); // -1 forces the battle soundscape
     }
 
 

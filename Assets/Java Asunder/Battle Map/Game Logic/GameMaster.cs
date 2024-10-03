@@ -13,49 +13,129 @@ public class GameMaster : MonoBehaviour
     #endregion
 
     [Header("Game State:")]
-    [SerializeField] private bool _gameUnderway;
-    public bool gameUnderway
+
+    // Is there a battle currently underway
+    [SerializeField] private bool _battleUnderway;
+    public bool battleUnderway
     {
         get
         {
-            return _gameUnderway;
+            return _battleUnderway;
         }	
     }
+
+    // Is time paused?
+    [SerializeField] private bool _battlePaused;
+    public bool battlePaused
+    {
+        get
+        {
+            return _battlePaused;
+        }	
+    }
+
 
     [SerializeField] private List<BoardPiece> _boardPieces;
 
 
+    #region Initialistion
     private void Awake()
     {
         _boardPieces = new List<BoardPiece>();
-        BoardPiece.OnBoardPieceInitialised += InitialiseBoardPiece;
+        BoardPiece.OnBoardPieceInitialised += AddBoardPiece;
+        BoardPiece.OnBoardPieceDestroyed += RemoveBoardPiece;
+
     }
 
-    private void InitialiseBoardPiece(BoardPiece piece)
+    private void OnDestroy()
+    {
+        BoardPiece.OnBoardPieceInitialised -= AddBoardPiece;
+        BoardPiece.OnBoardPieceDestroyed -= RemoveBoardPiece;
+    }
+
+
+
+    #endregion
+
+    #region Board Pieces
+    private void AddBoardPiece(BoardPiece piece)
     {
         _boardPieces.Add(piece);
     }
+
+    private void RemoveBoardPiece(BoardPiece piece)
+    {
+        _boardPieces.Remove(piece);
+    }
+    #endregion
+
+    #region Battle start & end
+
+    public void StartBattle()
+    {
+        // Delete all old peices
+        ClearBoard();
+
+        // Ensure the game starts paused.
+        PauseBattle();
+
+        _battleUnderway = true;
+        OnBattleStart?.Invoke();
+    }
+
+    public void EndBattle()
+    {
+        _battleUnderway = false;
+        OnBattleEnd?.Invoke();
+    }
+
+    /// <summary>
+    /// Destroys all board peices
+    /// </summary>
+    private void ClearBoard()
+    {
+        foreach (BoardPiece piece in _boardPieces)
+        {
+            Destroy(piece);
+        }
+    }
+
+    #endregion
+
+    #region Battle time control
+    private void PlayBattle()
+    {
+        if (_battleUnderway == false)
+        {
+            Debug.Log($"Attempting to pause a battle which is not running");
+            return;
+        }
+        _battlePaused = false;
+
+        OnTimePlay.Invoke();
+    }
+
+    private void PauseBattle()
+    {
+        if (_battleUnderway == false)
+        {
+            Debug.Log($"Attempting to play a battle which is not running");
+            return;
+        }
+        _battlePaused = true;
+
+        OnTimePause.Invoke();
+    }
+    #endregion
+
+
+    #region Debug
 
     private void Update()
     {
         UpdateDebug();
     }
 
-    private void PlayGame()
-    {
-        _gameUnderway = true;
-
-        OnTimePlay.Invoke();
-    }
-
-    private void PauseGame()
-    {
-        _gameUnderway = false;
-
-        OnTimePause.Invoke();
-    }
-
-    #region Debug
     private void UpdateDebug()
     {
         if (Input.GetKey(KeyCode.LeftControl))
@@ -66,15 +146,15 @@ public class GameMaster : MonoBehaviour
 
     private void CheckForDebugCommand()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && _battleUnderway)
         {
-            if (_gameUnderway)
+            if (_battlePaused)
             {
-                PauseGame();
+                PlayBattle();
             }     
             else
             {
-                PlayGame();
+                PauseBattle();
             }
         }
     }
