@@ -84,6 +84,16 @@ public static class SessionMaster
     {
         Ships.Add(toAdd);
 
+        if (toAdd.isIncludedInBattle)
+        {
+            ActiveShips.Add(toAdd);
+        }
+
+        if (toAdd.isPlayerShip)
+        {
+            PlayerShip = toAdd;
+        }
+
         OnShipCountChanged?.Invoke();
     }
 
