@@ -19,6 +19,7 @@ public class ShipInstanceUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _descriptionText;
     [SerializeField] private ContextualMenuLocation _contextualMenu;
     [SerializeField] private Image _flagImage;
+    [SerializeField] private Image _playerShipImage;
 
     public void AssignToShip(Ship ship)
     {
@@ -67,16 +68,26 @@ public class ShipInstanceUI : MonoBehaviour
             _nameText.color = INACTIVE_COLOR;
             _descriptionText.color = INACTIVE_COLOR;
         }
+
+        if (_ship.isPlayerShip)
+        {
+            _playerShipImage.enabled = true;
+        }
+        else
+        {
+            _playerShipImage.enabled = false;
+        }
     }
 
     private void SetupContextualMenu()
     {
-        ContextualMenu.Option[] options = new ContextualMenu.Option[4];
+        ContextualMenu.Option[] options = new ContextualMenu.Option[5];
 
         options[0] = new ContextualMenu.Option("Remove", StartRemove);
         options[1] = new ContextualMenu.Option("Change Nation", StartChangeNation);
         options[2] = new ContextualMenu.Option("Rename", StartRename);
         options[3] = new ContextualMenu.Option("Set Active/Inactive", StartAddToBattle);
+        options[4] = new ContextualMenu.Option("Set Player Ship", SetPlayerShip);
 
         _contextualMenu.Initialise(options);
     }
@@ -99,5 +110,14 @@ public class ShipInstanceUI : MonoBehaviour
     private void StartAddToBattle()
     {
         _ship.SetIncludedInBattle(!_ship.isIncludedInBattle);
+    }
+
+    private void SetPlayerShip()
+    {
+        if (SessionMaster.PlayerShip != null)
+        {
+            SessionMaster.PlayerShip.SetIsPlayerShip(false);
+        }
+        _ship.SetIsPlayerShip(true);
     }
 }

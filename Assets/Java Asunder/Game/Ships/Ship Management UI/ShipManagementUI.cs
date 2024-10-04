@@ -29,7 +29,7 @@ public class ShipManagementUI : MonoBehaviour
     private void DrawShipUI()
     {
         int shipUIIndex = 0;
-        foreach (Ship ship in SessionMaster.ships)
+        foreach (Ship ship in SessionMaster.Ships)
         {
             ShipInstanceUI shipUI;
             if (_shipUIs.Count > shipUIIndex)
@@ -55,7 +55,7 @@ public class ShipManagementUI : MonoBehaviour
 
 
         // Cull any extra UI elements
-        int extraUIElements = _shipUIs.Count - SessionMaster.ships.Count;
+        int extraUIElements = _shipUIs.Count - SessionMaster.Ships.Count;
         extraUIElements = Math.Clamp(extraUIElements, 0, 100); 
 
         for (int toDeleteIndex = 0; toDeleteIndex < extraUIElements; toDeleteIndex++)

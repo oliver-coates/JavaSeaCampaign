@@ -12,10 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 403acafe93547964985ebecaab9b1be4, type: 3}
   m_Name: Freighter
   m_EditorClassIdentifier: 
-  typeName: Cargo
-  base_manuverability: 45
-  base_armour: 0
-  base_repairs: 3
-  base_maxCondition: 50
-  base_cargo: 1000
-  shipImage: {fileID: 21300000, guid: c1b7e57b9c089944f96e82793b806d5f, type: 3}
+  typeName: Freighter

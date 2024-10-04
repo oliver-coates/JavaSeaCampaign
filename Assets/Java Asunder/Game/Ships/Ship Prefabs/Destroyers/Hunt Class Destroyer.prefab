@@ -13,7 +13,7 @@ GameObject:
   m_Layer: 0
   m_Name: Deck Mount 1
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Rear Deck Mount
-  type: 6
+  type: 0
 --- !u!1 &1616034192442772221
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +59,7 @@ GameObject:
   m_Layer: 0
   m_Name: Additional 1
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Rear Room
-  type: 12
+  type: 0
 --- !u!1 &2163997216263141867
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,7 +105,7 @@ GameObject:
   m_Layer: 0
   m_Name: Bridge
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -151,7 +151,7 @@ GameObject:
   m_Layer: 0
   m_Name: Front Gun
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Fore Light Gun Mount
-  type: 3
+  type: 0
 --- !u!1 &3536027577139989715
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +193,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5712321518652783385}
-  - component: {fileID: 6158582857001087553}
+  - component: {fileID: 1055865586913166770}
   m_Layer: 0
   m_Name: Hunt Class Destroyer
   m_TagString: Untagged
@@ -220,7 +220,7 @@ Transform:
   - {fileID: 6638605622202955806}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6158582857001087553
+--- !u!114 &1055865586913166770
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -229,21 +229,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3536027577139989715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b064f2cc5f1d55d4e80c59dabb4e1757, type: 3}
+  m_Script: {fileID: 11500000, guid: bc0a2027842b6ce4e8366b0c67c782da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  className: Hunt
-  shipType: {fileID: 11400000, guid: 49ebc7c39ef313840ac873ba26badd47, type: 2}
-  manufacturerNation: {fileID: 11400000, guid: e4e4966f2da0af447862c514c81b92a5, type: 2}
-  displacement: 1550
-  value: 20000
-  baseAgility: 0
-  baseArmour: 0
-  baseCargo: 0
+  shipData: {fileID: 0}
   armourSlot: {fileID: 1008013967335852858}
-  sections:
-  - {fileID: 927905300724855147}
-  - {fileID: 7221516226507851290}
+  sections: []
+  componentSlots: []
+  _rudder: 0
+  _targetSpeed: 0
 --- !u!1 &3784667007866536742
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,7 +251,7 @@ GameObject:
   m_Layer: 0
   m_Name: Electronic Room 1
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -270,7 +264,7 @@ Transform:
   m_GameObject: {fileID: 3784667007866536742}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 14, z: 0}
+  m_LocalPosition: {x: -1.25, y: 15.33, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -289,7 +283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Main Electronics Room
-  type: 7
+  type: 0
 --- !u!1 &4000044268225090703
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,6 +383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sectionName: Aft
+  slots: []
 --- !u!1 &4089353403793123566
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,7 +397,7 @@ GameObject:
   m_Layer: 0
   m_Name: Rear Gun 2
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -434,7 +429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Near Aft Light Gun Mount
-  type: 3
+  type: 0
 --- !u!1 &4363488878373959247
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,7 +443,7 @@ GameObject:
   m_Layer: 0
   m_Name: Deck Mount 2
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -480,7 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Port Deck Mount
-  type: 6
+  type: 0
 --- !u!1 &4489480450284354487
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,6 +576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sectionName: Fore
+  slots: []
 --- !u!1 &5790568902815885808
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,7 +752,7 @@ GameObject:
   m_Layer: 0
   m_Name: Engine
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -788,7 +784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Engine Room
-  type: 8
+  type: 0
 --- !u!1 &7751553943424693175
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,7 +798,7 @@ GameObject:
   m_Layer: 0
   m_Name: Rear Gun
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -834,7 +830,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Far Aft Light Gun Mount
-  type: 3
+  type: 0
 --- !u!1 &7903304595399901650
 GameObject:
   m_ObjectHideFlags: 0
@@ -848,7 +844,7 @@ GameObject:
   m_Layer: 0
   m_Name: Deck Mount 3
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -880,7 +876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Starboard Deck Mount
-  type: 6
+  type: 0
 --- !u!1 &8109193590445984590
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,7 +890,7 @@ GameObject:
   m_Layer: 0
   m_Name: Hold
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -926,7 +922,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Hold
-  type: 1
+  type: 0
 --- !u!1 &8997232532124010028
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,7 +936,7 @@ GameObject:
   m_Layer: 0
   m_Name: Electronic Room 2
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -972,4 +968,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Secondary Electronics Room
-  type: 7
+  type: 0

@@ -33,6 +33,14 @@ public class Ship : SerializedObject
         }	
     }
 
+    [SerializeField] private bool _isPlayerShip;
+    public bool isPlayerShip
+    {
+        get
+        {
+            return _isPlayerShip;
+        }	
+    }
 
     [SerializeField] private bool _isIncludedInBattle;
     public bool isIncludedInBattle
@@ -43,6 +51,7 @@ public class Ship : SerializedObject
         }	
     }
 
+
     [Header("Decorative:")]
     [SerializeField] private string _shipName;
     public string shipName
@@ -52,6 +61,8 @@ public class Ship : SerializedObject
             return _shipName;
         }	
     }
+
+
 
     public void Initialise(ShipClassType shipClass, Nation shipNation)
     {
@@ -95,7 +106,24 @@ public class Ship : SerializedObject
         _isIncludedInBattle = isIncludedInBattle;
         OnChange?.Invoke();
     }
+
+    public void SetIsPlayerShip(bool isPlayerShip)
+    {
+        _isPlayerShip = isPlayerShip;
+
+        if (isPlayerShip == false)
+        {
+            SessionMaster.PlayerShip = null;
+        }
+        else
+        {
+            SessionMaster.PlayerShip = this;
+        }
+
+        OnChange?.Invoke();
+    }
 }
+
 
 
 }

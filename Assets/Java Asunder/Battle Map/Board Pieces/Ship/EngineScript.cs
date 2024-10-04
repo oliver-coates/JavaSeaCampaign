@@ -57,13 +57,13 @@ public class EngineScript : BoardPiece
             Debug.LogError($"No ship instance on ship engine");
         }
 
-        DebugGiveShipEnginesAssignedInInspector();
+        // DebugGiveShipEnginesAssignedInInspector();
     }
 
 
     protected override void GameTick()
     {
-        ApplyForce();
+        // ApplyForce();
     }
 
     
@@ -72,87 +72,87 @@ public class EngineScript : BoardPiece
         
     }
 
-    private void DebugGiveShipEnginesAssignedInInspector()
-    {
-        GiveEngines(_engines);
-    }
+    // private void DebugGiveShipEnginesAssignedInInspector()
+    // {
+    //     GiveEngines(_engines);
+    // }
 
-    public void GiveEngines(List<EngineType> engines)
-    {
-        _engines = engines;
+    // public void GiveEngines(List<EngineType> engines)
+    // {
+    //     _engines = engines;
 
-        _agility = 0;
-        _strength = 0;
+    //     _agility = 0;
+    //     _strength = 0;
 
-        foreach (EngineType engine in engines)
-        {
-            _agility += engine.agility;
-            _strength += engine.strength;
-        }
+    //     foreach (EngineType engine in engines)
+    //     {
+    //         _agility += engine.agility;
+    //         _strength += engine.strength;
+    //     }
 
-        RecalculateStats();
-    }
+    //     RecalculateStats();
+    // }
 
-    private void RecalculateStats()
-    {
-        _engineForce = _strength * FORCE_TUNER;
-        _turnSpeed = _agility * TURN_SPEED_TUNER;
+    // private void RecalculateStats()
+    // {
+    //     _engineForce = _strength * FORCE_TUNER;
+    //     _turnSpeed = _agility * TURN_SPEED_TUNER;
 
-        float horsepower = _strength * HORSEPOWER_TUNER; 
-        _horsepowerToWeightRatio = horsepower / _ship.weight;        
+    //     float horsepower = _strength * HORSEPOWER_TUNER; 
+    //     _horsepowerToWeightRatio = horsepower / _ship.weight;        
         
-        _maxVelocity = _horsepowerToWeightRatio * MAX_VELOCITY_TUNER;
+    //     _maxVelocity = _horsepowerToWeightRatio * MAX_VELOCITY_TUNER;
 
-        _engineAccelerationTime = ((1f/_horsepowerToWeightRatio) * ACCELERATION_TUNER_HORSEPOWER)
-                                  + ( (1f/_agility) * ACCELERATION_TUNER_AGILITY);
-    }
+    //     _engineAccelerationTime = ((1f/_horsepowerToWeightRatio) * ACCELERATION_TUNER_HORSEPOWER)
+    //                               + ( (1f/_agility) * ACCELERATION_TUNER_AGILITY);
+    // }
 
 
-    private void ApplyForce()
-    {
-        float targetSpeed = _ship.targetSpeed;
-        float rudder = _ship.rudder;
+    // private void ApplyForce()
+    // {
+    //     float targetSpeed = _ship.targetSpeed;
+    //     float rudder = _ship.rudder;
 
-        // Accelerate the engine by engine acceleration amount:
-        float accelerationTuner = 1f;
-        if (_engineSpeed > targetSpeed)
-        {
-            // If we are decellerating, increase the speed at which this happens
-            accelerationTuner = 2.5f;
-        }
-        _engineSpeed = Mathf.MoveTowards(_engineSpeed, targetSpeed, Time.deltaTime * _engineAcceleration * accelerationTuner);
+    //     // Accelerate the engine by engine acceleration amount:
+    //     float accelerationTuner = 1f;
+    //     if (_engineSpeed > targetSpeed)
+    //     {
+    //         // If we are decellerating, increase the speed at which this happens
+    //         accelerationTuner = 2.5f;
+    //     }
+    //     _engineSpeed = Mathf.MoveTowards(_engineSpeed, targetSpeed, Time.deltaTime * _engineAcceleration * accelerationTuner);
 
-        // Find how much velocity is to be gained this frame
-        float velocityGain = _engineSpeed * _engineForce * (1f - _dragCurve.Evaluate(_velocity / _maxVelocity));
+    //     // Find how much velocity is to be gained this frame
+    //     float velocityGain = _engineSpeed * _engineForce * (1f - _dragCurve.Evaluate(_velocity / _maxVelocity));
 
-        // Add the engine speed onto veloicty
-        _velocity += velocityGain * Time.deltaTime;
+    //     // Add the engine speed onto veloicty
+    //     _velocity += velocityGain * Time.deltaTime;
 
-        // Move the ship forward by velocity
-        // Note 1 knot is 0.5144 m/s
-        transform.position += transform.forward * _velocity * 0.5144f * Time.deltaTime;
+    //     // Move the ship forward by velocity
+    //     // Note 1 knot is 0.5144 m/s
+    //     transform.position += transform.forward * _velocity * 0.5144f * Time.deltaTime;
 
-        // When the target speed is low, apply up to a 15% per frame velocity loss
-        float decelerateFactor = (1 - _engineSpeed);
-        _velocity -= _velocity * 0.15f * Time.deltaTime * decelerateFactor;
+    //     // When the target speed is low, apply up to a 15% per frame velocity loss
+    //     float decelerateFactor = (1 - _engineSpeed);
+    //     _velocity -= _velocity * 0.15f * Time.deltaTime * decelerateFactor;
 
-        // Rotate the ship by turn speed
-        float turnAmount = GetTurnAmount(rudder);
-        transform.Rotate(0, turnAmount * Time.deltaTime, 0);
-    }
+    //     // Rotate the ship by turn speed
+    //     float turnAmount = GetTurnAmount(rudder);
+    //     transform.Rotate(0, turnAmount * Time.deltaTime, 0);
+    // }
 
-    private float GetTurnAmount(float rudder)
-    {
-        // How much the boat is turning at full speed
-        float turnBase = rudder * _turnSpeed; 
+    // private float GetTurnAmount(float rudder)
+    // {
+    //     // How much the boat is turning at full speed
+    //     float turnBase = rudder * _turnSpeed; 
 
-        // Reduce the turn speed by the speed of the ship (0-1 range)
-        float speedAmount = (_velocity / _maxVelocity);
+    //     // Reduce the turn speed by the speed of the ship (0-1 range)
+    //     float speedAmount = (_velocity / _maxVelocity);
 
-        turnBase = turnBase * speedAmount;
+    //     turnBase = turnBase * speedAmount;
 
-        return turnBase;
-    }
+    //     return turnBase;
+    // }
 
 
 }

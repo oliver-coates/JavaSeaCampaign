@@ -1,15 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Ships;
 using UnityEngine;
 
 public class GameMaster : MonoBehaviour
 {
+
+
     #region Game Event Callbacks
     public static event Action OnBattleStart;
     public static event Action OnBattleEnd;
     public static event Action OnTimePause;
     public static event Action OnTimePlay;
+    
+    public static event Action<Ship> OnReadyForShipSpawn;
     #endregion
 
     [Header("Game State:")]
@@ -76,11 +81,13 @@ public class GameMaster : MonoBehaviour
         // Delete all old peices
         ClearBoard();
 
+        _battleUnderway = true;
+        OnBattleStart?.Invoke();
+
         // Ensure the game starts paused.
         PauseBattle();
 
-        _battleUnderway = true;
-        OnBattleStart?.Invoke();
+        SpawnShips();
     }
 
     public void EndBattle()
@@ -102,7 +109,16 @@ public class GameMaster : MonoBehaviour
 
     private void SpawnShips()
     {
-
+        if (SessionMaster.PlayerShip != null)
+        {
+            OnReadyForShipSpawn?.Invoke(SessionMaster.PlayerShip);
+        }
+    
+        List<Ship> shipsToSpawn = SessionMaster.ActiveShips;
+        foreach (Ship ship in shipsToSpawn)
+        {
+            OnReadyForShipSpawn?.Invoke(ship);
+        }
     }
 
     #endregion

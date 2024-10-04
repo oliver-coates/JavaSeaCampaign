@@ -43,7 +43,7 @@ public class PlayerCharacterUIManager : MonoBehaviour
         DeleteExistingElements();
 
         // Create new ones, assigning the players character to them
-        foreach (PlayerCharacter character in SessionMaster.playerCharacters)
+        foreach (PlayerCharacter character in SessionMaster.PlayerCharacters)
         {
             PlayerCharacterUI createdUI = Instantiate(_playerCharacterUIPrefab, _contentZone.transform).GetComponent<PlayerCharacterUI>();
 

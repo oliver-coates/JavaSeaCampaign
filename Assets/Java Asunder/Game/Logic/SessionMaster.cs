@@ -11,14 +11,32 @@ public static class SessionMaster
     public static event Action OnPlayerCountChanged;
     public static event Action OnShipCountChanged;
 
-    public static List<PlayerCharacter> playerCharacters;
-    public static List<Ship> ships;
+    public static List<PlayerCharacter> PlayerCharacters;
+    public static List<Ship> Ships;
+    public static List<Ship> ActiveShips
+    {
+        get
+        {
+            List<Ship> _activeShips = new List<Ship>();
+
+            foreach(Ship ship in Ships)
+            {
+                if (ship.isIncludedInBattle)
+                {
+                    _activeShips.Add(ship);
+                }
+            }
+            
+            return _activeShips;
+        }
+    }
+    public static Ship PlayerShip;
 
 
     public static void Initialise()
     {
-        playerCharacters = new List<PlayerCharacter>();
-        ships = new List<Ship>();
+        PlayerCharacters = new List<PlayerCharacter>();
+        Ships = new List<Ship>();
     
         ObjectRequestHandler.Initialise();
         LoadDataFromSaveFile();
@@ -46,14 +64,14 @@ public static class SessionMaster
     #region Player Characters
     public static void AddPlayerCharacter(PlayerCharacter playerCharacter)
     {
-        playerCharacters.Add(playerCharacter);
+        PlayerCharacters.Add(playerCharacter);
 
         OnPlayerCountChanged?.Invoke();
     }
 
     public static void RemovePlayerCharacter(PlayerCharacter playerCharacter)
     {
-        playerCharacters.Remove(playerCharacter);
+        PlayerCharacters.Remove(playerCharacter);
         SaveLoad.UntrackSerializedObject(playerCharacter);
 
         OnPlayerCountChanged?.Invoke();
@@ -64,14 +82,14 @@ public static class SessionMaster
 
     public static void AddShip(Ship toAdd)
     {
-        ships.Add(toAdd);
+        Ships.Add(toAdd);
 
         OnShipCountChanged?.Invoke();
     }
 
     public static void RemoveShip(Ship toRemove)
     {
-        ships.Remove(toRemove);
+        Ships.Remove(toRemove);
         SaveLoad.UntrackSerializedObject(toRemove);
         
         GameObject.Destroy(toRemove);

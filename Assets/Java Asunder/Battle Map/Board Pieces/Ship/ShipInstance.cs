@@ -2,10 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Ships
+{
+
+
 public class ShipInstance : BoardPiece
 {
-    [Header("Stats:")]
-    public int weight = 0;
+    public Ship shipData;
+
+    [Header("Sections:")]
+    public ComponentSlot armourSlot;
+    [HideInInspector] public ShipSection[] sections;
+    [HideInInspector] public ComponentSlot[] componentSlots;
+
 
     [Header("Input:")]
     // The current state that this ships rudder is set to,
@@ -45,13 +54,28 @@ public class ShipInstance : BoardPiece
     }
 
 
-    [Header("Sub-Systems:")]
-    [SerializeField] private EngineScript _engine;
-
-
 
     protected override void Initialise()
     {
+    }
+
+    public void Setup(Ship ship)
+    {
+        shipData = ship;
+
+        sections = GetComponentsInChildren<ShipSection>();
+
+        // Intiialsie all sections & Gather all component slots
+        List<ComponentSlot> allSlots = new List<ComponentSlot>();
+        allSlots.Add(armourSlot);
+
+        foreach (ShipSection section in sections)
+        {
+            section.Initialise();
+            allSlots.AddRange(section.slots);
+        }
+
+        componentSlots = allSlots.ToArray();
     }
 
 
@@ -66,4 +90,6 @@ public class ShipInstance : BoardPiece
     }
 
     
+}
+
 }
