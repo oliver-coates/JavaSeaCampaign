@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,15 @@ namespace Ships
 
 public class ShipInstance : BoardPiece
 {
+    public static event Action<ShipInstance> OnShipInstanceCreated;
+    public static event Action<ShipInstance> OnShipInstanceDestroyed;
+
+
+    [Header("Ship Data:")]
     public Ship shipData;
+
+    [Header("Decoration:")]
+    public float UIDisplayOffset = -50f;
 
     [Header("Sections:")]
     public ComponentSlot armourSlot;
@@ -57,7 +66,14 @@ public class ShipInstance : BoardPiece
 
     protected override void Initialise()
     {
+        OnShipInstanceCreated?.Invoke(this);
     }
+
+    private void OnDestroy()
+    {
+        OnShipInstanceDestroyed?.Invoke(this);
+    }
+
 
     public void Setup(Ship ship)
     {
@@ -87,6 +103,16 @@ public class ShipInstance : BoardPiece
 
     protected override void UpdateTick()
     {
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Vector3 tagPos = transform.position + new Vector3(0, UIDisplayOffset, 0);    
+        Gizmos.DrawLine(transform.position, tagPos);
+        
+        Vector3 boxSizeApprox = new Vector3(10, 5, 0.1f);
+        Gizmos.DrawCube(tagPos, boxSizeApprox);
+        
     }
 
     
