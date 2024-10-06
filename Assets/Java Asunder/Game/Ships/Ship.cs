@@ -87,6 +87,11 @@ public class Ship : SerializedObject
         }
     }
 
+    public string GetFullDescription()
+    {
+        return $"{nation.nationNameDesc} {shipClass.name} {shipClass.shipType.name}";
+    }
+
     public void Rename(string newName)
     {
         _shipName = newName;

@@ -54,7 +54,7 @@ public class ShipInstanceUI : MonoBehaviour
         _nameText.text = _ship.GetFullName();
         _flagImage.sprite = _ship.nation.flag;
 
-        _descriptionText.text = $"{_ship.nation.nationNameDesc} {_ship.shipClass.name} {_ship.shipClass.shipType.name}";
+        _descriptionText.text = _ship.GetFullDescription();
 
         if (_ship.isIncludedInBattle)
         {
