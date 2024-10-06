@@ -109,11 +109,6 @@ public class GameMaster : MonoBehaviour
 
     private void SpawnShips()
     {
-        if (SessionMaster.PlayerShip != null)
-        {
-            OnReadyForShipSpawn?.Invoke(SessionMaster.PlayerShip);
-        }
-    
         List<Ship> shipsToSpawn = SessionMaster.ActiveShips;
         foreach (Ship ship in shipsToSpawn)
         {

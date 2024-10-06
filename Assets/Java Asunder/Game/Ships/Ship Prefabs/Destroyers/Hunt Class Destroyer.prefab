@@ -233,6 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipData: {fileID: 0}
+  UIDisplayOffset: -70
   armourSlot: {fileID: 1008013967335852858}
   sections: []
   componentSlots: []

@@ -78,6 +78,7 @@ public class ShipInstance : BoardPiece
     public void Setup(Ship ship)
     {
         shipData = ship;
+        name = ship.GetFullName();
 
         sections = GetComponentsInChildren<ShipSection>();
 
