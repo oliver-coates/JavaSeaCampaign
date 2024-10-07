@@ -8,7 +8,7 @@ using System;
 public class ShipManagementUI : MonoBehaviour
 {
     [SerializeField] private GameObject _UIPrefab;
-    [SerializeField] private List<ShipInstanceUI> _shipUIs;
+    [SerializeField] private List<IShipUI> _shipUIs;
 
     [SerializeField] private RectTransform _contentZoneRectTransform;
 
@@ -17,7 +17,7 @@ public class ShipManagementUI : MonoBehaviour
 
     private void Awake()
     {
-        _shipUIs = new List<ShipInstanceUI>();
+        _shipUIs = new List<IShipUI>();
         SessionMaster.OnShipCountChanged += DrawShipUI;
     }
 
@@ -31,7 +31,7 @@ public class ShipManagementUI : MonoBehaviour
         int shipUIIndex = 0;
         foreach (Ship ship in SessionMaster.Ships)
         {
-            ShipInstanceUI shipUI;
+            IShipUI shipUI;
             if (_shipUIs.Count > shipUIIndex)
             {
                 // We already have a ship UI we can reuse:
@@ -40,7 +40,7 @@ public class ShipManagementUI : MonoBehaviour
             else
             {
                 // Create a new one
-                shipUI = Instantiate(_UIPrefab, _contentZoneRectTransform.transform).GetComponent<ShipInstanceUI>();
+                shipUI = Instantiate(_UIPrefab, _contentZoneRectTransform.transform).GetComponent<IShipUI>();
                 _shipUIs.Add(shipUI);
             }
      
@@ -48,7 +48,7 @@ public class ShipManagementUI : MonoBehaviour
             shipUI.AssignToShip(ship);
 
             Vector2 pos = new Vector2(0, shipUIIndex * -70);
-            shipUI.rectTransform.anchoredPosition = pos;
+            shipUI.GetRectTransform().anchoredPosition = pos;
 
             shipUIIndex++;
         }
@@ -60,10 +60,10 @@ public class ShipManagementUI : MonoBehaviour
 
         for (int toDeleteIndex = 0; toDeleteIndex < extraUIElements; toDeleteIndex++)
         {
-            ShipInstanceUI toDelete = _shipUIs[shipUIIndex];
+            IShipUI toDelete = _shipUIs[shipUIIndex];
             _shipUIs.RemoveAt(shipUIIndex);
 
-            Destroy(toDelete.gameObject);
+            Destroy(toDelete.GetGameObject());
         }
     }
 

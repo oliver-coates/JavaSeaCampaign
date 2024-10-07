@@ -39,8 +39,17 @@ public class GameMaster : MonoBehaviour
         }	
     }
 
-
     [SerializeField] private List<BoardPiece> _boardPieces;
+
+    [SerializeField] private static Ship _SelectedShip;
+    public static Ship SelectedShip
+    {
+        get
+        {
+            return _SelectedShip;
+        }	
+    }
+
 
 
     #region Initialistion
@@ -49,6 +58,7 @@ public class GameMaster : MonoBehaviour
         _boardPieces = new List<BoardPiece>();
         BoardPiece.OnBoardPieceInitialised += AddBoardPiece;
         BoardPiece.OnBoardPieceDestroyed += RemoveBoardPiece;
+        ShipSelectableUI.OnShipSelected += ShipSelected;
 
     }
 
@@ -56,6 +66,7 @@ public class GameMaster : MonoBehaviour
     {
         BoardPiece.OnBoardPieceInitialised -= AddBoardPiece;
         BoardPiece.OnBoardPieceDestroyed -= RemoveBoardPiece;
+        ShipSelectableUI.OnShipSelected -= ShipSelected;
     }
 
 
@@ -86,6 +97,10 @@ public class GameMaster : MonoBehaviour
 
         // Ensure the game starts paused.
         PauseBattle();
+
+        // Ensure no ship in selected
+        _SelectedShip?.SetIsSelected(false);
+        _SelectedShip = null;
 
         SpawnShips();
     }
@@ -144,6 +159,17 @@ public class GameMaster : MonoBehaviour
     }
     #endregion
 
+    #region Ship Selection
+
+    private void ShipSelected(Ship ship)
+    {
+        _SelectedShip?.SetIsSelected(false);
+        _SelectedShip = ship;
+        _SelectedShip.SetIsSelected(true);
+    }
+
+
+    #endregion
 
     #region Debug
 

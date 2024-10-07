@@ -18,6 +18,7 @@ public class ShipInstance : BoardPiece
 
     [Header("Decoration:")]
     public float UIDisplayOffset = -50f;
+    public LineRenderer shipDirectionLine; // A direction line only visible to the game master
 
     [Header("Sections:")]
     public ComponentSlot armourSlot;
@@ -93,6 +94,12 @@ public class ShipInstance : BoardPiece
         }
 
         componentSlots = allSlots.ToArray();
+
+        if (ship != SessionMaster.PlayerShip)
+        {
+            // Since this is not a player ship, it needs to be controlled by an AI 
+            gameObject.AddComponent<ShipAIController>();
+        }
     }
 
 

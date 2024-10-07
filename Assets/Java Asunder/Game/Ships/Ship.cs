@@ -51,6 +51,15 @@ public class Ship : SerializedObject
         }	
     }
 
+    [SerializeField] private bool _isSelectedByGameMaster;
+    public bool isSelectedByGameMaster
+    {
+        get
+        {
+            return _isSelectedByGameMaster;
+        }	
+    }
+
 
     [Header("Decorative:")]
     [SerializeField] private string _shipName;
@@ -64,6 +73,7 @@ public class Ship : SerializedObject
 
 
 
+
     public void Initialise(ShipClassType shipClass, Nation shipNation)
     {
         _shipClass = shipClass;
@@ -71,6 +81,7 @@ public class Ship : SerializedObject
 
         _shipName = DEFAULT_NAME;
         _isIncludedInBattle = false;
+        _isSelectedByGameMaster = false;
 
         OnChange?.Invoke();
     }    
@@ -127,6 +138,13 @@ public class Ship : SerializedObject
 
         OnChange?.Invoke();
     }
+
+    public void SetIsSelected(bool isSelected)
+    {
+        _isSelectedByGameMaster = isSelected;
+        OnChange?.Invoke();
+    }
+
 }
 
 

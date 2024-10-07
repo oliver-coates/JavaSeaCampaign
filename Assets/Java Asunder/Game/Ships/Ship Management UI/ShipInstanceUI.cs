@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShipInstanceUI : MonoBehaviour
+public class ShipInstanceUI : MonoBehaviour, IShipUI
 {
     private readonly Color INACTIVE_COLOR = new Color(0.75f, 0.75f, 0.75f, 0.75f);
     private readonly Color ACTIVE_COLOR = new Color(1f, 1f, 1f, 1f);
@@ -119,5 +119,15 @@ public class ShipInstanceUI : MonoBehaviour
             SessionMaster.PlayerShip.SetIsPlayerShip(false);
         }
         _ship.SetIsPlayerShip(true);
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    public RectTransform GetRectTransform()
+    {
+        return rectTransform;
     }
 }
