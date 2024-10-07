@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Rear Deck Mount
-  type: 0
+  type: 6
+  component: {fileID: 0}
 --- !u!1 &1616034192442772221
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,7 +92,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Rear Room
-  type: 0
+  type: 12
+  component: {fileID: 0}
 --- !u!1 &2163997216263141867
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,6 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotName: Bridge
   type: 0
+  component: {fileID: 0}
 --- !u!1 &2734514401933060139
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,7 +186,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Fore Light Gun Mount
-  type: 0
+  type: 3
+  component: {fileID: 0}
 --- !u!1 &3536027577139989715
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,6 +198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5712321518652783385}
   - component: {fileID: 1055865586913166770}
+  - component: {fileID: 2076883527109525146}
   m_Layer: 0
   m_Name: Hunt Class Destroyer
   m_TagString: Untagged
@@ -240,6 +245,33 @@ MonoBehaviour:
   componentSlots: []
   _rudder: 0
   _targetSpeed: 0
+--- !u!50 &2076883527109525146
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3536027577139989715}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1500
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &3784667007866536742
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +317,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Main Electronics Room
-  type: 0
+  type: 7
+  component: {fileID: 0}
 --- !u!1 &4000044268225090703
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +464,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Near Aft Light Gun Mount
-  type: 0
+  type: 3
+  component: {fileID: 0}
 --- !u!1 &4363488878373959247
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,7 +511,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Port Deck Mount
-  type: 0
+  type: 6
+  component: {fileID: 0}
 --- !u!1 &4489480450284354487
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,6 +796,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotName: Armour
   type: 9
+  component: {fileID: 0}
 --- !u!1 &6350421903770450311
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,6 +924,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1689563904903251209}
   - component: {fileID: 7272643855545225815}
+  - component: {fileID: 6389890341849963573}
   m_Layer: 0
   m_Name: Engine
   m_TagString: Untagged
@@ -923,7 +960,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Engine Room
-  type: 0
+  type: 8
+  component: {fileID: 11400000, guid: 0f9b73aee757b384695e026bc08d5143, type: 2}
+--- !u!114 &6389890341849963573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7723331787766325343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2c434d20dc3b7145ada2da17417eb18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _engineSlot: {fileID: 7272643855545225815}
+  _rigidBody: {fileID: 2076883527109525146}
+  _engineSpeed: 0
 --- !u!1 &7751553943424693175
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,7 +1022,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Far Aft Light Gun Mount
-  type: 0
+  type: 3
+  component: {fileID: 0}
 --- !u!1 &7903304595399901650
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,7 +1069,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Starboard Deck Mount
-  type: 0
+  type: 6
+  component: {fileID: 0}
 --- !u!1 &8109193590445984590
 GameObject:
   m_ObjectHideFlags: 0
@@ -1042,7 +1097,7 @@ Transform:
   m_GameObject: {fileID: 8109193590445984590}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1061,7 +1116,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Hold
-  type: 0
+  type: 12
+  component: {fileID: 0}
 --- !u!1 &8997232532124010028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1107,4 +1163,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Secondary Electronics Room
-  type: 0
+  type: 7
+  component: {fileID: 0}

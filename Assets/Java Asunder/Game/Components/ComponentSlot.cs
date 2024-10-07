@@ -29,6 +29,7 @@ public class ComponentSlot : MonoBehaviour
     public string slotName;
     public ComponentType type;
 
+    public ShipComponent component;
     
 }
 

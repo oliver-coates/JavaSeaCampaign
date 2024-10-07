@@ -71,7 +71,8 @@ public class Ship : SerializedObject
         }	
     }
 
-
+    [Header("Slots:")]
+    [SerializeField] private List<ShipComponentSlotPair> _componentSlotPairs;
 
 
     public void Initialise(ShipClassType shipClass, Nation shipNation)
@@ -147,6 +148,17 @@ public class Ship : SerializedObject
 
 }
 
+/// <summary>
+/// Struct which matches a ShipComponent to a slot on a hull.
+/// Should be passed through to the ShipInstance at runtime when its ship prefab is
+/// instaniated to pull data from the ship prefab.
+/// </summary>
+[System.Serializable]
+public struct ShipComponentSlotPair
+{
+    public ShipComponent component;
+    public string slotName;
+}
 
 
 }
