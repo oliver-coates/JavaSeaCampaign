@@ -11,6 +11,7 @@ public class ShipInstance : BoardPiece
 {
     public static event Action<ShipInstance> OnShipInstanceCreated;
     public static event Action<ShipInstance> OnShipInstanceDestroyed;
+    public static event Action<ShipInstance> OnPlayerShipCreated;
 
 
     [Header("Ship Data:")]
@@ -26,6 +27,8 @@ public class ShipInstance : BoardPiece
     [HideInInspector] public ShipSection[] sections;
     [HideInInspector] public ComponentSlot[] componentSlots;
 
+    [Header("Easy component access")]
+    public EngineScript engine;
 
 
     [Header("Input:")]
@@ -102,6 +105,11 @@ public class ShipInstance : BoardPiece
         {
             // Since this is not a player ship, it needs to be controlled by an AI 
             AI = gameObject.AddComponent<ShipAIController>();
+        }
+        else
+        {
+            // This is a player ship
+            OnPlayerShipCreated?.Invoke(this);
         }
     }
 

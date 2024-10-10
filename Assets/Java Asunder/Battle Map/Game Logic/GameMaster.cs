@@ -95,8 +95,9 @@ public class GameMaster : MonoBehaviour
         // Delete all old peices
         ClearBoard();
 
-        _battleUnderway = true;
         OnBattleStart?.Invoke();
+        _battleUnderway = true;
+        
 
         // Ensure the game starts paused.
         PauseBattle();

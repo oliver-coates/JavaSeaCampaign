@@ -28,6 +28,13 @@ public class EngineScript : BoardPiece
     [Header("State:")]
     // The speed that the engine is currently going.
     [Range(0,1)] [SerializeField] private float _engineSpeed;
+    public float engineSpeed
+    {
+        get
+        {
+            return _engineSpeed;
+        }
+    }
 
     protected override void Initialise() 
     {

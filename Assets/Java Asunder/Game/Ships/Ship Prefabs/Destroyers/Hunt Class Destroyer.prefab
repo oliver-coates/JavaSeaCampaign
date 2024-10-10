@@ -244,6 +244,7 @@ MonoBehaviour:
   armourSlot: {fileID: 1008013967335852858}
   sections: []
   componentSlots: []
+  engine: {fileID: 6389890341849963573}
   _rudder: 0
   _targetSpeed: 0
 --- !u!50 &2076883527109525146
