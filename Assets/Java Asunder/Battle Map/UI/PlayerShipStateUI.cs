@@ -17,6 +17,10 @@ public class PlayerShipStateUI : MonoBehaviour
     [SerializeField] private RectTransform _rudderTargetImage;
     [SerializeField] private TextMeshProUGUI _rudderOrderText;
 
+    [SerializeField] private TextMeshProUGUI _speedText;
+
+
+    private float _speedSmoothed;
 
     #region Initialisation & Destruction
     private void Awake()
@@ -46,13 +50,20 @@ public class PlayerShipStateUI : MonoBehaviour
             return;
         }
 
+        // ENGINE:
         _engineOrderText.text = GetEngineOrder(_playerShip.targetSpeed);
         _engineSpeedImage.fillAmount = _playerShip.engine.engineSpeed;
         _engineSpeedText.text = $"{_playerShip.engine.engineSpeed * 100:n0}%";
 
+        // RUDDER:
         _rudderOrderText.text = GetRudderOrder(_playerShip.rudder);
         float rudderLerp = (1.0f + _playerShip.rudder) / 2f;
         _rudderTargetImage.anchoredPosition = Vector2.Lerp(new Vector2(-100, 0), new Vector2(100, 0), rudderLerp);
+    
+        // SPEED:
+        float knots = _playerShip.engine.speed;
+        _speedSmoothed = Mathf.Lerp(_speedSmoothed, knots, Time.deltaTime);
+        _speedText.text = $"{_speedSmoothed:0.#}kt";
     }
 
     #region Decorators

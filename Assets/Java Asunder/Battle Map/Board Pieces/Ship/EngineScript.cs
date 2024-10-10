@@ -10,12 +10,12 @@ public class EngineScript : BoardPiece
 
     #region Magic Tuners
 
-    private const float ENGINE_SPEED_STARTING = 0.6f;
+    public const float ENGINE_SPEED_STARTING = 0.6f;
 
     private const float SHIP_DRAG = 15f;
     private const float SHIP_DRAG_ANGULAR = 1.15f;
-    private const float SPEED_TUNER = 50000;
-    private const float TURN_SPEED_TUNER = 10000;
+    private const float SPEED_TUNER = 20000;
+    private const float TURN_SPEED_TUNER = 25000;
     private const float ENGINE_CHANGE_SPEED_TUNER = 0.0005f;
     private const float ENGINE_SPEED_CHANGE_DOWN_MULTIPLIER = 1.5f;
     #endregion
@@ -33,6 +33,15 @@ public class EngineScript : BoardPiece
         get
         {
             return _engineSpeed;
+        }
+    }
+
+    public float speed
+    {
+        get
+        {
+            // returns the speed of this vessel, in knots
+            return _rigidBody.velocity.magnitude * 1.943844f;
         }
     }
 
