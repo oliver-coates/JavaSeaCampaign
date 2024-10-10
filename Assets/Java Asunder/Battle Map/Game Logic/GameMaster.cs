@@ -18,35 +18,36 @@ public class GameMaster : MonoBehaviour
     #endregion
 
     [Header("Game State:")]
+    private static GameMaster _Instance;
 
     // Is there a battle currently underway
     [SerializeField] private bool _battleUnderway;
-    public bool battleUnderway
+    public static bool BattleUnderway
     {
         get
         {
-            return _battleUnderway;
+            return _Instance._battleUnderway;
         }	
     }
 
     // Is time paused?
     [SerializeField] private bool _battlePaused;
-    public bool battlePaused
+    public static bool BattlePaused
     {
         get
         {
-            return _battlePaused;
+            return _Instance._battlePaused;
         }	
     }
 
     [SerializeField] private List<BoardPiece> _boardPieces;
 
-    [SerializeField] private static Ship _SelectedShip;
+    [SerializeField] private Ship _selectedShip;
     public static Ship SelectedShip
     {
         get
         {
-            return _SelectedShip;
+            return _Instance._selectedShip;
         }	
     }
 
@@ -55,6 +56,8 @@ public class GameMaster : MonoBehaviour
     #region Initialistion
     private void Awake()
     {
+        _Instance = this;
+
         _boardPieces = new List<BoardPiece>();
         BoardPiece.OnBoardPieceInitialised += AddBoardPiece;
         BoardPiece.OnBoardPieceDestroyed += RemoveBoardPiece;
@@ -99,8 +102,8 @@ public class GameMaster : MonoBehaviour
         PauseBattle();
 
         // Ensure no ship in selected
-        _SelectedShip?.SetIsSelected(false);
-        _SelectedShip = null;
+        _selectedShip?.SetIsSelected(false);
+        _selectedShip = null;
 
         SpawnShips();
     }
@@ -163,9 +166,9 @@ public class GameMaster : MonoBehaviour
 
     private void ShipSelected(Ship ship)
     {
-        _SelectedShip?.SetIsSelected(false);
-        _SelectedShip = ship;
-        _SelectedShip.SetIsSelected(true);
+        _selectedShip?.SetIsSelected(false);
+        _selectedShip = ship;
+        _selectedShip.SetIsSelected(true);
     }
 
 

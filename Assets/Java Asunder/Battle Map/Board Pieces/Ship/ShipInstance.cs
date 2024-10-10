@@ -21,6 +21,7 @@ public class ShipInstance : BoardPiece
     public LineRenderer shipDirectionLine; // A direction line only visible to the game master
 
     [Header("Sections:")]
+    [HideInInspector] public ShipAIController AI; // Will only exist on non-player ships
     public ComponentSlot armourSlot;
     [HideInInspector] public ShipSection[] sections;
     [HideInInspector] public ComponentSlot[] componentSlots;
@@ -79,6 +80,7 @@ public class ShipInstance : BoardPiece
     public void Setup(Ship ship)
     {
         shipData = ship;
+        ship.instance = this;
         name = ship.GetFullName();
 
         sections = GetComponentsInChildren<ShipSection>();
@@ -98,7 +100,7 @@ public class ShipInstance : BoardPiece
         if (ship != SessionMaster.PlayerShip)
         {
             // Since this is not a player ship, it needs to be controlled by an AI 
-            gameObject.AddComponent<ShipAIController>();
+            AI = gameObject.AddComponent<ShipAIController>();
         }
     }
 
@@ -122,8 +124,6 @@ public class ShipInstance : BoardPiece
         Gizmos.DrawCube(tagPos, boxSizeApprox);
         
     }
-
-    
 }
 
 }

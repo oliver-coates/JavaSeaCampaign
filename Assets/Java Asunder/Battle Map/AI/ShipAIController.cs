@@ -8,14 +8,14 @@ public class ShipAIController : BoardPiece
     ShipInstance _ship;
 
     [Header("State:")]
-    [SerializeField] private Vector3 _targetLocation;
-    [SerializeField] private Ship _targetShip;
+    [SerializeField] private Vector3 _targetDestination;
+    [SerializeField] private ShipInstance _targetShip;
 
     private void Awake()
     {
         _ship = GetComponent<ShipInstance>();
 
-        _targetLocation = new Vector3(Random.Range(-100f, 100f), 0, Random.Range(-100f, 100f));
+        _targetDestination = new Vector3(Random.Range(-100f, 100f), 0, Random.Range(-100f, 100f));
     
     }
 
@@ -30,7 +30,6 @@ public class ShipAIController : BoardPiece
     protected override void UpdateTick()
     {
         UpdateDirectionLineRenderer();
-
     }
 
     private void UpdateDirectionLineRenderer()
@@ -41,7 +40,7 @@ public class ShipAIController : BoardPiece
 
             Vector3[] lineRendererPositons = new Vector3[2];
             lineRendererPositons[0] = transform.position;
-            lineRendererPositons[1] = _targetLocation;
+            lineRendererPositons[1] = _targetDestination;
 
             _ship.shipDirectionLine.SetPositions(lineRendererPositons);
         }
@@ -49,5 +48,15 @@ public class ShipAIController : BoardPiece
         {
             _ship.shipDirectionLine.enabled = false;
         }
+    }
+
+    public void SetDestination(Vector3 destination)
+    {
+        _targetDestination = destination;
+    }
+
+    public void SetTarget(ShipInstance ship)
+    {
+        _targetShip = ship;
     }
 }

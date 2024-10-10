@@ -60,6 +60,9 @@ public class Ship : SerializedObject
         }	
     }
 
+    // The board instance of this ship.
+    // Be warned this this is EXTREMELY transient, make sure you null check on this 
+    [NonSerialized] public ShipInstance instance;
 
     [Header("Decorative:")]
     [SerializeField] private string _shipName;

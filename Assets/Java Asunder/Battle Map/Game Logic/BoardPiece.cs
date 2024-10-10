@@ -8,31 +8,31 @@ public abstract class BoardPiece : MonoBehaviour
     public static event Action<BoardPiece> OnBoardPieceInitialised;
     public static event Action<BoardPiece> OnBoardPieceDestroyed;
 
-    protected bool _gameUnderway = false;
+    protected bool _battleUnderway = false;
+    protected bool _gamePaused = true;
 
 
     #region Initialisation & Destruction
     private void Start()
     {
-        GameMaster.OnTimePlay += TimePlay;
-        GameMaster.OnTimePause += TimePause;
-
         OnBoardPieceInitialised.Invoke(this);
         Initialise();
     }
 
     private void OnDestroy()
     {
-        GameMaster.OnTimePause -= TimePause;
-        GameMaster.OnTimePlay -= TimePlay;
-
         OnBoardPieceDestroyed?.Invoke(this);
     }
     #endregion
 
     private void Update()
     {
-        if (_gameUnderway)
+        if (!GameMaster.BattleUnderway)
+        {
+            return;
+        }
+
+        if (!GameMaster.BattlePaused)
         {
             GameTick();
         }
@@ -40,15 +40,7 @@ public abstract class BoardPiece : MonoBehaviour
         UpdateTick();
     }
 
-    private void TimePause()
-    {
-        _gameUnderway = false;
-    }
 
-    private void TimePlay()
-    {
-        _gameUnderway = true;
-    }
 
 
     /// <summary>
