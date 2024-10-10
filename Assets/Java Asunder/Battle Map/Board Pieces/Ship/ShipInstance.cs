@@ -27,6 +27,7 @@ public class ShipInstance : BoardPiece
     [HideInInspector] public ComponentSlot[] componentSlots;
 
 
+
     [Header("Input:")]
     // The current state that this ships rudder is set to,
     // -1 being full port, 1 being full starboard

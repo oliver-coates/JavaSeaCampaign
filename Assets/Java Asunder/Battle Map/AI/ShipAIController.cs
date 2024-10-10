@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class ShipAIController : BoardPiece
 {
+    #region Tuners
+
+    public const float OVERSTEER_AMOUNT = 1.5f;
+
+    #endregion
+
     ShipInstance _ship;
 
     [Header("State:")]
@@ -29,7 +35,28 @@ public class ShipAIController : BoardPiece
 
     protected override void UpdateTick()
     {
+        SetRudderTowardsDestination();
+
         UpdateDirectionLineRenderer();
+        UpdateEngineSpeed();
+    }
+
+    private void SetRudderTowardsDestination()
+    {
+        Vector3 directionToTarget = transform.position - _targetDestination;
+
+        // Determine if the destination is left or right of the ship
+        float dot = Vector3.Dot(transform.right, directionToTarget.normalized);
+
+        // Add in 'oversteer'
+        dot = Mathf.Clamp(dot * OVERSTEER_AMOUNT, -1f, 1f);
+
+        _ship.rudder = dot;
+    }
+
+    private void UpdateEngineSpeed()
+    {
+        _ship.targetSpeed = 1f;
     }
 
     private void UpdateDirectionLineRenderer()
