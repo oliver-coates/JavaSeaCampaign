@@ -28,6 +28,7 @@ public class ShipInstance : BoardPiece
     [HideInInspector] public ComponentSlot[] componentSlots;
 
     [Header("Easy component access")]
+    public Rigidbody2D rb;
     public EngineScript engine;
 
 
@@ -95,7 +96,7 @@ public class ShipInstance : BoardPiece
 
         foreach (ShipSection section in sections)
         {
-            section.Initialise();
+            section.Initialise(this);
             allSlots.AddRange(section.slots);
         }
 

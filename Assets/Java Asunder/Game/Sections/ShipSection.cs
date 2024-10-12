@@ -12,9 +12,14 @@ public class ShipSection : MonoBehaviour
     [Header("Slots: (Auto-populated at runtime)")]
     public ComponentSlot[] slots;
 
-    public void Initialise()
+    public void Initialise(ShipInstance ship)
     {
         slots = GetComponentsInChildren<ComponentSlot>();
+
+        foreach (ComponentSlot slot in slots)
+        {
+            slot.Initialise(ship);
+        }
     }
 }
 

@@ -6,31 +6,38 @@ namespace Ships
 {
 
 
-public enum ComponentType
-{
-    Bridge,
-    Hold,
-    Magazine,
-    LightGun,
-    MediumGun,
-    HeavyGun,
-    DeckMount,
-    Electronics,
-    Engine,
-    LightArmour,
-    MediumArmour,
-    HeavyArmour,
-    Additional
-
-}
 
 public class ComponentSlot : MonoBehaviour
 {
+    [Header("Decorative")]
     public string slotName;
-    public ComponentType type;
 
-    public ShipComponent component;
+    [Header("Type of component that this is: (i.e. Medium Gun)")]
+    public ShipComponentType componentType;
     
+    [Header("The actual component that this is (i.e. 40mm gun)")]
+    public ShipComponent component;
+
+    [Header("The instaniated script related to this component:")]
+    public IShipComponentInstance componentInstance;
+    
+
+    public void Initialise(ShipInstance ship)
+    {
+        if (componentType.genericPrefab != null)
+        {
+            IShipComponentInstance createdComponentInstance = Instantiate(componentType.genericPrefab, transform).GetComponent<IShipComponentInstance>();    
+        
+            if (createdComponentInstance == null)
+            {
+                Debug.LogError($"Ship component instance not found on gameobject {name}");
+                return;
+            }
+        
+            createdComponentInstance.Setup(ship, this);
+        }   
+    }
+
 }
 
 }

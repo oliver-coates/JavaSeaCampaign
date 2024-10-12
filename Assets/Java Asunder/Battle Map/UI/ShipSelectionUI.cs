@@ -46,10 +46,11 @@ public class ShipSelectionUI : MonoBehaviour
             return;
         }
 
-        _rudderSlider.value = _rudderSlider.value;
+        float rudder = (_rudderSlider.value / 10f) / -1f;
 
-        float rudder = _rudderSlider.value;
-        SessionMaster.PlayerShip.instance.rudder = rudder / 10f;
+        _rudderText.text = rudder.ToString();
+
+        SessionMaster.PlayerShip.instance.rudder = rudder;
     }
 
     public void UpdateSpeedValue()

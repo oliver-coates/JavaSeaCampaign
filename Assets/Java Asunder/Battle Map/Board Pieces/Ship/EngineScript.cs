@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
-public class EngineScript : BoardPiece
+public class EngineScript : BoardPiece, IShipComponentInstance
 {
 
     #region Magic Tuners
@@ -45,17 +45,24 @@ public class EngineScript : BoardPiece
         }
     }
 
-    protected override void Initialise() 
-    {
-        _ship = GetComponentInParent<ShipInstance>();
+    protected override void Initialise() { }
 
+    public void Setup(ShipInstance ship, ComponentSlot componentSlot)
+    {
+        _ship = ship;
+        _engineSlot = componentSlot;
+        _ship.engine = this;
+
+        // Ensure the engine slot is correct
         if (_engineSlot.component is not EngineType)
         {
             Debug.LogError($"Provided component in engine slot is not Engine Type");
             return;
         }
-
         _engineType = (EngineType) _engineSlot.component;
+
+        // Set up rigid body:
+        _rigidBody = ship.rb;
 
         _rigidBody.drag = SHIP_DRAG;
         _rigidBody.angularDrag = SHIP_DRAG_ANGULAR;
@@ -88,4 +95,5 @@ public class EngineScript : BoardPiece
         _rigidBody.AddTorque(rotateAmount, ForceMode2D.Force);
     }
 
+    
 }
