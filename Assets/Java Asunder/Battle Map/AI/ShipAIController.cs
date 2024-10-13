@@ -84,6 +84,6 @@ public class ShipAIController : BoardPiece
 
     public void SetTarget(ShipInstance ship)
     {
-        _targetShip = ship;
+        ship.SetTarget(ship);
     }
 }

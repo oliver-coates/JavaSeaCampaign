@@ -73,21 +73,35 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
         {
             Vector3 aimLocation = GetAimLocation();
             dir = aimLocation -  transform.position;
+            TurnTurretTowards(dir);
         }
         else
         {
-            // If no target, aim straight ahead
-            dir = transform.position + (transform.up * 10f);
+            // If no target, aim straight ahead            
+            TurnTurretTowards(Vector3.up);
         }
-
-        TurnTurretTowards(dir);
     }
 
     private void TurnTurretTowards(Vector3 direction)
     {
-        Quaternion targetDir = Quaternion.LookRotation(direction);
+        Debug.DrawLine(transform.position, transform.position + direction, Color.yellow);
 
-        _turret.rotation = Quaternion.Slerp(_turret.rotation, targetDir, Time.deltaTime * _gunType.turnSpeed);
+
+        Vector3 directionRelativeToTurret = transform.worldToLocalMatrix * direction;
+        Debug.DrawLine(transform.position, transform.position + directionRelativeToTurret, Color.red);
+
+
+        Quaternion targetRotation = Quaternion.LookRotation(directionRelativeToTurret, Vector3.up);
+
+        float turnDelta = Time.deltaTime * _gunType.turnSpeed;
+        turnDelta = 1;
+
+        _turret.rotation = Quaternion.Slerp(_turret.rotation, targetRotation, turnDelta);
+    }
+
+    private void ReturnToRestPosition()
+    {
+        _turret.localRotation = Quaternion.Slerp(_turret.localRotation, Quaternion.identity, Time.deltaTime * _gunType.turnSpeed);
     }
 
     #endregion

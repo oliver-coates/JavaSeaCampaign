@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 namespace Ships
@@ -23,6 +24,7 @@ public class ShipInstance : BoardPiece
     [Header("Decoration:")]
     public float UIDisplayOffset = -50f;
     public LineRenderer shipDirectionLine; // A direction line only visible to the game master
+    public LineRenderer shipTargetLine; // A line visible only to the game master, shows what the ship is targetting with its guns.
 
     [Header("Sections:")]
     [HideInInspector] public ShipAIController AI; // Will only exist on non-player ships
@@ -135,6 +137,7 @@ public class ShipInstance : BoardPiece
 
     protected override void UpdateTick()
     {
+        UpdateDirectionLine();
     }
 
     private void OnDrawGizmosSelected()
@@ -151,6 +154,24 @@ public class ShipInstance : BoardPiece
     {
         _target = shipInstance;
         OnTargetSet?.Invoke(shipInstance);
+    }
+
+    private void UpdateDirectionLine()
+    {
+        if (shipData.isSelectedByGameMaster && _target != null)
+        {
+            shipTargetLine.enabled = true;
+
+            Vector3[] positions = new Vector3[2];
+            positions[0] = transform.position;
+            positions[1] = _target.transform.position;
+
+            shipTargetLine.SetPositions(positions);
+        }
+        else
+        {
+            shipTargetLine.enabled = false;
+        }
     }
 }
 

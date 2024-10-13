@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sourceNation: {fileID: 11400000, guid: 114e746261473a444a34996dc709b122, type: 2}
   price: 100
-  turnSpeed: 35
+  turnSpeed: 75
   shotVelocity: 10
   accuracy: 1

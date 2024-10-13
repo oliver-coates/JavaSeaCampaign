@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Ships;
 using UnityEngine;
 
 public class BoardInteractionManager : MonoBehaviour
@@ -20,11 +21,18 @@ public class BoardInteractionManager : MonoBehaviour
 
     private void CheckForInput()
     {
-        Vector2 mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePositionInWorld = _camera.ScreenToWorldPoint(Input.mousePosition);
 
-        if (Input.GetKey(KeyCode.LeftControl) && Input.GetMouseButton(1))
+        if (Input.GetKey(KeyCode.LeftControl))
         {
-            SetShipDestination(mousePosition);
+            if (Input.GetMouseButton(0))
+            {
+                SetShipDestination(mousePositionInWorld);
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                AttemptTargetShip(mousePositionInWorld);
+            }
         }
     }
 
@@ -43,5 +51,37 @@ public class BoardInteractionManager : MonoBehaviour
         }
 
         GameMaster.SelectedShip.instance.AI.SetDestination(destination);
+    }
+
+    private void AttemptTargetShip(Vector2 mousePositionInWorld)
+    {
+        Vector3 startPos = new Vector3(mousePositionInWorld.x, mousePositionInWorld.y, 10f);
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(startPos, Vector2.zero);
+
+        bool hitEnemyShip = false;
+        foreach (RaycastHit2D hit in hits)
+        {            
+            ShipSection section = hit.collider.GetComponent<ShipSection>();
+            if (section != null)
+            {
+                if (section.ship != GameMaster.SelectedShip)
+                {
+                    SetShipTarget(section.ship);
+                    hitEnemyShip = true;
+                    break;
+                }
+            }
+        }
+
+        if (!hitEnemyShip)
+        {
+            SetShipTarget(null);
+        }
+    }
+
+    private void SetShipTarget(ShipInstance target)
+    {
+        GameMaster.SelectedShip.instance.SetTarget(target);
     }
 }
