@@ -14,6 +14,9 @@ public class ShipInstance : BoardPiece
     public static event Action<ShipInstance> OnPlayerShipCreated;
 
 
+    public event Action<ShipInstance> OnTargetSet;
+
+
     [Header("Ship Data:")]
     public Ship shipData;
 
@@ -67,6 +70,15 @@ public class ShipInstance : BoardPiece
         {
             _targetSpeed = value;
         }
+    }
+
+    [SerializeField] private ShipInstance _target;
+    public ShipInstance target
+    {
+        get
+        {
+            return _target;
+        }	
     }
 
 
@@ -133,6 +145,12 @@ public class ShipInstance : BoardPiece
         Vector3 boxSizeApprox = new Vector3(10, 5, 0.1f);
         Gizmos.DrawCube(tagPos, boxSizeApprox);
         
+    }
+
+    public void SetTarget(ShipInstance shipInstance)
+    {
+        _target = shipInstance;
+        OnTargetSet?.Invoke(shipInstance);
     }
 }
 

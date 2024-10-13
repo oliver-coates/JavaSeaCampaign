@@ -187,7 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotName: Fore Gun Mount
   componentType: {fileID: 11400000, guid: 5561a009a56c8b441980ae726686d169, type: 2}
-  component: {fileID: 0}
+  component: {fileID: 11400000, guid: 841cd6747ba1b1f41ba8b0e91f332163, type: 2}
 --- !u!1 &3536027577139989715
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,6 +248,7 @@ MonoBehaviour:
   engine: {fileID: 0}
   _rudder: 0
   _targetSpeed: 0
+  _target: {fileID: 0}
 --- !u!50 &2076883527109525146
 Rigidbody2D:
   serializedVersion: 4
@@ -359,8 +360,8 @@ Transform:
   - {fileID: 6227961611873962443}
   - {fileID: 2543431574223004868}
   - {fileID: 4237514697331216143}
-  - {fileID: 676452137042818816}
   - {fileID: 286953930605503741}
+  - {fileID: 676452137042818816}
   m_Father: {fileID: 5712321518652783385}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &705326818759192091
@@ -433,7 +434,7 @@ GameObject:
   - component: {fileID: 286953930605503741}
   - component: {fileID: 7400610925531880589}
   m_Layer: 0
-  m_Name: Rear Gun 2
+  m_Name: Rear Medium Gun
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -447,13 +448,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4089353403793123566}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: -28.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1592050452780668756}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!114 &7400610925531880589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -468,7 +469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotName: Near Aft Gun Mount
   componentType: {fileID: 11400000, guid: 5561a009a56c8b441980ae726686d169, type: 2}
-  component: {fileID: 0}
+  component: {fileID: 11400000, guid: 841cd6747ba1b1f41ba8b0e91f332163, type: 2}
 --- !u!1 &4363488878373959247
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,7 +976,7 @@ GameObject:
   - component: {fileID: 676452137042818816}
   - component: {fileID: 321064160569781205}
   m_Layer: 0
-  m_Name: Rear Gun
+  m_Name: Rear Light Gun
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -989,13 +990,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7751553943424693175}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: -33.88, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1592050452780668756}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!114 &321064160569781205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1008,8 +1009,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a247ff27ca6fa468b49a749dd149c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotName: Far Aft Gun Mount
-  componentType: {fileID: 11400000, guid: 5561a009a56c8b441980ae726686d169, type: 2}
+  slotName: Far Small Gun Mount
+  componentType: {fileID: 11400000, guid: 4749d3654fea5824dbb62d2bcfc5d9e0, type: 2}
   component: {fileID: 0}
 --- !u!1 &7903304595399901650
 GameObject:

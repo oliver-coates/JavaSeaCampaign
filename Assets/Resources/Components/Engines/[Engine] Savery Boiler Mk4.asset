@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4905b2bc9505e2c4cbade0e9c277eead, type: 3}
-  m_Name: Savery Boiler Mk4
+  m_Name: '[Engine] Savery Boiler Mk4'
   m_EditorClassIdentifier: 
   sourceNation: {fileID: 11400000, guid: e4e4966f2da0af447862c514c81b92a5, type: 2}
   price: 100

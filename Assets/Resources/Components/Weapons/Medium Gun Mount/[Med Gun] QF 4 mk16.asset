@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48ba0cfdedb425948a8cf222e1c81a7b, type: 3}
-  m_Name: US 5-35 Dual Purpose
+  m_Name: '[Med Gun] QF 4 mk16'
   m_EditorClassIdentifier: 
+  sourceNation: {fileID: 11400000, guid: 114e746261473a444a34996dc709b122, type: 2}
+  price: 100
   turnSpeed: 35
   shotVelocity: 10
   accuracy: 1

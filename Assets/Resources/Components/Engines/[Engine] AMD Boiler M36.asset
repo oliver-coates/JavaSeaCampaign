@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4905b2bc9505e2c4cbade0e9c277eead, type: 3}
-  m_Name: AMD Boiler M31
+  m_Name: '[Engine] AMD Boiler M36'
   m_EditorClassIdentifier: 
   sourceNation: {fileID: 11400000, guid: 968bb892f8f80cd4890f696d12932e2e, type: 2}
   price: 100
-  strength: 75
-  agility: 50
+  strength: 90
+  agility: 75
