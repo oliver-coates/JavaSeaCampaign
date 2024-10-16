@@ -57,7 +57,7 @@ public class PlayerShipStateUI : MonoBehaviour
 
         // RUDDER:
         _rudderOrderText.text = GetRudderOrder(_playerShip.rudder);
-        float rudderLerp = (1.0f + _playerShip.rudder) / 2f;
+        float rudderLerp = 1f - ((1f + _playerShip.rudder) / 2f);
         _rudderTargetImage.anchoredPosition = Vector2.Lerp(new Vector2(-100, 0), new Vector2(100, 0), rudderLerp);
     
         // SPEED:
@@ -96,18 +96,18 @@ public class PlayerShipStateUI : MonoBehaviour
     
     public string GetRudderOrder(float rudderTargetAmount)
     {
-
         if (rudderTargetAmount < -0.75f)
         {
-            return "Hard to Port";
+            return "Hard to Starboard";
+
         }
         else if (rudderTargetAmount < -0.5f)
         {
-            return "Half Port";
+            return "Half Starboard";
         }
         else if (rudderTargetAmount < -0.05)
         {
-            return "Slow Port";
+            return "Slow Starboard";
         }
         else if (rudderTargetAmount < 0.05f)
         {
@@ -115,15 +115,15 @@ public class PlayerShipStateUI : MonoBehaviour
         }
         else if (rudderTargetAmount < 0.5f)
         {
-            return "Slow Starboard";
+            return "Slow Port";
         }
         else if (rudderTargetAmount < 0.75f)
         {
-            return "Half Starboard";
+            return "Half Port";
         }
         else
         {
-            return "Hard to Starboard";
+            return "Hard to Port";
         }
         
     }
