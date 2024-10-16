@@ -7,6 +7,12 @@ namespace Ships
 
 public class ShipGunScript : BoardPiece, IShipComponentInstance
 {
+    #region Magic numbers
+
+    private const float TURRET_TURN_DEAD_ZONE = 0.05f;
+
+    #endregion
+
     private ComponentSlot _componentSlot;
     private ShipInstance _ship;
 
@@ -72,7 +78,7 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
         if (_target != null)
         {
             Vector3 aimLocation = GetAimLocation();
-            dir = aimLocation -  transform.position;
+            dir = (aimLocation -  transform.position).normalized;
             TurnTurretTowards(dir);
         }
         else
@@ -84,25 +90,27 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
 
     private void TurnTurretTowards(Vector3 direction)
     {
-        Debug.DrawLine(transform.position, transform.position + direction, Color.yellow);
+        float dotRight = Vector3.Dot(direction, _turret.right);
+        float dotForward = Vector3.Dot(direction, _turret.up);
 
+        int turnDirection = 0;
 
-        Vector3 directionRelativeToTurret = transform.worldToLocalMatrix * direction;
-        Debug.DrawLine(transform.position, transform.position + directionRelativeToTurret, Color.red);
+        if (dotRight > TURRET_TURN_DEAD_ZONE)
+        {
+            turnDirection = -1;
+        }
+        else if (dotRight < (-TURRET_TURN_DEAD_ZONE))
+        {
+            turnDirection = 1;
+        }
+        if (dotForward < (-1 + TURRET_TURN_DEAD_ZONE))
+        {
+            turnDirection = 1;
+        }
 
-
-        Quaternion targetRotation = Quaternion.LookRotation(directionRelativeToTurret, Vector3.up);
-
-        float turnDelta = Time.deltaTime * _gunType.turnSpeed;
-        turnDelta = 1;
-
-        _turret.rotation = Quaternion.Slerp(_turret.rotation, targetRotation, turnDelta);
+        _turret.Rotate(0, 0, turnDirection * _gunType.turnSpeed * Time.deltaTime);
     }
 
-    private void ReturnToRestPosition()
-    {
-        _turret.localRotation = Quaternion.Slerp(_turret.localRotation, Quaternion.identity, Time.deltaTime * _gunType.turnSpeed);
-    }
 
     #endregion
 
