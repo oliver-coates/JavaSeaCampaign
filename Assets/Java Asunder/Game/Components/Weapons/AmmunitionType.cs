@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Effects;
 using UnityEngine;
 
 namespace Ships
@@ -12,6 +13,14 @@ public class AmmunitionType : ShipComponent
 
     public float damage;
     public float velocity;
+
+    [Header("Decoration:")]
+    public EffectType splashEffect;
+    public EffectType explosionEffect;
+
+
 }
+
+
 
 }
