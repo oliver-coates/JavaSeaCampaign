@@ -13,7 +13,7 @@ public class ShellInstance : BoardPiece
 
     private const float COLLISION_MAX_HEIGHT = 5f;
 
-    private const float ARM_TIME = 1f;
+    private const float ARM_TIME = 0.2f;
 
     #endregion
 
@@ -24,11 +24,11 @@ public class ShellInstance : BoardPiece
 
     [Header("References:")]
     [SerializeField] private TrailRenderer _trail;
-    [SerializeField] private EffectType _splashEffect;
 
     [Header("State:")]
     [SerializeField] private float _height;
     [SerializeField] private float _flightTime;
+    private Vector3 _positionLastFrame;
 
     protected override void Initialise()
     {
@@ -48,6 +48,8 @@ public class ShellInstance : BoardPiece
         // Deterime launch angle to hit the distance
         _launchAngle = 0.5f * Mathf.Asin((9.81f * distance) / Mathf.Pow(initialVelocity, 2f));
         _launchAngle = _launchAngle * Mathf.Rad2Deg;
+
+        _positionLastFrame = transform.position;
     }
 
 
@@ -78,6 +80,7 @@ public class ShellInstance : BoardPiece
         Move();
 
         _flightTime += Time.deltaTime;   
+        _positionLastFrame = transform.position;
     }
 
     private void DetermineHeight()
@@ -106,12 +109,23 @@ public class ShellInstance : BoardPiece
     private void CheckForCollisions()
     {
         // Check first for collisions with enemy ships:
+        RaycastHit2D hit = Physics2D.Linecast(transform.position, _positionLastFrame);
+        if (hit.collider != null)
+        {
+            ShipSection hitSection = hit.collider.GetComponent<ShipSection>();
+            if (hitSection != null)
+            {
+                Debug.Log("Hit Ship!");
+                EffectManager.SpawnEffect(_type.explosionEffect, transform.position);
+                Destroy(gameObject);
+            }
+        }
+
 
         if (_height < 0)
         {
             // Hit the sea
-            EffectManager.SpawnEffect(_splashEffect, transform.position);
-            
+            EffectManager.SpawnEffect(_type.splashEffect, transform.position);
             Destroy(gameObject);
         }
     }
