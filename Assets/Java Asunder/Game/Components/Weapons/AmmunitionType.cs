@@ -11,6 +11,7 @@ public class AmmunitionType : ShipComponent
     public GameObject _prefab;
 
     public float damage;
+    public float velocity;
 }
 
 }

@@ -71,7 +71,7 @@ public class DeveloperCameraScript : MonoBehaviour
 
         _targetPosition.x += Input.GetAxis("Horizontal") * Time.deltaTime * _movementSpeed * speedMultiplier;
         _targetPosition.y += Input.GetAxis("Vertical") * Time.deltaTime * _movementSpeed * speedMultiplier;
-        _targetPosition.z = 0;
+        _targetPosition.z = -500;
 
         transform.position = _targetPosition;
     }

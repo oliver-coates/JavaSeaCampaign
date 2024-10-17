@@ -16,9 +16,13 @@ public class ShipGunType : ShipComponent
 
     public float turnSpeed;
 
+    public float reloadTime;
+
     public float shotVelocity;
 
     public float accuracy;    
+
+    public AmmunitionType ammo;
 }
 
 }

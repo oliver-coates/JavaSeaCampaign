@@ -10,6 +10,8 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
     #region Magic numbers
 
     private const float TURRET_TURN_DEAD_ZONE = 0.05f;
+    private const float TURRET_FIRE_ANGLE_ALLOWANCE = 0.9f; // How close the forward dot product must alight to the target for shots to be allowed to be fired
+    private const float TURRET_RELOAD_RANDOMISATION = 0.1f;
 
     #endregion
 
@@ -18,6 +20,9 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
 
     [Header("State:")]
     public ShipInstance _target;
+    [SerializeField] private bool _pointingTowardsTarget;
+    [SerializeField] private float _distanceToTarget;
+    private float _loadTimer;
 
     [Header("References:")]
     [SerializeField] private Transform _turret;
@@ -56,6 +61,8 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
     protected override void GameTick()
     {
         TurnTurret();
+
+        GunUpdate();
     }
 
     protected override void UpdateTick()
@@ -79,6 +86,9 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
         {
             Vector3 aimLocation = GetAimLocation();
             dir = (aimLocation -  transform.position).normalized;
+
+            _distanceToTarget = Vector3.Distance(transform.position, aimLocation);
+
             TurnTurretTowards(dir);
         }
         else
@@ -109,6 +119,8 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
         }
 
         _turret.Rotate(0, 0, turnDirection * _gunType.turnSpeed * Time.deltaTime);
+
+        _pointingTowardsTarget = dotForward > TURRET_FIRE_ANGLE_ALLOWANCE;
     }
 
 
@@ -124,6 +136,38 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
         // TODO: Add in inaccuracy, etc here
         
         return _target.transform.position;
+    }
+
+    private void GunUpdate()
+    {
+        // The crew consistently loads the gun
+        _loadTimer += Time.deltaTime; // <<-- Implement player load skill boost here
+
+        if (_target is not null)
+        {
+            if (_loadTimer > _gunType.reloadTime && _pointingTowardsTarget)
+            {
+                Shoot();
+                float reloadTimeRange = TURRET_RELOAD_RANDOMISATION * _gunType.reloadTime;
+                _loadTimer = Random.Range(-reloadTimeRange, reloadTimeRange);
+            }
+        }
+
+
+    }
+
+    private void Shoot()
+    {
+        GameObject shellObj = Instantiate(_gunType.ammo._prefab);
+
+        shellObj.transform.position = _shootPoint.position;
+        shellObj.transform.position = new Vector3(shellObj.transform.position.x,
+                                                 shellObj.transform.position.y,
+                                                  -3f);
+        shellObj.transform.rotation = _shootPoint.rotation;
+
+        ShellInstance shell = shellObj.GetComponent<ShellInstance>();
+        shell.Fire(_gunType.ammo, _distanceToTarget);
     }
 
     #endregion

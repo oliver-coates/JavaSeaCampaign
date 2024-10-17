@@ -18,8 +18,6 @@ public class PlayerShipStateUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _rudderOrderText;
 
     [SerializeField] private TextMeshProUGUI _speedText;
-
-
     private float _speedSmoothed;
 
     #region Initialisation & Destruction

@@ -15,5 +15,7 @@ MonoBehaviour:
   sourceNation: {fileID: 11400000, guid: 114e746261473a444a34996dc709b122, type: 2}
   price: 100
   turnSpeed: 75
+  reloadTime: 3
   shotVelocity: 10
   accuracy: 1
+  ammo: {fileID: 11400000, guid: 9090b981037093241bef9b33a4b98457, type: 2}
