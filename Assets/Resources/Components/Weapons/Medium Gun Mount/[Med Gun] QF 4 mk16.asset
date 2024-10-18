@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ba0cfdedb425948a8cf222e1c81a7b, type: 3}
   m_Name: '[Med Gun] QF 4 mk16'
   m_EditorClassIdentifier: 
-  sourceNation: {fileID: 11400000, guid: 114e746261473a444a34996dc709b122, type: 2}
+  sourceNation: {fileID: 11400000, guid: e4e4966f2da0af447862c514c81b92a5, type: 2}
   price: 100
   turnSpeed: 75
   reloadTime: 3
-  shotVelocity: 10
-  accuracy: 1
+  inaccuracy: 4
   ammo: {fileID: 11400000, guid: 9090b981037093241bef9b33a4b98457, type: 2}

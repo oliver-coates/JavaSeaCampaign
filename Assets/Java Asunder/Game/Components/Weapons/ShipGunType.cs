@@ -14,14 +14,17 @@ public class ShipGunType : ShipComponent
         Large
     }
 
+
+    [Header("The speed, in degrees/second that this turret can turn")]
     public float turnSpeed;
 
+    [Header("The time, in seconds, between shots from this gun")]
     public float reloadTime;
 
-    public float shotVelocity;
+    [Header("The inaccuracy of this gun (in degrees)")]
+    public float inaccuracy;    
 
-    public float accuracy;    
-
+    [Header("The type of ammunuition fired by this gun")]
     public AmmunitionType ammo;
 }
 

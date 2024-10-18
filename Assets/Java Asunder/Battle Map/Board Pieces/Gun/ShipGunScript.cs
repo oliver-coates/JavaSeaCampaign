@@ -134,8 +134,13 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
     private Vector3 GetAimLocation()
     {
         // TODO: Add in inaccuracy, etc here
-        
-        return _target.transform.position;
+        float timeToReachTarget = _distanceToTarget / _gunType.ammo.velocity;
+
+        Vector3 velocityOffset = _target.rb.velocity * timeToReachTarget;
+
+        Vector3 velocityAdjustedTargetPosition = _target.transform.position + velocityOffset;
+
+        return velocityAdjustedTargetPosition;
     }
 
     private void GunUpdate()
@@ -165,6 +170,10 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
                                                  shellObj.transform.position.y,
                                                   -3f);
         shellObj.transform.rotation = _shootPoint.rotation;
+
+        // Add random rotation
+        float inaccuracy = Random.Range(-(_gunType.inaccuracy/2f), _gunType.inaccuracy/2f);
+        shellObj.transform.Rotate(0, 0, inaccuracy);
 
         ShellInstance shell = shellObj.GetComponent<ShellInstance>();
         shell.Fire(_gunType.ammo, _distanceToTarget);
