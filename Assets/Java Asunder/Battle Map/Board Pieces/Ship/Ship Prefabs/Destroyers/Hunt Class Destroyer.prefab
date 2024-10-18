@@ -355,7 +355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotName: Main Electronics Room
   componentType: {fileID: 11400000, guid: c5f142554ef771d40a2fda165d4ac5d0, type: 2}
-  component: {fileID: 0}
+  component: {fileID: 11400000, guid: 76888f1378ac7e3488584ab77ce47932, type: 2}
 --- !u!1 &4000044268225090703
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,6 +455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sectionName: Aft
+  ship: {fileID: 0}
   slots: []
 --- !u!1 &4089353403793123566
 GameObject:
@@ -650,6 +651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sectionName: Fore
+  ship: {fileID: 0}
   slots: []
 --- !u!1 &5790568902815885808
 GameObject:

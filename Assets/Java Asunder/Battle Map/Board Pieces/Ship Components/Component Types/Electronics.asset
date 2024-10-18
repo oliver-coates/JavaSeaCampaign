@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b148d675edac7914ea0191edfb26caa2, type: 3}
   m_Name: Electronics
   m_EditorClassIdentifier: 
+  genericPrefab: {fileID: 2502580514783291047, guid: b8b7358aba40b094e9d29c37da50aff3, type: 3}

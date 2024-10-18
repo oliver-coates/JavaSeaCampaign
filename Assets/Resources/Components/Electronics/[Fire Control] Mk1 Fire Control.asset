@@ -15,4 +15,5 @@ MonoBehaviour:
   sourceNation: {fileID: 11400000, guid: e4e4966f2da0af447862c514c81b92a5, type: 2}
   price: 100
   type: 0
-  skill: 1
+  strength: 1
+  effectiveRange: 1000

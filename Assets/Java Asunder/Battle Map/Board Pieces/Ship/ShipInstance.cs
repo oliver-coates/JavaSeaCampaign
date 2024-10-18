@@ -35,6 +35,7 @@ public class ShipInstance : BoardPiece
     [Header("Easy component access")]
     public Rigidbody2D rb;
     public EngineScript engine;
+    public FireControlInstance fireControl;
 
 
     [Header("Input:")]

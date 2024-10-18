@@ -115,7 +115,7 @@ public class ShellInstance : BoardPiece
             ShipSection hitSection = hit.collider.GetComponent<ShipSection>();
             if (hitSection != null)
             {
-                Debug.Log("Hit Ship!");
+                // Debug.Log("Hit Ship!");
                 EffectManager.SpawnEffect(_type.explosionEffect, transform.position);
                 Destroy(gameObject);
             }

@@ -13,6 +13,8 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
     private const float TURRET_FIRE_ANGLE_ALLOWANCE = 0.9f; // How close the forward dot product must alight to the target for shots to be allowed to be fired
     private const float TURRET_RELOAD_RANDOMISATION = 0.1f;
 
+    private const float TARGET_BIAS_LENGTH = 150f;
+
     #endregion
 
     private ComponentSlot _componentSlot;
@@ -23,6 +25,8 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
     [SerializeField] private bool _pointingTowardsTarget;
     [SerializeField] private float _distanceToTarget;
     private float _loadTimer;
+
+    [SerializeField] private Vector2 _shotBias;
 
     [Header("References:")]
     [SerializeField] private Transform _turret;
@@ -73,6 +77,7 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
     private void SetTarget(ShipInstance target)
     {
         _target = target;
+        GenerateNewShotBias();
     }
 
 
@@ -88,6 +93,8 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
             dir = (aimLocation -  transform.position).normalized;
 
             _distanceToTarget = Vector3.Distance(transform.position, aimLocation);
+
+            Debug.DrawLine(transform.position, aimLocation, Color.red);
 
             TurnTurretTowards(dir);
         }
@@ -133,14 +140,25 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
     /// </summary>
     private Vector3 GetAimLocation()
     {
-        // TODO: Add in inaccuracy, etc here
+        // Deterime the actual position of where the target is:
         float timeToReachTarget = _distanceToTarget / _gunType.ammo.velocity;
-
         Vector3 velocityOffset = _target.rb.velocity * timeToReachTarget;
-
         Vector3 velocityAdjustedTargetPosition = _target.transform.position + velocityOffset;
 
-        return velocityAdjustedTargetPosition;
+        // Add in the shot bias
+        Vector2 shotBiasAmount = _shotBias * TARGET_BIAS_LENGTH;
+        if (_ship.fireControl != null)
+        {
+            // if we have a fire control system, reduce the shot bias
+            float accuracyMultiplier = 1f- (_ship.fireControl.confidence / 100f);
+            shotBiasAmount = shotBiasAmount * accuracyMultiplier;
+        }
+
+        Vector3 finalLocation = velocityAdjustedTargetPosition;
+        finalLocation.x += shotBiasAmount.x;
+        finalLocation.y += shotBiasAmount.y;
+
+        return finalLocation;
     }
 
     private void GunUpdate()
@@ -177,6 +195,11 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
 
         ShellInstance shell = shellObj.GetComponent<ShellInstance>();
         shell.Fire(_gunType.ammo, _distanceToTarget);
+    }
+
+    private void GenerateNewShotBias()
+    {
+        _shotBias = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
     }
 
     #endregion

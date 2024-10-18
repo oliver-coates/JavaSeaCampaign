@@ -16,7 +16,9 @@ public class ElectronicsType : ShipComponent
     }
 
     public Electronics type;
-    public int skill = 1;
+    [Range(1, 10)]
+    public int strength = 1;
+    public float effectiveRange = 1000;
 
 }
 }
