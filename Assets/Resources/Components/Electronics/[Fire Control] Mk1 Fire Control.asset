@@ -16,4 +16,4 @@ MonoBehaviour:
   price: 100
   type: 0
   strength: 1
-  effectiveRange: 1000
+  effectiveRange: 750
