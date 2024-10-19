@@ -38,6 +38,7 @@ public class FireControlInstance : BoardPiece, IShipComponentInstance
     private float _randomNoise;
     private float _randomTimer;
 
+    public ComponentEffectiveness calculationEffectiveness;
 
 
 
@@ -48,6 +49,7 @@ public class FireControlInstance : BoardPiece, IShipComponentInstance
     {
         _ship = ship;
         _fireControl = (ElectronicsType) componentSlot.component;
+        calculationEffectiveness = new ComponentEffectiveness();
     
         if (_ship.fireControl != null)
         {
@@ -71,6 +73,8 @@ public class FireControlInstance : BoardPiece, IShipComponentInstance
 
     protected override void GameTick()
     {
+        calculationEffectiveness.Tick();
+
         if (_ship.target != null)
         {
             ComputeFiringSolution();
@@ -84,7 +88,7 @@ public class FireControlInstance : BoardPiece, IShipComponentInstance
         float distanceModifier = 1f-(Mathf.Clamp(_distanceToTarget/_fireControl.effectiveRange, 1f, 2f)-1f);
 
         // Add confidence linearly
-        _confidence += Time.deltaTime * _fireControl.strength * _randomNoise * distanceModifier * CONDIFENCE_GAIN_MULTIPLIER;
+        _confidence += Time.deltaTime * _fireControl.strength * _randomNoise * distanceModifier * CONDIFENCE_GAIN_MULTIPLIER * calculationEffectiveness.value;
 
         // Lose confidence due to enemy velocity
         _confidence -= Time.deltaTime * _ship.targetSpeed * CONDIFENCE_LOSS_ENEMY_VELOCITY_FACTOR;

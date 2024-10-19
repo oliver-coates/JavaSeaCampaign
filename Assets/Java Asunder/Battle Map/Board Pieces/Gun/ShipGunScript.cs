@@ -26,6 +26,8 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
     [SerializeField] private float _distanceToTarget;
     private float _loadTimer;
 
+    public ComponentEffectiveness loadingEffectiveness;
+
     [SerializeField] private Vector2 _shotBias;
 
     [Header("References:")]
@@ -42,6 +44,7 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
     {
         _ship = ship;
         _componentSlot = componentSlot;
+        loadingEffectiveness = new ComponentEffectiveness();
 
         if (_componentSlot.component is not ShipGunType)
         {
@@ -67,6 +70,8 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
         TurnTurret();
 
         GunUpdate();
+    
+        loadingEffectiveness.Tick();
     }
 
     protected override void UpdateTick()
@@ -164,7 +169,7 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
     private void GunUpdate()
     {
         // The crew consistently loads the gun
-        _loadTimer += Time.deltaTime; // <<-- Implement player load skill boost here
+        _loadTimer += (Time.deltaTime * loadingEffectiveness.value);
 
         if (_target is not null)
         {
