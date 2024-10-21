@@ -21,8 +21,16 @@ public class ComponentEffectiveness
     [SerializeField] private List<EffectivenessModifier> _modifiers;
 
 
-    public ComponentEffectiveness()
+    [Header("Decorative:")]
+    public string name;
+    public string taskDescription;
+
+
+    public ComponentEffectiveness(string name, string taskDescription)
     {
+        this.name = name;
+        this.taskDescription = taskDescription;
+
         _modifiers = new List<EffectivenessModifier>();
     }
 
@@ -68,7 +76,7 @@ public class ComponentEffectiveness
         // Get the roll as a value ranging from
         // 0 at a roll of 3 to 1 at a roll of 18
         // High rolls will exceed this (if players roll exceptionally well)
-        float rollAsPercent = (roll - 3) / 15;
+        float rollAsPercent = (roll - 3f) / 15f;
 
         float effectMultipier = Mathf.Lerp(-EFFECTIVENESS_AMOUNT, EFFECTIVENESS_AMOUNT, rollAsPercent);
 

@@ -26,15 +26,15 @@ public class ComponentSlot : MonoBehaviour
     {
         if (componentType.genericPrefab != null && component != null)
         {
-            IShipComponentInstance createdComponentInstance = Instantiate(componentType.genericPrefab, transform.position, transform.rotation, transform).GetComponent<IShipComponentInstance>();    
+            componentInstance = Instantiate(componentType.genericPrefab, transform.position, transform.rotation, transform).GetComponent<IShipComponentInstance>();    
 
-            if (createdComponentInstance == null)
+            if (componentInstance == null)
             {
                 Debug.LogError($"Ship component instance not found on gameobject {name}");
                 return;
             }
         
-            createdComponentInstance.Setup(ship, this);
+            componentInstance.Setup(ship, this);
         }   
     }
 

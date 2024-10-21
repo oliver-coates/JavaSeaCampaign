@@ -23,7 +23,7 @@ public class PlayerCharacterUI : MonoBehaviour
     [SerializeField] private Image _completionBarImage;
 
     private PlayerCharacter _playerCharacter;
-
+    private ComponentEffectiveness _componentCurrentlyBeingRolledToBuff;
 
     #region Unity Methods
     private void Start()
@@ -87,7 +87,7 @@ public class PlayerCharacterUI : MonoBehaviour
         onPlayerCharacterChanged?.Invoke();
     }
 
-    private void SetTask()
+    private void SetMove()
     {
         if (GameMaster.BattleUnderway == false)
         {
@@ -120,6 +120,75 @@ public class PlayerCharacterUI : MonoBehaviour
         _playerCharacter.StartMoveTo(destinationSlot);
     }
 
+    private void ChooseSetTask()
+    {
+        if (GameMaster.BattleUnderway == false)
+        {
+            Debug.Log($"Cannot set tasks when battle is not underway");
+            return;
+        }
+
+        if (_playerCharacter.location.componentInstance == null)
+        {
+            // This component slot has no component
+            Debug.Log($"Cannot assign task: Slot has no component");
+            return; 
+        }
+
+        ComponentEffectiveness[] possibleBuffs = _playerCharacter.location.componentInstance.GetComponentEffectivenesses();
+        if (possibleBuffs.Length == 0)
+        {
+            Debug.Log($"Cannot assign task: Slot has nothing to buff");
+            return;
+        }
+
+        // Set up the category
+        BasicSelection.Category<ComponentEffectiveness> componentsToBuff = new BasicSelection.Category<ComponentEffectiveness>();
+        componentsToBuff.categoryName = "Components to Buff";
+
+        // Collate all componentEffectiveness into selectable options
+        BasicSelection.Option<ComponentEffectiveness>[] options = new BasicSelection.Option<ComponentEffectiveness>[possibleBuffs.Length];
+        for (int buffIndex = 0; buffIndex < possibleBuffs.Length; buffIndex++)
+        {
+            ComponentEffectiveness component = possibleBuffs[buffIndex];
+            options[buffIndex] = new BasicSelection.Option<ComponentEffectiveness>(component.name, component);
+        }
+        componentsToBuff.options = options; 
+
+        BasicSelection.RequestSelection(componentsToBuff, RollForSetTask);
+    }
+
+    private void RollForSetTask(ComponentEffectiveness componentToRollToBuff)
+    {
+        BasicInputManager.InputRequest inputRequest = new BasicInputManager.InputRequest("Roll", SetTask); 
+        BasicInputManager.RequestInput(inputRequest);
+
+        if (_componentCurrentlyBeingRolledToBuff != null)
+        {
+            Debug.LogError("Component is already being rolled for. Aborting/.");
+            return;
+        }
+        else
+        {
+            _componentCurrentlyBeingRolledToBuff = componentToRollToBuff;
+        }
+    }
+
+    private void SetTask(string rollAsString)
+    {  
+        if (int.TryParse(rollAsString, out int roll))
+        {
+            _componentCurrentlyBeingRolledToBuff.ApplyPlayerBuff(roll);
+            string description = _componentCurrentlyBeingRolledToBuff.taskDescription;
+            _playerCharacter.StartTask(description, EffectivenessModifier.MODIFIER_TIME);
+            _componentCurrentlyBeingRolledToBuff = null;
+        }
+        else
+        {
+            Debug.LogError($"Could not parse input {rollAsString} to int");
+        }
+    }
+
     private void SetIdle()
     {
         Debug.Log($"Idle");
@@ -133,14 +202,15 @@ public class PlayerCharacterUI : MonoBehaviour
     private void SetupContextualMenu()
     {
         // Set up the contextual menu:
-        ContextualMenu.Option[] options = new ContextualMenu.Option[5];
+        ContextualMenu.Option[] options = new ContextualMenu.Option[6];
 
         options[0] = new ContextualMenu.Option("Remove", Remove);
         options[1] = new ContextualMenu.Option("Rename", Rename);
         
         options[2] = new ContextualMenu.Option("Disable/Enable", SetDisabled);
-        options[3] = new ContextualMenu.Option("Set task", SetTask);
-        options[4] = new ContextualMenu.Option("Set idle", SetIdle);
+        options[3] = new ContextualMenu.Option("Move", SetMove);
+        options[4] = new ContextualMenu.Option("Do task", ChooseSetTask);
+        options[5] = new ContextualMenu.Option("Set idle", SetIdle);
 
         _contextualMenu.Initialise(options);
     }

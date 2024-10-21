@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class EffectivenessModifier
 {
-    public const float MODIFIER_TIME = 7.5f;
+    public const float MODIFIER_TIME = 15f;
 
     public float effect;
     [SerializeField] private float _timeRemaining;

@@ -45,7 +45,7 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
     {
         _ship = ship;
         _componentSlot = componentSlot;
-        loadingEffectiveness = new ComponentEffectiveness();
+        loadingEffectiveness = new ComponentEffectiveness("Loading", $"({componentSlot.slotName}) Loading");
 
         if (_componentSlot.component is not ShipGunType)
         {
@@ -210,7 +210,18 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
         _shotBias = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
     }
 
+ 
     #endregion
+
+    public ComponentEffectiveness[] GetComponentEffectivenesses()
+    {
+        ComponentEffectiveness[] output = new ComponentEffectiveness[1];
+
+        output[0] = loadingEffectiveness;
+
+        return output;
+    }
+
 }
 
 }

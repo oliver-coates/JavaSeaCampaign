@@ -49,7 +49,7 @@ public class FireControlInstance : BoardPiece, IShipComponentInstance
     {
         _ship = ship;
         _fireControl = (ElectronicsType) componentSlot.component;
-        calculationEffectiveness = new ComponentEffectiveness();
+        calculationEffectiveness = new ComponentEffectiveness("Fire Control", "Using the Ballistic Computer");
     
         if (_ship.fireControl != null)
         {
@@ -116,5 +116,14 @@ public class FireControlInstance : BoardPiece, IShipComponentInstance
     {
         _confidence = 0;
         _randomTimer = CONFIDENCE_GAIN_MULTIPLIER_RANDOMNESS_TIME_LENGTH;
+    }
+
+    public ComponentEffectiveness[] GetComponentEffectivenesses()
+    {
+        ComponentEffectiveness[] output = new ComponentEffectiveness[1];
+
+        output[0] = calculationEffectiveness;
+
+        return output;
     }
 }

@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class ElectronicsGenericInstance : MonoBehaviour, IShipComponentInstance
 {
+    public ComponentEffectiveness[] GetComponentEffectivenesses()
+    {
+        return new ComponentEffectiveness[0];
+    }
+
     public void Setup(ShipInstance ship, ComponentSlot componentSlot)
     {
         if (componentSlot.component is not ElectronicsType)
@@ -18,7 +23,9 @@ public class ElectronicsGenericInstance : MonoBehaviour, IShipComponentInstance
         switch (electronics.type)
         {
             case ElectronicsType.Electronics.BallisticComputer:
-                gameObject.AddComponent<FireControlInstance>().Setup(ship, componentSlot);
+                FireControlInstance fireControlInstance = gameObject.AddComponent<FireControlInstance>();
+                fireControlInstance.Setup(ship, componentSlot);
+                componentSlot.componentInstance = fireControlInstance;
                 break;
 
             case ElectronicsType.Electronics.Sonar:

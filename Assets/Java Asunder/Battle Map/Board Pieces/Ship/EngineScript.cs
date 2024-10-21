@@ -44,7 +44,7 @@ public class EngineScript : BoardPiece, IShipComponentInstance
         }
     }
 
-    public ComponentEffectiveness speedModifier;
+    public ComponentEffectiveness speedEffectivness;
 
     protected override void Initialise() { }
 
@@ -53,7 +53,7 @@ public class EngineScript : BoardPiece, IShipComponentInstance
         _ship = ship;
         _engineSlot = componentSlot;
         _ship.engine = this;
-        speedModifier = new ComponentEffectiveness();
+        speedEffectivness = new ComponentEffectiveness("Engines", "Overcharging the engines");
 
         // Ensure the engine slot is correct
         if (_engineSlot.component is not EngineType)
@@ -77,7 +77,7 @@ public class EngineScript : BoardPiece, IShipComponentInstance
 
     protected override void GameTick()
     {
-        speedModifier.Tick();
+        speedEffectivness.Tick();
 
         // Spool up/down the engine
         float engineChangeSpeed = _engineType.agility * ENGINE_CHANGE_SPEED_TUNER;
@@ -89,7 +89,7 @@ public class EngineScript : BoardPiece, IShipComponentInstance
         _engineSpeed = Mathf.MoveTowards(_engineSpeed, _ship.targetSpeed, engineChangeSpeed * Time.deltaTime);
 
         // Add force:
-        Vector3 force = _ship.transform.up * _engineType.strength * _engineSpeed * Time.deltaTime * SPEED_TUNER * speedModifier.value;
+        Vector3 force = _ship.transform.up * _engineType.strength * _engineSpeed * Time.deltaTime * SPEED_TUNER * speedEffectivness.value;
         _rigidBody.AddForce(force, ForceMode2D.Force);
     
         // Rotate:
@@ -99,5 +99,12 @@ public class EngineScript : BoardPiece, IShipComponentInstance
         _rigidBody.AddTorque(rotateAmount, ForceMode2D.Force);
     }
 
-    
+    public ComponentEffectiveness[] GetComponentEffectivenesses()
+    {
+        ComponentEffectiveness[] output = new ComponentEffectiveness[1];
+
+        output[0] = speedEffectivness;
+
+        return output;
+    }
 }

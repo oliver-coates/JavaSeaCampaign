@@ -11,7 +11,7 @@ using Ships;
 public class PlayerCharacter : SerializedObject
 {
     public const float MOVEMENT_TIME_BASE = 3f;
-    public const float MOVEMENT_TIME_PER_METER_TRAVELLED = 1f;
+    public const float MOVEMENT_TIME_PER_METER_TRAVELLED = 0.6f;
 
     public event Action OnStateChanged;
 
@@ -29,7 +29,7 @@ public class PlayerCharacter : SerializedObject
     
     [Header("Task:")]
     
-    [SerializeField] private ComponentSlot _location;
+    public ComponentSlot location;
     [SerializeField] private ComponentSlot _moveDestination; // For movement from one component slot to another
     [SerializeField] private int _roll; // For applying a buff to a component instance
     [SerializeField] private TaskType _taskType;
@@ -45,7 +45,7 @@ public class PlayerCharacter : SerializedObject
 
     protected override void Initialise()
     {
-        _location = null;
+        location = null;
         _moveDestination = null;
     }
 
@@ -61,6 +61,10 @@ public class PlayerCharacter : SerializedObject
                 {
                     FinishMoveTo();
                 }
+                else if (_taskType == TaskType.ApplyBuff)
+                {
+                    FinishTask();
+                }
             }
         }
     }
@@ -75,28 +79,44 @@ public class PlayerCharacter : SerializedObject
     public void StartMoveTo(ComponentSlot destination)
     {
         _moveDestination = destination;
+        _taskType = TaskType.MoveTo;
 
-        float distance = Vector3.Distance(_location.transform.position, _moveDestination.transform.position);
+        float distance = Vector3.Distance(location.transform.position, _moveDestination.transform.position);
 
         taskTimer = 0f;
         timeToCompleteTask = MOVEMENT_TIME_BASE + (distance * MOVEMENT_TIME_PER_METER_TRAVELLED);
         _hasTask = true;
 
-        currentTaskString = $"Moving from the {_location.slotName} to the {destination.slotName}";
+        currentTaskString = $"Moving from the {location.slotName} to the {destination.slotName}";
         
         OnStateChanged?.Invoke();
     }
 
     public void FinishMoveTo()
     {
-        _location = _moveDestination;
+        location = _moveDestination;
         _moveDestination = null;
+        
+        FinishTask();
+    }
 
+    public void StartTask(string description, float time)
+    {
+        _taskType = TaskType.ApplyBuff;
+        currentTaskString = description;
+        taskTimer = 0f;
+        timeToCompleteTask = time;
+        _hasTask = true;
+
+        OnStateChanged?.Invoke();
+    }
+
+    private void FinishTask()
+    {
         taskTimer = 0f;
         _hasTask = false;
 
-        currentTaskString = $"At the {_location.slotName}";
-
+        currentTaskString = $"At the {location.slotName}";
         OnStateChanged?.Invoke();
     }
 
