@@ -34,6 +34,10 @@ public class ShipInstance : BoardPiece
 
     [Header("Easy component access")]
     public Rigidbody2D rb;
+    public ComponentSlot bridge;
+
+
+    [Header("Core Components: (Filled out at runtime)")]
     public EngineScript engine;
     public FireControlInstance fireControl;
 
@@ -126,6 +130,7 @@ public class ShipInstance : BoardPiece
         {
             // This is a player ship
             OnPlayerShipCreated?.Invoke(this);
+            SessionMaster.MoveAllPlayerCharactersToBridge(this);
         }
     }
 

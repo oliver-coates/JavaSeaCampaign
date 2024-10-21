@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using KahuInteractive.HassleFreeSaveLoad;
 using KahuInteractive.UIHelpers;
+using Ships;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,6 +35,11 @@ public class PlayerCharacterUI : MonoBehaviour
     private void OnDestroy()
     {
         onPlayerCharacterChanged -= RefreshUI;
+
+        if (_playerCharacter != null)
+        {
+            _playerCharacter.OnStateChanged -= RefreshUI;
+        }
     }
 
     private void Update()
@@ -50,6 +56,7 @@ public class PlayerCharacterUI : MonoBehaviour
     public void AssignToPlayerCharacter(PlayerCharacter playerCharacter)
     {
         _playerCharacter = playerCharacter;
+        _playerCharacter.OnStateChanged += RefreshUI;
 
         RefreshUI();
         UpdateCompletionBar();
@@ -82,13 +89,43 @@ public class PlayerCharacterUI : MonoBehaviour
 
     private void SetTask()
     {
-        Debug.Log($"Task");
+        if (GameMaster.BattleUnderway == false)
+        {
+            Debug.Log($"Cannot set tasks when battle is not underway");
+            return;
+        }
+
+        // Get all component slots in the ship:
+        ComponentSlot[] slots = SessionMaster.PlayerShip.instance.componentSlots;
+
+        // Set up the category 
+        BasicSelection.Category<ComponentSlot> movementDestinations = new BasicSelection.Category<ComponentSlot>();
+        movementDestinations.categoryName = "Move Locations";
+        
+        // Collate all ship component slots into selectable options
+        BasicSelection.Option<ComponentSlot>[] options = new BasicSelection.Option<ComponentSlot>[slots.Length];
+        for (int slotIndex = 0; slotIndex < slots.Length; slotIndex++)
+        {
+            ComponentSlot slot = slots[slotIndex];
+            options[slotIndex] = new BasicSelection.Option<ComponentSlot>(slot.slotName, slot);
+        }
+        movementDestinations.options = options;
+
+        // Request the slection, SetMoveTo will be called once an option is decided.
+        BasicSelection.RequestSelection<ComponentSlot>(movementDestinations, SetMoveTo);    
+    }
+
+    private void SetMoveTo(ComponentSlot destinationSlot)
+    {
+        _playerCharacter.StartMoveTo(destinationSlot);
     }
 
     private void SetIdle()
     {
         Debug.Log($"Idle");
     }
+
+
     #endregion
 
     #region UI
@@ -121,7 +158,7 @@ public class PlayerCharacterUI : MonoBehaviour
         else
         {
             _canvasGroup.alpha = 1f;
-            _taskText.text = "Idle";
+            _taskText.text = _playerCharacter.currentTaskString;
         }
     }
     

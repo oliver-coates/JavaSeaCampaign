@@ -76,6 +76,28 @@ public class GameMaster : MonoBehaviour
 
     #endregion
 
+    #region Runtime
+
+    private void Update()
+    {
+        if (BattlePaused == false)
+        {
+            TickPlayerCharacters();
+        }
+
+        UpdateDebug();
+    }
+
+    private void TickPlayerCharacters()
+    {
+        foreach (PlayerCharacter playerCharacter in SessionMaster.PlayerCharacters)
+        {
+            playerCharacter.Tick(Time.deltaTime);
+        }
+    }
+
+    #endregion
+
     #region Board Pieces
     private void AddBoardPiece(BoardPiece piece)
     {
@@ -177,10 +199,7 @@ public class GameMaster : MonoBehaviour
 
     #region Debug
 
-    private void Update()
-    {
-        UpdateDebug();
-    }
+    
 
     private void UpdateDebug()
     {

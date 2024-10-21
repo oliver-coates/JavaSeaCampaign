@@ -55,18 +55,6 @@ public class ShellInstance : BoardPiece
 
     protected override void GameTick()
     {
-         
-    }
-
-
-    protected override void UpdateTick()
-    {
-        
-        
-    }
-
-    private void Update()
-    {
         DetermineHeight();
         
         ScaleLineRendererByHeight();
@@ -81,6 +69,13 @@ public class ShellInstance : BoardPiece
 
         _flightTime += Time.deltaTime;   
         _positionLastFrame = transform.position;
+    }
+
+
+    protected override void UpdateTick()
+    {
+        
+        
     }
 
     private void DetermineHeight()

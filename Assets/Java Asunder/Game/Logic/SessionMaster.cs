@@ -76,6 +76,14 @@ public static class SessionMaster
 
         OnPlayerCountChanged?.Invoke();
     }
+    
+    public static void MoveAllPlayerCharactersToBridge(ShipInstance playerShip)
+    {
+        foreach (PlayerCharacter playerCharacter in PlayerCharacters)
+        {
+            playerCharacter.TeleportTo(playerShip.bridge);
+        }
+    }
     #endregion
 
     #region Ships

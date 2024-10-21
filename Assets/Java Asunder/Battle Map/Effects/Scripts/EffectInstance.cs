@@ -28,9 +28,24 @@ public class EffectInstance : MonoBehaviour
 
     private void Update()
     {
-        if (!_particleSystem.isPlaying)
+        if (GameMaster.BattlePaused)
         {
-            ReturnToPool();
+            if (_particleSystem.isPaused == false)
+            {
+                _particleSystem.Pause();
+            }
+        }
+        else
+        {
+            if (_particleSystem.isPaused == true)
+            {
+                _particleSystem.Play();
+            }
+
+            if (!_particleSystem.isPlaying)
+            {
+                ReturnToPool();
+            }
         }
     }
 

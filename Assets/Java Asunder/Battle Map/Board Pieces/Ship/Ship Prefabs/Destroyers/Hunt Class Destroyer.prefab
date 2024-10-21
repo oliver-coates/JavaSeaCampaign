@@ -278,7 +278,9 @@ MonoBehaviour:
   sections: []
   componentSlots: []
   rb: {fileID: 2076883527109525146}
+  bridge: {fileID: 5160432588531642400}
   engine: {fileID: 0}
+  fireControl: {fileID: 0}
   _rudder: 0
   _targetSpeed: 0
   _target: {fileID: 0}

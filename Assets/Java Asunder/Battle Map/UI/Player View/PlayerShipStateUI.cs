@@ -60,7 +60,11 @@ public class PlayerShipStateUI : MonoBehaviour
     
         // SPEED:
         float knots = _playerShip.engine.speed;
-        _speedSmoothed = Mathf.Lerp(_speedSmoothed, knots, Time.deltaTime);
+        if (GameMaster.BattlePaused == false)
+        {
+            // Only smooth when game is running
+            _speedSmoothed = Mathf.Lerp(_speedSmoothed, knots, Time.deltaTime);
+        }
         _speedText.text = $"{_speedSmoothed:0.#}kt";
     }
 
