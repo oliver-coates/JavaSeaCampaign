@@ -4854,6 +4854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _particleSystem: {fileID: 3688751156155396233}
+  _sound: {fileID: 11400000, guid: aca805d4ceb71cb41a3b540e7960137e, type: 2}
 --- !u!1 &8992289656589357220
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ public static class AudioEngine
         Object.DontDestroyOnLoad(_AudioPlayer.gameObject);
     }
 
-    public static void PlaySound(AudioClip clip, AudioMixerGroup mixer, Vector3 worldPosition, float volume, float pitch, bool playInWorldSpace)
+    public static void PlaySound(AudioClip clip, AudioMixerGroup mixer, Vector3 worldPosition, float volume, float pitch, bool playInWorldSpace, ClipSet clipSet)
     {
         // Ensure we are initialised
         if (!_Initialised)
@@ -38,65 +38,79 @@ public static class AudioEngine
         }
 
         // Play sound:
-        _AudioPlayer.PlaySound(clip, mixer, worldPosition, volume, pitch, playInWorldSpace);
+        _AudioPlayer.PlaySound(clip, mixer, worldPosition, volume, pitch, playInWorldSpace, clipSet);
     }
 
     public static void PlaySound(ClipSet clipSet)
     {
+        if (clipSet == null)
+        {
+            Debug.LogError("Recieved null clip set");
+            return;
+        }
+
         float pitch = 1f;
         float volume = 1f;
         AudioMixerGroup mixer = null;
         AudioClip clip = clipSet.GetRandomClip(out mixer, out pitch, out volume);
 
-        PlaySound(clip, mixer, Vector3.zero, volume, pitch, false);
+        PlaySound(clip, mixer, Vector3.zero, volume, pitch, false, clipSet);
     }
 
     public static void PlaySound(ClipSet clipSet, float volume)
     {
+        if (clipSet == null)
+        {
+            Debug.LogError("Recieved null clip set");
+            return;
+        }
+
         float pitch = 1f;
         AudioMixerGroup mixer = null;
         AudioClip clip = clipSet.GetRandomClip(out mixer, out pitch, out float volumeUnused);
 
-        PlaySound(clip, mixer, Vector3.zero, volume, pitch, false);
+        PlaySound(clip, mixer, Vector3.zero, volume, pitch, false, clipSet);
     }
 
     public static void PlaySound(ClipSet clipSet, Vector3 worldPosition)
     {
+        if (clipSet == null)
+        {
+            Debug.LogError("Recieved null clip set");
+            return;
+        }
+
         float pitch = 1f;
         float volume = 1f;
         AudioMixerGroup mixer = null;
         AudioClip clip = clipSet.GetRandomClip(out mixer, out pitch, out volume);
 
-        PlaySound(clip, mixer, worldPosition, volume, pitch, true);
+        PlaySound(clip, mixer, worldPosition, volume, pitch, true, clipSet);
     }
 
     public static void PlaySound(ClipSet clipSet, Vector3 worldPosition, float volume)
     {
+        if (clipSet == null)
+        {
+            Debug.LogError("Recieved null clip set");
+            return;
+        }
+
         float pitch = 1f;
         AudioMixerGroup mixer = null;
         AudioClip clip = clipSet.GetRandomClip(out mixer, out pitch, out float volumeUnused);
 
-        PlaySound(clip, mixer, worldPosition, volume, pitch, true);
+        PlaySound(clip, mixer, worldPosition, volume, pitch, true, clipSet);
     }
 
     public static void PlaySound(AudioClip clip)
     {
-        PlaySound(clip, null, Vector3.zero, 1f, 1f, false);
-    }
-
-    public static void PlaySound(AudioClip clip, Vector3 worldPosition)
-    {
-        PlaySound(clip, null, worldPosition, 1f, 1f, true);
+        PlaySound(clip, null, Vector3.zero, 1f, 1f, false, null);
     }
 
     public static void PlaySound(AudioClip clip, float volume)
     {
-        PlaySound(clip, null, Vector3.zero, volume, 1f, false);
-    }
-
-    public static void PlaySound(AudioClip clip, Vector3 worldPosition, float volume)
-    {
-        PlaySound(clip, null, worldPosition, volume, 1f, true);
+        PlaySound(clip, null, Vector3.zero, volume, 1f, false, null);
     }
 }
 

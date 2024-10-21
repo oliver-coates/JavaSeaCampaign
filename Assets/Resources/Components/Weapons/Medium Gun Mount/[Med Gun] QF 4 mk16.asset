@@ -18,3 +18,4 @@ MonoBehaviour:
   reloadTime: 3
   inaccuracy: 4
   ammo: {fileID: 11400000, guid: 9090b981037093241bef9b33a4b98457, type: 2}
+  shootClipSet: {fileID: 11400000, guid: 7470f17d7f90e1b4da9f9f72ab5d0b99, type: 2}

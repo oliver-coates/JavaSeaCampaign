@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using KahuInteractive.HassleFreeAudio;
 using UnityEngine;
 
 namespace Ships
@@ -200,6 +201,8 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
 
         ShellInstance shell = shellObj.GetComponent<ShellInstance>();
         shell.Fire(_gunType.ammo, _distanceToTarget);
+
+        AudioEngine.PlaySound(_gunType.shootClipSet, transform.position);
     }
 
     private void GenerateNewShotBias()

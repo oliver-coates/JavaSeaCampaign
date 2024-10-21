@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2503069833728620471}
+  - component: {fileID: 6002291626939467643}
   - component: {fileID: 1641407102235550464}
   - component: {fileID: 6624842198713020519}
-  - component: {fileID: 6002291626939467643}
   m_Layer: 0
   m_Name: Sea Splash
   m_TagString: Untagged
@@ -34,6 +34,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6002291626939467643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53249406523294298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09427a5939019c0498c70bb7a0336623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _particleSystem: {fileID: 1641407102235550464}
+  _sound: {fileID: 11400000, guid: ab4d6e8aa53333b4ca5b0616d66450bf, type: 2}
 --- !u!198 &1641407102235550464
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4831,16 +4845,3 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &6002291626939467643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 53249406523294298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09427a5939019c0498c70bb7a0336623, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _particleSystem: {fileID: 1641407102235550464}

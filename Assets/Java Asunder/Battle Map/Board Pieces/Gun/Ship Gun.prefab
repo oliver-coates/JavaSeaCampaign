@@ -192,15 +192,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 812cf59f443988e4abb6c44b010c9002, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  _target: {fileID: 0}
+  _pointingTowardsTarget: 0
+  _distanceToTarget: 0
+  loadingEffectiveness:
+    _modifiers: []
+  _shotBias: {x: 0, y: 0}
+  _turret: {fileID: 0}
+  _shootPoint: {fileID: 0}
   _gunType: {fileID: 11400000, guid: 841cd6747ba1b1f41ba8b0e91f332163, type: 2}
-  _rotationBlockers:
-  - from: 320
-    to: 40
-    type: 1
-    rotationReference: {fileID: 0}
-  - from: 160
-    to: 200
-    type: 0
-    rotationReference: {fileID: 0}
-  _gizmoRotationRadius: 3.5
+  _shootSound: {fileID: 11400000, guid: 7470f17d7f90e1b4da9f9f72ab5d0b99, type: 2}

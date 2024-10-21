@@ -19,6 +19,10 @@ public class ClipSet : ScriptableObject
     [SerializeField] private float _pitchVariance;
     [Range(0,1)]
     [SerializeField] private float _volumeVariance; 
+
+    [Header("Sound Spacialisation Settings: (Ignored if not played in world space)")]
+    public float maxDistance;    
+    public AnimationCurve spatialisationCurve;
     
 
     public AudioClip GetRandomClip()

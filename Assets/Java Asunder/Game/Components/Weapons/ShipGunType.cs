@@ -1,3 +1,4 @@
+using KahuInteractive.HassleFreeAudio;
 using UnityEngine;
 
 namespace Ships
@@ -26,6 +27,9 @@ public class ShipGunType : ShipComponent
 
     [Header("The type of ammunuition fired by this gun")]
     public AmmunitionType ammo;
+
+    [Header("The clip set to play when firing")]
+    public ClipSet shootClipSet;
 }
 
 }

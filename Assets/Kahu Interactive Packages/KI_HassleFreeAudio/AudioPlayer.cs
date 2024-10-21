@@ -18,10 +18,11 @@ public class AudioPlayer : MonoBehaviour
         _audioSources = new List<AudioSource>();
     }
 
-    public void PlaySound(AudioClip clip, AudioMixerGroup mixer, Vector3 worldPosition, float volume, float pitch, bool playInWorldSpace)
+    public void PlaySound(AudioClip clip, AudioMixerGroup mixer, Vector3 worldPosition, float volume, float pitch, bool playInWorldSpace, ClipSet clipSet)
     {
         AudioSource source = GetNextAvailableAudioSource();
 
+        source.dopplerLevel = 0;
         source.volume = volume;
         source.pitch = pitch;
         source.transform.position = worldPosition;
@@ -41,11 +42,18 @@ public class AudioPlayer : MonoBehaviour
         if (playInWorldSpace)
         {
             source.spatialBlend = 1;
+            source.spatialize = true;
+
+            source.rolloffMode = AudioRolloffMode.Custom;
+            source.maxDistance = clipSet.maxDistance;
+            source.SetCustomCurve(AudioSourceCurveType.CustomRolloff, clipSet.spatialisationCurve);
         }
         else
         {
+            source.spatialize = false;
             source.spatialBlend = 0;
         }
+
 
         source.PlayOneShot(clip);
 
