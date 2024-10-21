@@ -6,6 +6,7 @@ public class PlayerCameraScript : MonoBehaviour
 {
 
     [SerializeField] private Camera _playerCamera;
+    [SerializeField] private AudioListener _audioListener;
     private float _camSize;
 
     private float _minSize;
@@ -19,11 +20,15 @@ public class PlayerCameraScript : MonoBehaviour
     private void Awake()
     {
         GameMaster.OnBattleEnd += CenterCamera;
+        GameMaster.OnBattleEnd += EnableListener;
+        GameMaster.OnBattleStart += DisableListener;
     }
 
     private void OnDestroy()
     {
         GameMaster.OnBattleEnd -= CenterCamera;
+        GameMaster.OnBattleEnd -= EnableListener;
+        GameMaster.OnBattleStart -= DisableListener;
     }
 
     public void SetupSizes(float min, float max, float tightness)
@@ -68,5 +73,15 @@ public class PlayerCameraScript : MonoBehaviour
     private void MovementUpdate()
     {
         transform.position = Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime * _movementTightness);
+    }
+
+    private void DisableListener()
+    {
+        _audioListener.enabled = false;
+    }
+
+    private void EnableListener()
+    {
+        _audioListener.enabled = true;
     }
 }

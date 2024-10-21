@@ -8,7 +8,7 @@ public class FireControlInstance : BoardPiece, IShipComponentInstance
     private const float CONFIDENCE_GAIN_MULTIPLIER_RANDOMNESS_AMOUNT_MAXIMUM = 0.25f;
     private const float CONFIDENCE_GAIN_MULTIPLIER_RANDOMNESS_TIME_LENGTH = 5f;
     private const float CONDIFENCE_LOSS_ENEMY_VELOCITY_FACTOR = 0.8f;
-    private const float CONDIFENCE_GAIN_MULTIPLIER = 1.5f;
+    private const float CONDIFENCE_GAIN_MULTIPLIER = 2.5f;
 
 
     private ShipInstance _ship;

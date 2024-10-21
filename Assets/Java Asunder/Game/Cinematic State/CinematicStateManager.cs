@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class CinematicStateManager : MonoBehaviour
 {
+
     private const float TRANSITION_TIME = 0.5f;
 
     [SerializeField] private CinematicState[] _states;
@@ -50,7 +51,8 @@ public class CinematicStateManager : MonoBehaviour
     private void Awake()
     {
         GameMaster.OnBattleStart += SwitchToBattleState;
-        
+        VolumeControl.OnVolumeChange += SetMasterVolume;
+
         List<TMP_Dropdown.OptionData> optionDatas = new List<TMP_Dropdown.OptionData>();
         optionDatas.Add(new TMP_Dropdown.OptionData("Battle"));
         foreach (CinematicState state in _states)
@@ -70,6 +72,8 @@ public class CinematicStateManager : MonoBehaviour
     private void OnDestroy()
     {
         GameMaster.OnBattleStart -= SwitchToBattleState;
+        VolumeControl.OnVolumeChange -= SetMasterVolume;
+
     }
 
     public void TransitionToState(int value)
@@ -118,7 +122,7 @@ public class CinematicStateManager : MonoBehaviour
         _randomSoundInterval = _currentSoundscape.GetRandomTimeInterval();
     }
 
-    public void SetMasterVolume(float newAmount)
+    private void SetMasterVolume(float newAmount)
     {
         _randomAudioSource.volume = newAmount;
         _loopingAudioSource.volume = newAmount;

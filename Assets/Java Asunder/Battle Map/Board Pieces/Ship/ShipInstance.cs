@@ -131,6 +131,8 @@ public class ShipInstance : BoardPiece
             // This is a player ship
             OnPlayerShipCreated?.Invoke(this);
             SessionMaster.MoveAllPlayerCharactersToBridge(this);
+
+            gameObject.AddComponent<AudioListener>(); // This low listens for audio
         }
     }
 
