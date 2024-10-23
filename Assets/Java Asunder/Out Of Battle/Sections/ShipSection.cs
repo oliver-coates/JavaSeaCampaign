@@ -14,6 +14,8 @@ public class ShipSection : MonoBehaviour
     [Header("Slots: (Auto-populated at runtime)")]
     public ComponentSlot[] slots;
 
+
+
     public void Initialise(ShipInstance ship)
     {
         this.ship = ship;
