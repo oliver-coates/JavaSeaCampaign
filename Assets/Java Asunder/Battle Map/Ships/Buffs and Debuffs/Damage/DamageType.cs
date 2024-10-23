@@ -19,6 +19,24 @@ public class DamageType : ScriptableObject
         }	
     }
 
+    [Header("Chance of hit:")]
+    [SerializeField] private float _minimumHitSeverity;
+    public float minimumHitSeverity
+    {
+        get
+        {
+            return _minimumHitSeverity;
+        }
+    }
+    [SerializeField] private float _chanceToOccurPerHitSeverity;   
+    public float chanceToOccurPerHitSeverity
+    {
+        get
+        {
+            return _chanceToOccurPerHitSeverity;
+        }
+    }
+
 
     [Header("Possible damage to integrity:")]
     [SerializeField] private float _minimumDamageToIntegrity;
@@ -30,7 +48,7 @@ public class DamageType : ScriptableObject
 
     [Header("Effects caused by this damage type:")]
     [SerializeField] private DamageEffect[] _effectsCaused;
-    public DamageEffect[] effectCauseds
+    public DamageEffect[] effectsCaused
     {
         get
         {

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Hull Breach
   m_EditorClassIdentifier: 
   _descriptiveName: The hull was breached in the {location}
+  _minimumHitSeverity: 7
+  _chanceToOccurPerHitSeverity: 2
   _minimumDamageToIntegrity: 1
   _maximumDamageToIntegrity: 10
   _effectsCaused:

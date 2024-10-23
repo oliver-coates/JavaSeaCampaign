@@ -115,7 +115,7 @@ public class ShipInstance : BoardPiece
 
         foreach (ShipSection section in sections)
         {
-            section.Initialise(this);
+            section.Setup(this);
             allSlots.AddRange(section.slots);
         }
 

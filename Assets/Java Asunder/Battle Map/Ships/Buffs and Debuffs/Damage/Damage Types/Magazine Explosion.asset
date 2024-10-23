@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Magazine Explosion
   m_EditorClassIdentifier: 
   _descriptiveName: The {location} magazine exploded
+  _minimumHitSeverity: 15
+  _chanceToOccurPerHitSeverity: 0.25
   _minimumDamageToIntegrity: 10
   _maximumDamageToIntegrity: 50
   _effectsCaused:

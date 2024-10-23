@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Fire Started
   m_EditorClassIdentifier: 
   _descriptiveName: A fire was started in the {location}
+  _minimumHitSeverity: 3
+  _chanceToOccurPerHitSeverity: 3
   _minimumDamageToIntegrity: 1
   _maximumDamageToIntegrity: 5
   _effectsCaused:

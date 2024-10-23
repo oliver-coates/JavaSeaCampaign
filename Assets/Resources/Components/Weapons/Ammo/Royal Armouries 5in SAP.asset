@@ -15,7 +15,7 @@ MonoBehaviour:
   sourceNation: {fileID: 11400000, guid: e4e4966f2da0af447862c514c81b92a5, type: 2}
   price: 100
   _prefab: {fileID: 5436418464505265309, guid: e993330899aa1ef48bdcb210b2d85589, type: 3}
-  damage: 10
+  damage: 15
   velocity: 400
   splashEffect: {fileID: 11400000, guid: 2aca9fd35da752446903a9ed8af1280d, type: 2}
   explosionEffect: {fileID: 11400000, guid: 698ce2e26a165134b9d2c4b52a7de589, type: 2}

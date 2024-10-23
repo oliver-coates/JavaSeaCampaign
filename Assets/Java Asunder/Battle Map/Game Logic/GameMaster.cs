@@ -51,6 +51,14 @@ public class GameMaster : MonoBehaviour
         }	
     }
 
+    [SerializeField] private DamageType[] _damageTypes;
+    public static DamageType[] damageTypes
+    {
+        get
+        {
+            return _Instance._damageTypes;
+        }
+    }
 
 
     #region Initialistion

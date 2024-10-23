@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _descriptiveName: 
   _integrityReductionPerIntensity: 0.75
+  _intensityGrowthBase: 0.5
+  _intensityGrowthPerIntensity: 0.025

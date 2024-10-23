@@ -32,6 +32,26 @@ public class DamageEffect : ScriptableObject
     }
 
     
+    // Intensity growth per second
+    [SerializeField] private float _intensityGrowthBase;
+    public float intensityGrowthBase
+    {
+        get
+        {
+            return _intensityGrowthBase;
+        }	
+    }
+
+    // Intensity growth per second multiplied by the intensity 
+    [SerializeField] private float _intensityGrowthPerIntensity;
+    public float intensityGrowthPerIntensity
+    {
+        get
+        {
+            return _intensityGrowthPerIntensity;
+        }	
+    }
+
 }
 
 }

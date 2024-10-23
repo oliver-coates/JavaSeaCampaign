@@ -5,18 +5,22 @@ using UnityEngine;
 namespace Ships
 {
 
-public class ShipSection : MonoBehaviour
+public class ShipSection : BoardPiece
 {
     public string sectionName = "Unnamed section";
 
     [HideInInspector] public ShipInstance ship;
 
+    [Header("Damage:")]
+    public SectionState state;
+
     [Header("Slots: (Auto-populated at runtime)")]
     public ComponentSlot[] slots;
 
 
+    protected override void Initialise() { }
 
-    public void Initialise(ShipInstance ship)
+    public void Setup(ShipInstance ship)
     {
         this.ship = ship;
         slots = GetComponentsInChildren<ComponentSlot>();
@@ -25,7 +29,23 @@ public class ShipSection : MonoBehaviour
         {
             slot.Initialise(ship);
         }
+
+        state = new SectionState();
     }
+
+    protected override void UpdateTick() { }
+
+    protected override void GameTick()
+    {
+        state.Tick(Time.deltaTime);
+    }
+
+    public void Hit(AmmunitionType ammunitionType)
+    {
+        state.RecieveHit(ammunitionType);
+    }
+
+
 }
 
 }
