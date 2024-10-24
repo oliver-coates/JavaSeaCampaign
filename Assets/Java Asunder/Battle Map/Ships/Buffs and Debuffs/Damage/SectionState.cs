@@ -16,6 +16,17 @@ public class SectionState
 
     #endregion
 
+
+    [SerializeField] private float _integrity;
+    public float integrity
+    {
+        get
+        {
+            return _integrity;
+        }	
+    }
+
+
     public List<DamageInstance> damages;
     public float permanentIntegrityDamage;
 
@@ -28,9 +39,13 @@ public class SectionState
 
     public void Tick(float deltaTime)
     {
+        // Recalculate integrity & tick damage instances
+        _integrity = 100f - permanentIntegrityDamage;
+
         foreach (DamageInstance damageInstance in damages)
         {
             damageInstance.Tick(deltaTime);
+            _integrity -= damageInstance.integrityDamage; 
         }
     }
 

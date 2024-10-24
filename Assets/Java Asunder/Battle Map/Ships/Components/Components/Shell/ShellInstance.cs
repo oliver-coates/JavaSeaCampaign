@@ -126,7 +126,6 @@ public class ShellInstance : BoardPiece
     private void HitShipSection(ShipSection hitSection)
     {
         hitSection.Hit(_type);
-        Debug.Log("Hit Ship!");
         EffectManager.SpawnEffect(_type.explosionEffect, transform.position);
         Destroy(gameObject);
     }

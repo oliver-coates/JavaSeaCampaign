@@ -9,6 +9,14 @@ namespace Ships
 [System.Serializable]
 public class DamageInstance
 {
+    public float integrityDamage
+    {
+        get
+        {
+            return (_intensity * _damageEffect.integrityReductionPerIntensity);
+        }
+    }
+
     [Header("The type of damage this is (Flooding, Fire, etc)")]
     [SerializeField] private DamageEffect _damageEffect;
     public DamageEffect damageEffect
@@ -32,6 +40,7 @@ public class DamageInstance
     }
 
 
+
     public DamageInstance(DamageEffect type, float hitSeverity)
     {
         _damageEffect = type;
@@ -41,13 +50,22 @@ public class DamageInstance
     public void BoostDamage(float severity)
     {
         _intensity += severity;
+
+        _intensity = Mathf.Clamp(_intensity, 0f, 100f);
     }
 
     public void Tick(float deltaTime)
     {
         _intensity += deltaTime * (_damageEffect.intensityGrowthBase + (_damageEffect.intensityGrowthPerIntensity * _intensity));
+ 
+        _intensity = Mathf.Clamp(_intensity, 0f, 100f);
     }
  
+    public string GetDescription()
+    {
+        return _damageEffect.GetDescription(_intensity);
+    }
+
 }
 
 }

@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f2a7edb3918ede489e0b60c87cc9e5d, type: 3}
   m_Name: Flooding
   m_EditorClassIdentifier: 
-  _descriptiveName: 
   _integrityReductionPerIntensity: 0.75
-  _intensityGrowthBase: 0.5
-  _intensityGrowthPerIntensity: 0.025
+  _intensityGrowthBase: 0.05
+  _intensityGrowthPerIntensity: 0.002
+  _damageName: flooding
+  _intensityDescriptors:
+  - Slight
+  - Minor
+  - Major
+  - Severe
+  - Critical

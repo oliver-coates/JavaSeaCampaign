@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f2a7edb3918ede489e0b60c87cc9e5d, type: 3}
   m_Name: Fire
   m_EditorClassIdentifier: 
-  _descriptiveName: 
   _integrityReductionPerIntensity: 0.4
-  _intensityGrowthBase: 0.4
-  _intensityGrowthPerIntensity: 0.055
+  _intensityGrowthBase: 0.04
+  _intensityGrowthPerIntensity: 0.005
+  _damageName: fires
+  _intensityDescriptors:
+  - Slight
+  - Minor
+  - Major
+  - Severe
+  - Critical

@@ -9,16 +9,6 @@ namespace Ships
 [CreateAssetMenu(fileName = "New Damage Effect", menuName = "Java Asunder/Damage/Damage Effect", order = 1)]
 public class DamageEffect : ScriptableObject
 {
-    [Header("Decorative")]
-    [SerializeField] private string _descriptiveName;
-    public string descriptiveName
-    {
-        get
-        {
-            return _descriptiveName;
-        }	
-    }
-
 
     [Header("Damage:")]
     // How much the section's integrity is reduced by 
@@ -50,6 +40,22 @@ public class DamageEffect : ScriptableObject
         {
             return _intensityGrowthPerIntensity;
         }	
+    }
+
+    [Header("Decorative:")]
+    [SerializeField] private string _damageName;
+    [SerializeField] private string[] _intensityDescriptors;
+
+    public string GetDescription(float intensity)
+    {
+        int intensityAsInt = (int) intensity;
+
+        float intensityAsRange = intensityAsInt / 100f;
+
+        int descriptorIndex = Mathf.FloorToInt(intensityAsRange * _intensityDescriptors.Length);
+        
+
+        return $"{_intensityDescriptors[descriptorIndex]} {_damageName} ({intensityAsInt}%)";
     }
 
 }
