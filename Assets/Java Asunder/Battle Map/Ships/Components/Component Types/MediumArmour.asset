@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b148d675edac7914ea0191edfb26caa2, type: 3}
   m_Name: MediumArmour
   m_EditorClassIdentifier: 
+  genericPrefab: {fileID: 3495534186815811724, guid: c47b2b311b5449b4293391cb3800a3dc, type: 3}

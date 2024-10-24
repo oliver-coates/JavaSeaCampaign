@@ -12,6 +12,9 @@ public class ComponentSlot : MonoBehaviour
     [Header("Decorative")]
     public string slotName;
 
+    [Header("The section this component is in (Auto assigned at runtime)")]
+    public ShipSection shipSection;
+
     [Header("Type of component that this is: (i.e. Medium Gun)")]
     public ShipComponentType componentType;
     
@@ -22,20 +25,32 @@ public class ComponentSlot : MonoBehaviour
     public IShipComponentInstance componentInstance;
     
 
-    public void Initialise(ShipInstance ship)
+    public void Initialise(ShipInstance ship, ShipSection shipSection)
     {
-        if (componentType.genericPrefab != null && component != null)
-        {
-            componentInstance = Instantiate(componentType.genericPrefab, transform.position, transform.rotation, transform).GetComponent<IShipComponentInstance>();    
+        this.shipSection = shipSection;
 
-            if (componentInstance == null)
-            {
-                Debug.LogError($"Ship component instance not found on gameobject {name}");
-                return;
-            }
-        
-            componentInstance.Setup(ship, this);
-        }   
+        if (componentType.genericPrefab == null || component == null)
+        {
+            return;
+        }
+
+        // Ensure that this component type matches this slots component type
+        // E.g. - prevent a light gun from being added to a heavy gun slot
+        if (component.componentType != componentType)
+        {
+            Debug.LogError($"The provided component {component.name}'s type ({component.componentType.name}) does not match this slots component type ({componentType.name})");
+            return;
+        }
+    
+        componentInstance = Instantiate(componentType.genericPrefab, transform.position, transform.rotation, transform).GetComponent<IShipComponentInstance>();    
+
+        if (componentInstance == null)
+        {
+            Debug.LogError($"Ship component instance not found on gameobject {name}");
+            return;
+        }
+    
+        componentInstance.Setup(ship, this);
     }
 
 }

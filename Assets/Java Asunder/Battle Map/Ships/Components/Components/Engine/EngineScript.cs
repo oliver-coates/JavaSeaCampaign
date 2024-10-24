@@ -20,6 +20,7 @@ public class EngineScript : BoardPiece, IShipComponentInstance
     #endregion
 
     [SerializeField] private ComponentSlot _engineSlot;
+    private SectionState _sectionState;
     [SerializeField] private Rigidbody2D _rigidBody;
     private ShipInstance _ship;
     private EngineType _engineType;
@@ -52,15 +53,10 @@ public class EngineScript : BoardPiece, IShipComponentInstance
     {
         _ship = ship;
         _engineSlot = componentSlot;
+        _sectionState = componentSlot.shipSection.state;
         _ship.engine = this;
         speedEffectivness = new ComponentEffectiveness("Engines", "Overcharging the engines");
 
-        // Ensure the engine slot is correct
-        if (_engineSlot.component is not EngineType)
-        {
-            Debug.LogError($"Provided component in engine slot is not Engine Type");
-            return;
-        }
         _engineType = (EngineType) _engineSlot.component;
 
         // Set up rigid body:
@@ -89,11 +85,13 @@ public class EngineScript : BoardPiece, IShipComponentInstance
         _engineSpeed = Mathf.MoveTowards(_engineSpeed, _ship.targetSpeed, engineChangeSpeed * Time.deltaTime);
 
         // Add force:
-        Vector3 force = _ship.transform.up * _engineType.strength * _engineSpeed * Time.deltaTime * SPEED_TUNER * speedEffectivness.value;
+        float speedMultiplier = _engineType.strength * SPEED_TUNER * speedEffectivness.value * _sectionState.effectivenessMultiplier;
+        Vector3 force = _ship.transform.up *  _engineSpeed * Time.deltaTime * speedMultiplier;
         _rigidBody.AddForce(force, ForceMode2D.Force);
     
         // Rotate:
-        float rotateAmount = _ship.rudder * TURN_SPEED_TUNER * Time.deltaTime;
+        float rotationMultiplier = TURN_SPEED_TUNER; // TODO: Get rotation multilier from bridge
+        float rotateAmount = _ship.rudder * rotationMultiplier * Time.deltaTime;
 
         rotateAmount *= _rigidBody.velocity.magnitude;
         _rigidBody.AddTorque(rotateAmount, ForceMode2D.Force);

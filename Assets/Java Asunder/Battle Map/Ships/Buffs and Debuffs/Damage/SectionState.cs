@@ -16,6 +16,7 @@ public class SectionState
 
     #endregion
 
+    private ShipInstance _ship;
 
     [SerializeField] private float _integrity;
     public float integrity
@@ -26,13 +27,22 @@ public class SectionState
         }	
     }
 
+    [SerializeField] private float _effectivenessMultiplier;
+    public float effectivenessMultiplier
+    {
+        get
+        {
+            return _effectivenessMultiplier;
+        }	
+    }
 
     public List<DamageInstance> damages;
     public float permanentIntegrityDamage;
 
 
-    public SectionState()
+    public SectionState(ShipInstance ship)
     {
+        _ship = ship;
         damages = new List<DamageInstance>();
         permanentIntegrityDamage = 0f;
     }
@@ -47,6 +57,10 @@ public class SectionState
             damageInstance.Tick(deltaTime);
             _integrity -= damageInstance.integrityDamage; 
         }
+    
+        float integrityAsPercent = _integrity / 100f;
+
+        _effectivenessMultiplier = Mathf.Lerp(0.1f, 1f, integrityAsPercent);
     }
 
     public void RecieveHit(AmmunitionType ammunitionType)
@@ -60,8 +74,8 @@ public class SectionState
                                                     1f + SEVERITY_RANDOM_MULTIPLIER);
 
 
-        // TODO: Implement armour reduction here
-
+        // Reduce the severity by our ships armour
+        hitSeverity -= _ship.armourType.strength;
 
         // Roll for damage types from the severity of the hit
         List<DamageType> damageTypesDealt = RollForDamageTypes(possibleDamageTypes, hitSeverity);

@@ -28,14 +28,14 @@ public class ShipInstance : BoardPiece
 
     [Header("Sections:")]
     [HideInInspector] public ShipAIController AI; // Will only exist on non-player ships
-    public ComponentSlot armourSlot;
+    [SerializeField] private ComponentSlot armourSlot;
     [HideInInspector] public ShipSection[] sections;
     [HideInInspector] public ComponentSlot[] componentSlots;
 
     [Header("Easy component access")]
     public Rigidbody2D rb;
     public ComponentSlot bridge;
-
+    public ArmourType armourType;
 
     [Header("Core Components: (Filled out at runtime)")]
     public EngineScript engine;
@@ -111,7 +111,10 @@ public class ShipInstance : BoardPiece
 
         // Intiialsie all sections & Gather all component slots
         List<ComponentSlot> allSlots = new List<ComponentSlot>();
+        
+        // Don't forget about armour:
         allSlots.Add(armourSlot);
+        armourSlot.Initialise(this, null);
 
         foreach (ShipSection section in sections)
         {

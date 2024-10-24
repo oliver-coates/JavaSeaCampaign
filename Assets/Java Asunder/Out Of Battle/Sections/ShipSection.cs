@@ -23,14 +23,14 @@ public class ShipSection : BoardPiece
     public void Setup(ShipInstance ship)
     {
         this.ship = ship;
-        slots = GetComponentsInChildren<ComponentSlot>();
+        state = new SectionState(ship);
 
+
+        slots = GetComponentsInChildren<ComponentSlot>();
         foreach (ComponentSlot slot in slots)
         {
-            slot.Initialise(ship);
+            slot.Initialise(ship, this);
         }
-
-        state = new SectionState();
     }
 
     protected override void UpdateTick() { }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7acb406adf03a49a4e7b0c3bc039bb, type: 3}
   m_Name: '[Fire Control] Mk1 Fire Control'
   m_EditorClassIdentifier: 
+  componentType: {fileID: 11400000, guid: c5f142554ef771d40a2fda165d4ac5d0, type: 2}
   sourceNation: {fileID: 11400000, guid: e4e4966f2da0af447862c514c81b92a5, type: 2}
   price: 100
   type: 0

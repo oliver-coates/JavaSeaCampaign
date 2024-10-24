@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Fire
   m_EditorClassIdentifier: 
   _integrityReductionPerIntensity: 0.4
-  _intensityGrowthBase: 0.04
-  _intensityGrowthPerIntensity: 0.005
+  _intensityGrowthBase: 0.1
+  _intensityGrowthPerIntensity: 0.008
   _damageName: fires
   _intensityDescriptors:
   - Slight

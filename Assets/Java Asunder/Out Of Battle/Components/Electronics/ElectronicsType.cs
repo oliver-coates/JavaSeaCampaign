@@ -14,8 +14,10 @@ public class ElectronicsType : ShipComponent
         Sonar,
         Radar
     }
-
+    [Header("Electronics Type:")]
     public Electronics type;
+    
+    [Header("Strength:")]
     [Range(1, 10)]
     public int strength = 1;
     public float effectiveRange = 1000;

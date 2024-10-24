@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Rear Deck Mount
+  shipSection: {fileID: 0}
   componentType: {fileID: 11400000, guid: 1f00bba677ed7524793e0d7ce7bd5a72, type: 2}
   component: {fileID: 0}
 --- !u!1 &1616034192442772221
@@ -92,6 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Rear Room
+  shipSection: {fileID: 0}
   componentType: {fileID: 11400000, guid: 1d66c2a4f9829df44a6245bbb9fec3b2, type: 2}
   component: {fileID: 0}
 --- !u!1 &2163997216263141867
@@ -139,6 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Bridge
+  shipSection: {fileID: 0}
   componentType: {fileID: 11400000, guid: 515cac48d72b0e3498a0544aac64b120, type: 2}
   component: {fileID: 0}
 --- !u!1 &2710673452750201735
@@ -220,6 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Fore Gun Mount
+  shipSection: {fileID: 0}
   componentType: {fileID: 11400000, guid: 5561a009a56c8b441980ae726686d169, type: 2}
   component: {fileID: 11400000, guid: 841cd6747ba1b1f41ba8b0e91f332163, type: 2}
 --- !u!1 &3536027577139989715
@@ -279,6 +283,7 @@ MonoBehaviour:
   componentSlots: []
   rb: {fileID: 2076883527109525146}
   bridge: {fileID: 5160432588531642400}
+  armourType: {fileID: 0}
   engine: {fileID: 0}
   fireControl: {fileID: 0}
   _rudder: 0
@@ -356,6 +361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Main Electronics Room
+  shipSection: {fileID: 0}
   componentType: {fileID: 11400000, guid: c5f142554ef771d40a2fda165d4ac5d0, type: 2}
   component: {fileID: 11400000, guid: 76888f1378ac7e3488584ab77ce47932, type: 2}
 --- !u!1 &4000044268225090703
@@ -458,6 +464,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sectionName: Aft
   ship: {fileID: 0}
+  state:
+    _integrity: 0
+    _effectivenessMultiplier: 0
+    damages: []
+    permanentIntegrityDamage: 0
   slots: []
 --- !u!1 &4089353403793123566
 GameObject:
@@ -504,6 +515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Near Aft Gun Mount
+  shipSection: {fileID: 0}
   componentType: {fileID: 11400000, guid: 5561a009a56c8b441980ae726686d169, type: 2}
   component: {fileID: 11400000, guid: 841cd6747ba1b1f41ba8b0e91f332163, type: 2}
 --- !u!1 &4363488878373959247
@@ -551,6 +563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Port Deck Mount
+  shipSection: {fileID: 0}
   componentType: {fileID: 11400000, guid: 1f00bba677ed7524793e0d7ce7bd5a72, type: 2}
   component: {fileID: 0}
 --- !u!1 &4489480450284354487
@@ -654,6 +667,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sectionName: Fore
   ship: {fileID: 0}
+  state:
+    _integrity: 0
+    _effectivenessMultiplier: 0
+    damages: []
+    permanentIntegrityDamage: 0
   slots: []
 --- !u!1 &5790568902815885808
 GameObject:
@@ -700,8 +718,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Armour
-  componentType: {fileID: 11400000, guid: 18156c33d423a534283411d938883e66, type: 2}
-  component: {fileID: 0}
+  shipSection: {fileID: 0}
+  componentType: {fileID: 11400000, guid: 813a27a0e10b69a4f9f35b866c793b06, type: 2}
+  component: {fileID: 11400000, guid: 85dd59c3f5f1a2041aff306af311cbe4, type: 2}
 --- !u!1 &7723331787766325343
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,6 +766,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Engine Room
+  shipSection: {fileID: 0}
   componentType: {fileID: 11400000, guid: f2721a9e6f1c87c45a6ccf671347b9c7, type: 2}
   component: {fileID: 11400000, guid: 0f9b73aee757b384695e026bc08d5143, type: 2}
 --- !u!1 &7751553943424693175
@@ -794,6 +814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Far Small Gun Mount
+  shipSection: {fileID: 0}
   componentType: {fileID: 11400000, guid: 4749d3654fea5824dbb62d2bcfc5d9e0, type: 2}
   component: {fileID: 0}
 --- !u!1 &7903304595399901650
@@ -841,6 +862,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Starboard Deck Mount
+  shipSection: {fileID: 0}
   componentType: {fileID: 11400000, guid: 1f00bba677ed7524793e0d7ce7bd5a72, type: 2}
   component: {fileID: 0}
 --- !u!1 &8109193590445984590
@@ -888,6 +910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Hold
+  shipSection: {fileID: 0}
   componentType: {fileID: 11400000, guid: 785fb5be2a936a842beefd8182134eca, type: 2}
   component: {fileID: 0}
 --- !u!1 &8997232532124010028
@@ -935,6 +958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotName: Secondary Electronics Room
+  shipSection: {fileID: 0}
   componentType: {fileID: 11400000, guid: c5f142554ef771d40a2fda165d4ac5d0, type: 2}
   component: {fileID: 0}
 --- !u!1001 &5127362950042911549

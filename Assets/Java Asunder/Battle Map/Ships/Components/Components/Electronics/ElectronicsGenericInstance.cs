@@ -12,12 +12,6 @@ public class ElectronicsGenericInstance : MonoBehaviour, IShipComponentInstance
 
     public void Setup(ShipInstance ship, ComponentSlot componentSlot)
     {
-        if (componentSlot.component is not ElectronicsType)
-        {
-            Debug.LogError($"Provided component in electronics slot is not Electronics Type");
-            return;
-        }
- 
         ElectronicsType electronics = (ElectronicsType) componentSlot.component;
 
         switch (electronics.type)

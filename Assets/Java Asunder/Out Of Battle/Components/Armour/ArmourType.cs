@@ -9,8 +9,8 @@ namespace Ships
 [CreateAssetMenu(fileName = "New Armour Type", menuName = "Java Asunder/Components/Armour", order = 0)]
 public class ArmourType : ShipComponent
 {
+    [Header("Armour Strength:")]
     public int strength = 1;
-    public int agility = 1;
 
 }
 }

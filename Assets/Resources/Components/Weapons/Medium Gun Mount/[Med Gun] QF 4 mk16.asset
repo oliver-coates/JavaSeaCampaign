@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ba0cfdedb425948a8cf222e1c81a7b, type: 3}
   m_Name: '[Med Gun] QF 4 mk16'
   m_EditorClassIdentifier: 
+  componentType: {fileID: 11400000, guid: 5561a009a56c8b441980ae726686d169, type: 2}
   sourceNation: {fileID: 11400000, guid: e4e4966f2da0af447862c514c81b92a5, type: 2}
   price: 100
   turnSpeed: 75

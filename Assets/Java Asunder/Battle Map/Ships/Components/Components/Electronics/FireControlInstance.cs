@@ -13,7 +13,7 @@ public class FireControlInstance : BoardPiece, IShipComponentInstance
 
     private ShipInstance _ship;
     private ElectronicsType _fireControl;
-    
+    private SectionState _sectionState;
 
 
     [Header("State:")]
@@ -49,6 +49,7 @@ public class FireControlInstance : BoardPiece, IShipComponentInstance
     {
         _ship = ship;
         _fireControl = (ElectronicsType) componentSlot.component;
+        _sectionState = componentSlot.shipSection.state;
         calculationEffectiveness = new ComponentEffectiveness("Fire Control", "Using the Ballistic Computer");
     
         if (_ship.fireControl != null)
@@ -88,7 +89,11 @@ public class FireControlInstance : BoardPiece, IShipComponentInstance
         float distanceModifier = 1f-(Mathf.Clamp(_distanceToTarget/_fireControl.effectiveRange, 1f, 2f)-1f);
 
         // Add confidence linearly
-        _confidence += Time.deltaTime * _fireControl.strength * _randomNoise * distanceModifier * CONDIFENCE_GAIN_MULTIPLIER * calculationEffectiveness.value;
+        _confidence += Time.deltaTime * _fireControl.strength
+                       * _randomNoise * distanceModifier 
+                       * CONDIFENCE_GAIN_MULTIPLIER 
+                       * calculationEffectiveness.value
+                       * _sectionState.effectivenessMultiplier;
 
         // Lose confidence due to enemy velocity
         _confidence -= Time.deltaTime * _ship.targetSpeed * CONDIFENCE_LOSS_ENEMY_VELOCITY_FACTOR;

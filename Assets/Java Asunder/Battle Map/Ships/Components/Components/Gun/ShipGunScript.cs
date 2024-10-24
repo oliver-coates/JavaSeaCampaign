@@ -20,6 +20,7 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
 
     private ComponentSlot _componentSlot;
     private ShipInstance _ship;
+    private SectionState _sectionState;
 
     [Header("State:")]
     public ShipInstance _target;
@@ -45,13 +46,8 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
     {
         _ship = ship;
         _componentSlot = componentSlot;
+        _sectionState = _componentSlot.shipSection.state;
         loadingEffectiveness = new ComponentEffectiveness("Loading", $"({componentSlot.slotName}) Loading");
-
-        if (_componentSlot.component is not ShipGunType)
-        {
-            Debug.LogError($"Provided component in gun slot is not Gun Type");
-            return;
-        }
 
         _gunType = (ShipGunType) _componentSlot.component;
     
@@ -170,7 +166,7 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
     private void GunUpdate()
     {
         // The crew consistently loads the gun
-        _loadTimer += (Time.deltaTime * loadingEffectiveness.value);
+        _loadTimer += (Time.deltaTime * loadingEffectiveness.value * _sectionState.effectivenessMultiplier);
 
         if (_target is not null)
         {
@@ -181,8 +177,6 @@ public class ShipGunScript : BoardPiece, IShipComponentInstance
                 _loadTimer = Random.Range(-reloadTimeRange, reloadTimeRange);
             }
         }
-
-
     }
 
     private void Shoot()

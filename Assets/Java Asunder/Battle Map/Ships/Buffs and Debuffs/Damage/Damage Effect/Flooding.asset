@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Flooding
   m_EditorClassIdentifier: 
   _integrityReductionPerIntensity: 0.75
-  _intensityGrowthBase: 0.05
+  _intensityGrowthBase: 0.08
   _intensityGrowthPerIntensity: 0.002
   _damageName: flooding
   _intensityDescriptors:
